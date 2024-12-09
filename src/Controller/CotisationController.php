@@ -16,6 +16,7 @@ class CotisationController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $cotisation = new Cotisation();
+        $cotisation->setPaidAt(new \DateTime());
 
         $form = $this->createForm(CotisationType::class, $cotisation);
         $form->handleRequest($request);

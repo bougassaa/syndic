@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Cotisation
 {
 
-    public const MOYEN_PAIEMENT = ['cheque', 'virement', 'espece', 'autre'];
+    public const MOYENS_PAIEMENTS = ['virement', 'cheque', 'espece', 'autre'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

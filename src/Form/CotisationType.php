@@ -8,6 +8,7 @@ use App\Entity\Tarif;
 use App\Form\Type\AppartementFieldType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,9 +32,18 @@ class CotisationType extends AbstractType
             ->add('montant', MoneyType::class, [
                 'label' => $this->translator->trans('cotisation.montant'),
                 'currency' => 'MAD',
+                'html5' => true,
+                'attr' => [
+                    'type' => 'number',
+                    'step' => '0.01',
+                ],
             ])
-            ->add('moyenPaiement', null, [
+            ->add('moyenPaiement', ChoiceType::class, [
                 'label' => $this->translator->trans('cotisation.moyenPaiement'),
+                'choices' => array_combine(
+                    array_map(fn($key) => $this->translator->trans('moyenPaiement.' . $key), Cotisation::MOYENS_PAIEMENTS),
+                    Cotisation::MOYENS_PAIEMENTS
+                ),
             ])
             ->add('appartement', AppartementFieldType::class)
             ->add('proprietaire', EntityType::class, [
