@@ -21,6 +21,8 @@ cotisation:
   montant: Montant du règlement (en Dirhams)
   moyenPaiement: Moyen de paiement
   paidAt: Date de règlement
+  proprietaire: Co-propriétaire
+  tarif: Périodes concernées
 
 moyenPaiement:
   cheque: Chèque

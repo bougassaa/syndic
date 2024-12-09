@@ -50,13 +50,15 @@ class CotisationType extends AbstractType
             ])
             ->add('proprietaire', EntityType::class, [
                 'class' => Proprietaire::class,
-                'choice_label' => 'id',
+                'choice_label' => fn(Proprietaire $proprietaire) => $proprietaire->getNom() . ' ' . $proprietaire->getPrenom(),
                 'placeholder' => $this->translator->trans('select-choose'),
+                'label' => $this->translator->trans('cotisation.proprietaire'),
             ])
             ->add('tarif', EntityType::class, [
                 'class' => Tarif::class,
-                'choice_label' => 'id',
+                'choice_label' => fn(Tarif $tarif) => $tarif->getYear() . ' - ' . $tarif->getTarif() . ' Dh',
                 'multiple' => true,
+                'label' => $this->translator->trans('cotisation.tarif'),
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
