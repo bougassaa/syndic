@@ -5,8 +5,8 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
-            <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-            <link rel="stylesheet" href="font-awesome/font-awesome.min.css">
+            <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('font-awesome/font-awesome.min.css') }}">
         {% endblock %}
     </head>
     <body>
@@ -33,10 +33,12 @@
                 </div>
             </div>
         </nav>
-        {% block body %}{% endblock %}
+        <div class="container pt-4">
+            {% block body %}{% endblock %}
+        </div>
 
         {% block javascripts %}
-            <script src="bootstrap/bootstrap.bundle.min.js"></script>
+            <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>
