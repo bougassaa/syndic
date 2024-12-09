@@ -2,9 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Appartement;
 use App\Entity\Proprietaire;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\Type\AppartementFieldType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -51,16 +50,7 @@ class ProprietaireType extends AbstractType
                 'label' => $this->translator->trans('proprietaire.leaveAt'),
                 'attr' => ['class' => 'leaveAt'],
             ])
-            ->add('appartement', EntityType::class, [
-                'class' => Appartement::class,
-                'label' => $this->translator->trans('proprietaire.appartement'),
-                'choice_label' => function(Appartement $appartement) {
-                    return $appartement->getBatiment()->getNom() . ' - ' . $appartement->getNumero();
-                },
-                'group_by' => function(Appartement $appartement) {
-                    return $appartement->getBatiment()->getNom();
-                },
-            ])
+            ->add('appartement', AppartementFieldType::class)
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
             ])

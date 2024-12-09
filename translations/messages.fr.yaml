@@ -12,3 +12,16 @@ proprietaire:
   leaveAt: Date de fin (Vente appartement)
   appartement: Numéro appartement
   isCurrentOwner: Est actuellement le propriétaire ?
+
+cotisation:
+  new: Ajouter une cotisation
+  list: Liste des cotisations
+  montant: Montant du règlement (en Dirhams)
+  moyenPaiement: Moyen de paiement
+  paidAt: Date de règlement
+
+moyenPaiement:
+  cheque: Chèque
+  espece: Espece
+  virement: Virement
+  autre: Autre

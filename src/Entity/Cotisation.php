@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CotisationRepository::class)]
 class Cotisation
 {
+
+    public const MOYEN_PAIEMENT = ['cheque', 'virement', 'espece', 'autre'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,6 +37,9 @@ class Cotisation
      */
     #[ORM\ManyToMany(targetEntity: Tarif::class, inversedBy: 'cotisations')]
     private Collection $tarif;
+
+    #[ORM\Column(length: 30)]
+    private ?string $moyenPaiement = null;
 
     public function __construct()
     {
@@ -113,6 +119,18 @@ class Cotisation
     public function removeTarif(Tarif $tarif): static
     {
         $this->tarif->removeElement($tarif);
+
+        return $this;
+    }
+
+    public function getMoyenPaiement(): ?string
+    {
+        return $this->moyenPaiement;
+    }
+
+    public function setMoyenPaiement(string $moyenPaiement): static
+    {
+        $this->moyenPaiement = $moyenPaiement;
 
         return $this;
     }
