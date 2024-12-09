@@ -1,0 +1,19 @@
+.uppercase {
+    text-transform: uppercase;
+}
+
+.form-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    .form-check-input {
+        clear: left;
+        height: 1.5rem;
+        width: calc(2rem + 0.75rem);
+        border-radius: 3rem;
+    }
+    label, input {
+        cursor: pointer;
+    }
+}

@@ -1,2 +1,10 @@
 syndic: Syndic
+save: Sauvegarder
 ajouter-proprietaire: Ajouter un propriétaire
+proprietaire:
+  nom: Nom de famille
+  prenom: Prénom
+  beginAt: Date début adhésion (Achat appartement)
+  leaveAt: Date de fin (Vente appartement)
+  appartement: Numéro appartement
+  isCurrentOwner: Est actuellement le propriétaire ?
