@@ -21,6 +21,9 @@ class ProprietaireType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var Proprietaire $data */
+        $data = $options['data'];
+
         $builder
             ->add('nom', null, [
                 'label' => $this->translator->trans('proprietaire.nom'),
@@ -34,17 +37,19 @@ class ProprietaireType extends AbstractType
                 'label' => $this->translator->trans('proprietaire.beginAt'),
             ])
             ->add('isCurrentOwner', CheckboxType::class, [
+                'required' => false,
                 'mapped' => false,
                 'label' => $this->translator->trans('proprietaire.isCurrentOwner'),
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
                 'attr' => ['class' => 'isCurrentOwner'],
-
+                'data' => !$data->getLeaveAt()
             ])
             ->add('leaveAt', null, [
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.leaveAt'),
+                'attr' => ['class' => 'leaveAt'],
             ])
             ->add('appartement', EntityType::class, [
                 'class' => Appartement::class,

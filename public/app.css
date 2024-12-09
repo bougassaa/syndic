@@ -2,6 +2,10 @@
     text-transform: uppercase;
 }
 
+.hidden {
+    display: none;
+}
+
 .form-switch {
     display: flex;
     align-items: center;
