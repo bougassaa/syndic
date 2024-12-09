@@ -1,7 +1,8 @@
 syndic: Syndic
 save: Sauvegarder
-ajouter-proprietaire: Ajouter un propriétaire
 proprietaire:
+  new: Ajouter un propriétaire
+  list: Liste des co-propriétaires
   nom: Nom de famille
   prenom: Prénom
   beginAt: Date début adhésion (Achat appartement)

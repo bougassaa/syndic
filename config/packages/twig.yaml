@@ -1,4 +1,6 @@
 twig:
+    date:
+        format: 'd/m/Y'
     file_name_pattern: '*.twig'
     form_themes: ['bootstrap_5_layout.html.twig']
 

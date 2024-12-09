@@ -101,6 +101,13 @@ class Proprietaire
         return $this->appartement;
     }
 
+    public function getAppartementAbsoluteName(): string
+    {
+        return $this->appartement->getBatiment()->getSyndic()->getNom() . ' ' .
+            $this->appartement->getBatiment()->getNom() . '-' .
+            $this->appartement->getNumero();
+    }
+
     public function setAppartement(?Appartement $appartement): static
     {
         $this->appartement = $appartement;
