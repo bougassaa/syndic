@@ -36,11 +36,18 @@ class Syndic
     #[ORM\OneToMany(targetEntity: Tarif::class, mappedBy: 'syndic')]
     private Collection $tarifs;
 
+    /**
+     * @var Collection<int, TypeDepense>
+     */
+    #[ORM\OneToMany(targetEntity: TypeDepense::class, mappedBy: 'syndic')]
+    private Collection $typeDepenses;
+
     public function __construct()
     {
         $this->batiments = new ArrayCollection();
         $this->depenses = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
+        $this->typeDepenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +151,36 @@ class Syndic
             // set the owning side to null (unless already changed)
             if ($tarif->getSyndic() === $this) {
                 $tarif->setSyndic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeDepense>
+     */
+    public function getTypeDepenses(): Collection
+    {
+        return $this->typeDepenses;
+    }
+
+    public function addTypeDepense(TypeDepense $typeDepense): static
+    {
+        if (!$this->typeDepenses->contains($typeDepense)) {
+            $this->typeDepenses->add($typeDepense);
+            $typeDepense->setSyndic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeDepense(TypeDepense $typeDepense): static
+    {
+        if ($this->typeDepenses->removeElement($typeDepense)) {
+            // set the owning side to null (unless already changed)
+            if ($typeDepense->getSyndic() === $this) {
+                $typeDepense->setSyndic(null);
             }
         }
 

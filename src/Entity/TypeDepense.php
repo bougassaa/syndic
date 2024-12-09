@@ -34,6 +34,10 @@ class TypeDepense
     #[ORM\OneToMany(targetEntity: Depense::class, mappedBy: 'type')]
     private Collection $depenses;
 
+    #[ORM\ManyToOne(inversedBy: 'typeDepenses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Syndic $syndic = null;
+
     public function __construct()
     {
         $this->depenses = new ArrayCollection();
@@ -106,6 +110,18 @@ class TypeDepense
                 $depense->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSyndic(): ?Syndic
+    {
+        return $this->syndic;
+    }
+
+    public function setSyndic(?Syndic $syndic): static
+    {
+        $this->syndic = $syndic;
 
         return $this;
     }
