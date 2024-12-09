@@ -45,10 +45,13 @@ class CotisationType extends AbstractType
                     Cotisation::MOYENS_PAIEMENTS
                 ),
             ])
-            ->add('appartement', AppartementFieldType::class)
+            ->add('appartement', AppartementFieldType::class, [
+                'placeholder' => $this->translator->trans('select-choose'),
+            ])
             ->add('proprietaire', EntityType::class, [
                 'class' => Proprietaire::class,
                 'choice_label' => 'id',
+                'placeholder' => $this->translator->trans('select-choose'),
             ])
             ->add('tarif', EntityType::class, [
                 'class' => Tarif::class,

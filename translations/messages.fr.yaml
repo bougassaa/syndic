@@ -1,6 +1,8 @@
 syndic: Syndic
 save: Sauvegarder
 edit: Modifier
+select-choose: Sélectionner une valeur
+
 proprietaire:
   nav: Co-propriétaires
   new: Ajouter un propriétaire

@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
             leaveAtVisibility(input);
         })
     });
+
+    document.querySelectorAll('select').forEach(select => {
+        new TomSelect(select);
+    });
 });
 
 function leaveAtVisibility(input) {
