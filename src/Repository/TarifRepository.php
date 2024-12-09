@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Syndic;
 use App\Entity\Tarif;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,15 @@ class TarifRepository extends ServiceEntityRepository
         parent::__construct($registry, Tarif::class);
     }
 
-    //    /**
-    //     * @return Tarif[] Returns an array of Tarif objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Tarif
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function getThisYearTarif(Syndic $syndic): float
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.tarif')
+            ->where('t.year = :year')
+            ->andWhere('t.syndic = :syndic')
+            ->setParameter('year', date('Y'))
+            ->setParameter('syndic', $syndic)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
