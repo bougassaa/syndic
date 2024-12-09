@@ -15,10 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function leaveAtVisibility(input) {
-    const leaveAt = document.querySelector('.leaveAt').parentElement;
+    const leaveAtInput = document.querySelector('.leaveAt');
+    const leaveAtParent = leaveAtInput.parentElement;
     if (input.checked) {
-        leaveAt.classList.add('hidden');
+        leaveAtParent.classList.add('hidden');
+        leaveAtInput.required = false;
     } else {
-        leaveAt.classList.remove('hidden');
+        leaveAtParent.classList.remove('hidden');
+        leaveAtInput.required = true;
     }
 }

@@ -1,7 +1,10 @@
 syndic: Syndic
 save: Sauvegarder
+edit: Modifier
 proprietaire:
+  nav: Co-propriétaires
   new: Ajouter un propriétaire
+  edit: Modifier un propriétaire
   list: Liste des co-propriétaires
   nom: Nom de famille
   prenom: Prénom

@@ -29,8 +29,8 @@ class ProprietaireController extends AbstractController
         $proprietaire = new Proprietaire();
 
         $form = $this->createForm(ProprietaireType::class, $proprietaire);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($proprietaire);
             $manager->flush();
@@ -39,6 +39,23 @@ class ProprietaireController extends AbstractController
         }
 
         return $this->render('proprietaire/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/proprietaire/edit/{proprietaire}', name: 'app_proprietaire_edit')]
+    public function edit(Proprietaire $proprietaire, Request $request, EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(ProprietaireType::class, $proprietaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->flush();
+
+            return $this->redirectToRoute('app_proprietaire_list');
+        }
+
+        return $this->render('proprietaire/edit.html.twig', [
             'form' => $form,
         ]);
     }
