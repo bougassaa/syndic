@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', function () {
         new TomSelect(select);
     });
 
+    document.querySelectorAll('input[type="date"]').forEach(date => {
+        date.addEventListener('focus', function (event) {
+            if (event.target.showPicker) {
+                event.target.showPicker();
+            }
+        });
+    });
+
     const appartementSelect = document.querySelector('#cotisation_appartement');
     const proprietaireSelect = document.querySelector('#cotisation_proprietaire');
     const appartementsMapping = document.querySelector('#appartementsMapping');

@@ -29,7 +29,7 @@ class CotisationController extends AbstractController
     public function list(CotisationRepository $repository): Response
     {
         return $this->render('cotisation/list.html.twig', [
-            'cotisations' => $repository->findAll(),
+            'cotisations' => $repository->findBy([], ['paidAt' => 'DESC']),
         ]);
     }
 
