@@ -10,7 +10,7 @@
         <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-sm table-striped table-hover">
             <thead>
                 <tr>
                     <th>{{ 'appartement'|trans }}</th>
@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 {% for item in items %}
-                <tr>
+                <tr class="{% if item.status == 'overdue' %}table-danger{% endif %}">
                     <td>{{ item.appartement.absoluteName}}</td>
                     <td>
                         {% if item.proprietaire is not null %}
@@ -34,7 +34,15 @@
                         {% endif %}
                     </td>
                     <td>
-                        <span class="badge text-bg-primary">Primary</span>
+                        {% if item.status == 'paid' %}
+                            <span class="badge text-bg-success">Paid</span>
+                        {% elseif item.status == 'partial' %}
+                            <span class="badge text-bg-warning">Partial</span>
+                        {% elseif item.status == 'overdue' %}
+                            <span class="badge text-bg-danger">Overdue</span>
+                        {% elseif item.status == 'exempt' %}
+                            <span class="badge text-bg-secondary">Exempt</span>
+                        {% endif %}
                     </td>
                     <td>
                         {% if item.cotisations is not empty %}

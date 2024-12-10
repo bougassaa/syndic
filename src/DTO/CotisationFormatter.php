@@ -12,13 +12,29 @@ class CotisationFormatter
 
     public ?Appartement $appartement = null;
     public ?Proprietaire $proprietaire = null;
+    /** @var Cotisation[]  */
     public array $cotisations = [];
     public ?Tarif $tarif = null;
 
-    public function getStatus()
+    public function getStatus(): string
     {
-        // success if cotisation is not null and montant equal or greater than tarif
-        // partial if cotisation is not null and montant less than tarif
+        if ($this->proprietaire === null) {
+            return 'exempt';
+        }
+
+        $sum = 0;
+
+        foreach ($this->cotisations as $cotisation) {
+            $sum += $cotisation->getMontant();
+        }
+
+        if ($sum >= $this->tarif->getTarif()) {
+            return 'paid';
+        } elseif ($sum > 0) {
+            return 'partial';
+        } else {
+            return 'overdue';
+        }
     }
 
     public function getAppartement(): ?Appartement

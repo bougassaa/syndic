@@ -18,7 +18,7 @@ class ProprietaireController extends AbstractController
     public function list(ProprietaireRepository $repository): Response
     {
         return $this->render('proprietaire/list.html.twig', [
-            'proprietaires' => $repository->findAll(),
+            'proprietaires' => $repository->findBy([], ['appartement' => 'ASC']),
         ]);
     }
 
