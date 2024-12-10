@@ -6,8 +6,8 @@ use App\Entity\Cotisation;
 use App\Entity\Syndic;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
-use App\Repository\CotisationRepository;
 use App\Repository\TarifRepository;
+use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +26,13 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationRepository $repository): Response
+    public function list(CotisationsDisplay $cotisationsDisplay): Response
     {
+        $year = 2024;
+        $batimentKey = null;
+
         return $this->render('cotisation/list.html.twig', [
-            'cotisations' => $repository->findBy([], ['paidAt' => 'DESC']),
+            'items' => $cotisationsDisplay->getCotisations($year, $batimentKey),
         ]);
     }
 

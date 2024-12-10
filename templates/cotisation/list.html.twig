@@ -15,6 +15,7 @@
                 <tr>
                     <th>{{ 'appartement'|trans }}</th>
                     <th>{{ 'cotisation.proprietaire'|trans }}</th>
+                    <th>{{ 'status'|trans }}</th>
                     <th>{{ 'cotisation.paidAt'|trans }}</th>
                     <th>{{ 'cotisation.montant'|trans }}</th>
                     <th>{{ 'cotisation.moyenPaiement'|trans }}</th>
@@ -22,17 +23,48 @@
                 </tr>
             </thead>
             <tbody>
-                {% for cotisation in cotisations %}
+                {% for item in items %}
                 <tr>
-                    <td>{{ cotisation.appartement.absoluteName}}</td>
-                    <td>{{ cotisation.proprietaire.nom }} {{ cotisation.proprietaire.prenom }}</td>
-                    <td>{{ cotisation.paidAt|date }}</td>
-                    <td>{{ cotisation.montant }} Dh</td>
-                    <td>{{ ('moyenPaiement.' ~ cotisation.moyenPaiement)|trans }}</td>
+                    <td>{{ item.appartement.absoluteName}}</td>
                     <td>
-                        {% for tarif in cotisation.tarif %}
-                            <div>{{ tarif.year }} - {{ tarif.tarif }} Dh</div>
-                        {% endfor %}
+                        {% if item.proprietaire is not null %}
+                            {{ item.proprietaire.nom }} {{ item.proprietaire.prenom }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge text-bg-primary">Primary</span>
+                    </td>
+                    <td>
+                        {% if item.cotisations is not empty %}
+                            {% for cotisation in item.cotisations %}
+                                <div>{{ cotisation.paidAt|date }}</div>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.cotisations is not empty %}
+                            {% for cotisation in item.cotisations %}
+                                <div>{{ cotisation.montant }} Dh</div>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.cotisations is not empty %}
+                            {% for cotisation in item.cotisations %}
+                                <div>{{ ('moyenPaiement.' ~ cotisation.moyenPaiement)|trans }}</div>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.tarif.year }} - {{ item.tarif.tarif }} Dh
                     </td>
                 </tr>
                 {% endfor %}

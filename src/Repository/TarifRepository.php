@@ -19,11 +19,16 @@ class TarifRepository extends ServiceEntityRepository
 
     public function getThisYearTarif(Syndic $syndic): ?Tarif
     {
+        return $this->getYearTarif($syndic, date('Y'));
+    }
+
+    public function getYearTarif(Syndic $syndic, int $year): ?Tarif
+    {
         return $this->createQueryBuilder('t')
             ->select('t')
             ->where('t.year = :year')
             ->andWhere('t.syndic = :syndic')
-            ->setParameter('year', date('Y'))
+            ->setParameter('year', $year)
             ->setParameter('syndic', $syndic)
             ->getQuery()
             ->getOneOrNullResult();
