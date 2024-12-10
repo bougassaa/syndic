@@ -16,28 +16,21 @@ class AppartementRepository extends ServiceEntityRepository
         parent::__construct($registry, Appartement::class);
     }
 
-    //    /**
-    //     * @return Appartement[] Returns an array of Appartement objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getAppartementsProprietaires(): array
+    {
+        $result = $this->createQueryBuilder('a')
+            ->select('a.id AS appartement, p.id AS proprietaire')
+            ->join('a.proprietaires', 'p')
+            ->where('p.leaveAt IS NULL')
+            ->getQuery()
+            ->getResult();
 
-    //    public function findOneBySomeField($value): ?Appartement
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $mapping = [];
+
+        foreach ($result as $item) {
+            $mapping[$item['appartement']] = $item['proprietaire'];
+        }
+
+        return $mapping;
+    }
 }

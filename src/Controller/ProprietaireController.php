@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Proprietaire;
 use App\Form\ProprietaireType;
+use App\Repository\ProprietaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,10 @@ class ProprietaireController extends AbstractController
 {
 
     #[Route('/proprietaire', name: 'app_proprietaire_list')]
-    public function list(EntityManagerInterface $manager): Response
+    public function list(ProprietaireRepository $repository): Response
     {
-        $proprietaires = $manager->getRepository(Proprietaire::class)->findAll();
-
         return $this->render('proprietaire/list.html.twig', [
-            'proprietaires' => $proprietaires,
+            'proprietaires' => $repository->findAll(),
         ]);
     }
 

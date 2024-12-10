@@ -6,6 +6,7 @@ use App\Entity\Cotisation;
 use App\Entity\Proprietaire;
 use App\Entity\Tarif;
 use App\Form\Type\AppartementFieldType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -53,6 +54,10 @@ class CotisationType extends AbstractType
                 'choice_label' => fn(Proprietaire $proprietaire) => $proprietaire->getNom() . ' ' . $proprietaire->getPrenom(),
                 'placeholder' => $this->translator->trans('select-choose'),
                 'label' => $this->translator->trans('cotisation.proprietaire'),
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.leaveAt IS NULL');
+                },
             ])
             ->add('tarif', EntityType::class, [
                 'class' => Tarif::class,

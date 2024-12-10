@@ -128,4 +128,11 @@ class Appartement
 
         return $this;
     }
+
+    public function getAbsoluteName(): string
+    {
+        return $this->getBatiment()->getSyndic()->getNom() . ' ' .
+            $this->getBatiment()->getNom() . '-' .
+            $this->getNumero();
+    }
 }

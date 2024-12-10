@@ -34,6 +34,7 @@ class ProprietaireType extends AbstractType
             ->add('beginAt', null, [
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.beginAt'),
+                'help' => $this->translator->trans('proprietaire.beginAt-help')
             ])
             ->add('isCurrentOwner', CheckboxType::class, [
                 'required' => false,
@@ -49,6 +50,7 @@ class ProprietaireType extends AbstractType
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.leaveAt'),
                 'attr' => ['class' => 'leaveAt'],
+                'help' => $this->translator->trans('proprietaire.leaveAt-help')
             ])
             ->add('appartement', AppartementFieldType::class)
             ->add('save', SubmitType::class, [

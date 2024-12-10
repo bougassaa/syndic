@@ -7,4 +7,5 @@
 {% block body %}
     <h2>{{ 'cotisation.new'|trans }}</h2>
     {{ form(form) }}
+    <input type="hidden" value="{{ appartementsMapping | json_encode }}" id="appartementsMapping">
 {% endblock %}

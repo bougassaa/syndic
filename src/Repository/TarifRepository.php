@@ -17,15 +17,15 @@ class TarifRepository extends ServiceEntityRepository
         parent::__construct($registry, Tarif::class);
     }
 
-    public function getThisYearTarif(Syndic $syndic): float
+    public function getThisYearTarif(Syndic $syndic): ?Tarif
     {
         return $this->createQueryBuilder('t')
-            ->select('t.tarif')
+            ->select('t')
             ->where('t.year = :year')
             ->andWhere('t.syndic = :syndic')
             ->setParameter('year', date('Y'))
             ->setParameter('syndic', $syndic)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getOneOrNullResult();
     }
 }

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'cotisation.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center flex-wrap">
+        <h2 class="flex-fill">{{ 'cotisation.list'|trans }}</h2>
+        <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'appartement'|trans }}</th>
+                    <th>{{ 'cotisation.proprietaire'|trans }}</th>
+                    <th>{{ 'cotisation.paidAt'|trans }}</th>
+                    <th>{{ 'cotisation.montant'|trans }}</th>
+                    <th>{{ 'cotisation.moyenPaiement'|trans }}</th>
+                    <th>{{ 'cotisation.tarif'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cotisation in cotisations %}
+                <tr>
+                    <td>{{ cotisation.appartement.absoluteName}}</td>
+                    <td>{{ cotisation.proprietaire.nom }} {{ cotisation.proprietaire.prenom }}</td>
+                    <td>{{ cotisation.paidAt|date }}</td>
+                    <td>{{ cotisation.montant }} Dh</td>
+                    <td>{{ ('moyenPaiement.' ~ cotisation.moyenPaiement)|trans }}</td>
+                    <td>
+                        {% for tarif in cotisation.tarif %}
+                            <div>{{ tarif.year }} - {{ tarif.tarif }} Dh</div>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

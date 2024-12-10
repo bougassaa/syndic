@@ -2,6 +2,7 @@ syndic: Syndic
 save: Sauvegarder
 edit: Modifier
 select-choose: Sélectionner une valeur
+appartement: N° appartement
 
 proprietaire:
   nav: Co-propriétaires
@@ -10,15 +11,17 @@ proprietaire:
   list: Liste des co-propriétaires
   nom: Nom de famille
   prenom: Prénom
-  beginAt: Date début adhésion (Achat appartement)
-  leaveAt: Date de fin (Vente appartement)
-  appartement: Numéro appartement
+  beginAt: Date début adhésion
+  leaveAt: Date de fin
+  beginAt-help: Quand le propriétaire a commencé à habiter
+  leaveAt-help: Quand le propriétaire à quitté la résidence
   isCurrentOwner: Est actuellement le propriétaire ?
 
 cotisation:
+  nav: Cotisations
   new: Ajouter une cotisation
   list: Liste des cotisations
-  montant: Montant du règlement (en Dirhams)
+  montant: Montant du règlement
   moyenPaiement: Moyen de paiement
   paidAt: Date de règlement
   proprietaire: Co-propriétaire
