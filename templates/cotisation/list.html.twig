@@ -76,7 +76,7 @@
                                         data-bs-toggle="tooltip" data-bs-title="{{ item.partialReason }}"
                                     {% endif %}
                                 >
-                                    {{ cotisation.montant }} Dh
+                                    {{ cotisation.montant|format_currency('MAD') }}
                                     {% if item.partialPayment and item.partialReason is not empty %}
                                         <i class="fa-regular fa-circle-question"></i>
                                     {% endif %}
@@ -96,11 +96,22 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ item.tarif.year }} - {{ item.tarif.tarif }} Dh
+                        {{ item.tarif.year }} - {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
+            <tfoot class="table-info">
+                <tr>
+                    <th colspan="7">
+                        {{ 'cotisation.total'|trans }}
+                        <i class="fa-solid fa-arrow-right-long mx-1"></i>
+                        <span class="border-bottom border-dark border-2">
+                            {{ totalCotisations|format_currency('MAD') }}
+                        </span>
+                    </th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 {% endblock %}

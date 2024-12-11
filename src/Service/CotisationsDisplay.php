@@ -9,6 +9,8 @@ use App\Repository\TarifRepository;
 class CotisationsDisplay
 {
 
+    private ?int $totalCotisations = null;
+
     public function __construct(
         private BatimentRepository $batimentRepository,
         private TarifRepository $tarifRepository,
@@ -27,6 +29,8 @@ class CotisationsDisplay
         $batiments = $this->batimentRepository->findBy(['syndic' => $syndic], ['nom' => 'ASC']);
         // get batiments of this syndic
         $tarif = $this->tarifRepository->getYearTarif($syndic, $year);
+        // init total cotisations
+        $this->totalCotisations = 0;
 
         foreach ($batiments as $batiment) {
             if ($batiment->getId() == $batimentKey || is_null($batimentKey)) {
@@ -44,6 +48,7 @@ class CotisationsDisplay
                         if ($cotisation->getTarif() === $tarif) {
                             $formatter->cotisations[] = $cotisation;
                             $formatter->proprietaire = $cotisation->getProprietaire();
+                            $this->totalCotisations += $cotisation->getMontant();
                         }
                     }
 
@@ -63,6 +68,14 @@ class CotisationsDisplay
             }
         }
         return $cotisationsDisplay;
+    }
+
+    public function getTotalCotisations(): int
+    {
+        if (is_null($this->totalCotisations)) {
+            throw new \Exception('call getCotisations first');
+        }
+        return $this->totalCotisations;
     }
 
 }

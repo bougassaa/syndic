@@ -78,7 +78,7 @@ class CotisationType extends AbstractType
             ])
             ->add('tarif', EntityType::class, [
                 'class' => Tarif::class,
-                'choice_label' => fn(Tarif $tarif) => $tarif->getYear() . ' - ' . $tarif->getTarif() . ' Dh',
+                'choice_label' => fn(Tarif $tarif) => $tarif->getYear() . ' - ' . (new \NumberFormatter('fr', \NumberFormatter::CURRENCY))->formatCurrency($tarif->getTarif(), 'MAD'),
                 'label' => $this->translator->trans('cotisation.tarif'),
             ])
             ->add('save', SubmitType::class, [

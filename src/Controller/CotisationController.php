@@ -33,6 +33,7 @@ class CotisationController extends AbstractController
 
         return $this->render('cotisation/list.html.twig', [
             'items' => $cotisationsDisplay->getCotisations($year, $batimentKey),
+            'totalCotisations' => $cotisationsDisplay->getTotalCotisations(),
         ]);
     }
 

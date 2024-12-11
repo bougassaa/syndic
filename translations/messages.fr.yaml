@@ -36,6 +36,7 @@ cotisation:
   overdue: Non payé
   incomplete: Incomplet
   paid: Payé
+  total: Total des cotisations pour la période
 
 moyenPaiement:
   cheque: Chèque
