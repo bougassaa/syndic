@@ -37,6 +37,12 @@ class Cotisation
     #[ORM\JoinColumn(nullable: false)]
     private ?Tarif $tarif = null;
 
+    #[ORM\Column]
+    private ?bool $isPartial = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $partialReason = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,6 +116,30 @@ class Cotisation
     public function setTarif(?Tarif $tarif): static
     {
         $this->tarif = $tarif;
+
+        return $this;
+    }
+
+    public function isPartial(): ?bool
+    {
+        return $this->isPartial;
+    }
+
+    public function setIsPartial(bool $isPartial): static
+    {
+        $this->isPartial = $isPartial;
+
+        return $this;
+    }
+
+    public function getPartialReason(): ?string
+    {
+        return $this->partialReason;
+    }
+
+    public function setPartialReason(?string $partialReason): static
+    {
+        $this->partialReason = $partialReason;
 
         return $this;
     }

@@ -28,6 +28,12 @@ cotisation:
   paidAt: Date de règlement
   proprietaire: Co-propriétaire
   tarif: Périodes concernées
+  isPartialPayment: Est un paiement partiel accepté ?
+  partialReason: Raison du paiement partiel
+  exempt: Exonéré
+  overdue: Non payé
+  incomplete: Incomplet
+  paid: Payé
 
 moyenPaiement:
   cheque: Chèque

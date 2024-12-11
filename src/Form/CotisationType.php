@@ -5,13 +5,14 @@ namespace App\Form;
 use App\Entity\Cotisation;
 use App\Entity\Proprietaire;
 use App\Entity\Tarif;
-use App\Form\Type\AppartementFieldType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -38,6 +39,19 @@ class CotisationType extends AbstractType
                     'type' => 'number',
                     'step' => '0.01',
                 ],
+            ])
+            ->add('isPartial', CheckboxType::class, [
+                'required' => false,
+                'label' => $this->translator->trans('cotisation.isPartialPayment'),
+                'label_attr' => ['class' => 'checkbox-switch'],
+                'row_attr' => ['id' => 'isPartialPayment-row'],
+                'attr' => ['class' => 'isPartialPayment'],
+                'help' => "Exemple, le propriétaire paye la moitie de la cotisation car il est arrivé en milieu d'année"
+            ])
+            ->add('partialReason', TextareaType::class, [
+                'label' => $this->translator->trans('cotisation.partialReason'),
+                'row_attr' => ['id' => 'partialPaymentReason-row'],
+                'attr' => ['rows' => 2],
             ])
             ->add('moyenPaiement', ChoiceType::class, [
                 'label' => $this->translator->trans('cotisation.moyenPaiement'),

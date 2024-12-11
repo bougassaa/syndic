@@ -28,10 +28,10 @@ class CotisationFormatter
             $sum += $cotisation->getMontant();
         }
 
-        if ($sum >= $this->tarif->getTarif()) {
+        if ($sum >= $this->tarif->getTarif() || $this->hasPartialPayment()) {
             return 'paid';
         } elseif ($sum > 0) {
-            return 'partial';
+            return 'incomplete';
         } else {
             return 'overdue';
         }
@@ -49,12 +49,32 @@ class CotisationFormatter
 
     public function getCotisations(): array
     {
-        return $this->cotisation;
+        return $this->cotisations;
     }
 
     public function getTarif(): ?Tarif
     {
         return $this->tarif;
+    }
+
+    public function hasPartialPayment(): bool
+    {
+        foreach ($this->cotisations as $cotisation) {
+            if ($cotisation->isPartial()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getPartialReason(): string
+    {
+        foreach ($this->cotisations as $cotisation) {
+            if ($cotisation->isPartial()) {
+                return $cotisation->getPartialReason();
+            }
+        }
+        return '';
     }
 
 }

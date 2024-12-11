@@ -35,13 +35,28 @@
                     </td>
                     <td>
                         {% if item.status == 'paid' %}
-                            <span class="badge text-bg-success">Paid</span>
-                        {% elseif item.status == 'partial' %}
-                            <span class="badge text-bg-warning">Partial</span>
+                            <span class="badge text-success-emphasis bg-success-subtle border-success-subtle border"
+                                {% if item.partialPayment and item.partialReason is not empty %}
+                                    data-bs-toggle="tooltip" data-bs-title="{{ item.partialReason }}"
+                                {% endif %}
+                            >
+                                {{ 'cotisation.paid'|trans }}
+                                {% if item.partialPayment and item.partialReason is not empty %}
+                                    <i class="fa-regular fa-circle-question"></i>
+                                {% endif %}
+                            </span>
+                        {% elseif item.status == 'incomplete' %}
+                            <span class="badge text-warning-emphasis bg-warning-subtle border-warning-subtle border">
+                                {{ 'cotisation.incomplete'|trans }}
+                            </span>
                         {% elseif item.status == 'overdue' %}
-                            <span class="badge text-bg-danger">Overdue</span>
+                            <span class="badge text-bg-danger">
+                                {{ 'cotisation.overdue'|trans }}
+                            </span>
                         {% elseif item.status == 'exempt' %}
-                            <span class="badge text-bg-secondary">Exempt</span>
+                            <span class="badge text-dark-emphasis bg-secondary-subtle border-dark-subtle border">
+                                {{ 'cotisation.exempt'|trans }}
+                            </span>
                         {% endif %}
                     </td>
                     <td>
@@ -56,7 +71,16 @@
                     <td>
                         {% if item.cotisations is not empty %}
                             {% for cotisation in item.cotisations %}
-                                <div>{{ cotisation.montant }} Dh</div>
+                                <div
+                                    {% if item.partialPayment and item.partialReason is not empty %}
+                                        data-bs-toggle="tooltip" data-bs-title="{{ item.partialReason }}"
+                                    {% endif %}
+                                >
+                                    {{ cotisation.montant }} Dh
+                                    {% if item.partialPayment and item.partialReason is not empty %}
+                                        <i class="fa-regular fa-circle-question"></i>
+                                    {% endif %}
+                                </div>
                             {% endfor %}
                         {% else %}
                             -

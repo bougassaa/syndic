@@ -8,7 +8,7 @@
 
 .form-switch {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 8px;
     user-select: none;
     .form-check-input {
@@ -20,4 +20,9 @@
     label, input {
         cursor: pointer;
     }
+}
+
+#isPartialPayment-row,
+#partialPaymentReason-row {
+    display: none;
 }
