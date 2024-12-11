@@ -38,6 +38,8 @@ cotisation:
   paid: Payé
   total: Total des cotisations pour la période
   filter-year: Cotisations pour
+  filter-batiment: Batiment
+  filter-batiment-all: Tous
 
 moyenPaiement:
   cheque: Chèque

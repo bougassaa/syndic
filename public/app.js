@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
             options.controlInput = null;
         }
 
+        if (select.hasAttribute('data-select-allow-empty')) {
+            options.allowEmptyOption = true;
+        }
+
         if (select.hasAttribute('data-select-label')) {
             options.render = {
                 item: function(data, escape) {

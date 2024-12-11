@@ -6,6 +6,7 @@ use App\Entity\Cotisation;
 use App\Entity\Syndic;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
+use App\Repository\BatimentRepository;
 use App\Repository\TarifRepository;
 use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
@@ -21,26 +22,32 @@ class CotisationController extends AbstractController
 
     private Syndic $syndic;
 
-    public function __construct(private TarifRepository $tarifRepository, private SyndicSessionResolver $syndicSessionResolver)
+    public function __construct(
+        private TarifRepository $tarifRepository,
+        private BatimentRepository $batimentRepository,
+        private SyndicSessionResolver $syndicSessionResolver
+    )
     {
         $this->syndic = $this->syndicSessionResolver->getSelectedSyndic();
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterYear): Response
+    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterYear, #[MapQueryParameter] ?int $filterBatiment): Response
     {
         if (!$filterYear){
             $currentTarif = $this->tarifRepository->getThisYearTarif($this->syndic);
             $filterYear = $currentTarif?->getYear();
         }
 
-        $batimentKey = null;
+        $filterBatiment = $filterBatiment === 0 ? null : $filterBatiment;
 
         return $this->render('cotisation/list.html.twig', [
-            'items' => $cotisationsDisplay->getCotisations($filterYear, $batimentKey),
+            'items' => $cotisationsDisplay->getCotisations($filterYear, $filterBatiment),
             'totalCotisations' => $cotisationsDisplay->getTotalCotisations(),
             'yearsFilter' => $this->tarifRepository->getYearsTarifs($this->syndic),
-            'yearSelected' => $filterYear
+            'batimentsFilter' => $this->batimentRepository->getSyndicBatiments($this->syndic),
+            'yearSelected' => $filterYear,
+            'batimentSelected' => $filterBatiment
         ]);
     }
 

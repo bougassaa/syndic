@@ -13,7 +13,7 @@
         <form action="{{ path('app_cotisation_list') }}"
               method="get"
               id="cotisations-filter-form"
-              class="d-flex align-items-center"
+              class="d-flex flex-wrap gap-2 align-items-center my-2"
         >
             <select class="form-select-sm no-search"
                     name="filterYear"
@@ -22,6 +22,19 @@
             >
                 {% for year in yearsFilter %}
                     <option value="{{ year.year }}" {% if year.year == yearSelected %}selected{% endif %}>{{ year.year }}</option>
+                {% endfor %}
+            </select>
+            <select class="form-select-sm no-search"
+                    name="filterBatiment"
+                    data-select-no-search="true"
+                    data-select-allow-empty="true"
+                    data-select-label="{{ 'cotisation.filter-batiment'|trans }} :&nbsp;"
+            >
+                <option value="0" {% if batimentSelected is null %}selected{% endif %}>
+                    {{ 'cotisation.filter-batiment-all'|trans }}
+                </option>
+                {% for batiment in batimentsFilter %}
+                    <option value="{{ batiment.id }}" {% if batiment.id == batimentSelected %}selected{% endif %}>{{ batiment.nom }}</option>
                 {% endfor %}
             </select>
         </form>
