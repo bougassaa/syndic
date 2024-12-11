@@ -147,4 +147,11 @@ class Proprietaire
     {
         return $this->nom . ' ' . $this->prenom;
     }
+
+    public function isExempt(Tarif $tarif): bool
+    {
+        $yearTarif = $tarif->getYear();
+        $yearBeginAt = (int) $this->beginAt->format('Y');
+        return $yearBeginAt > $yearTarif;
+    }
 }
