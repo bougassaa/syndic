@@ -37,6 +37,7 @@ cotisation:
   incomplete: Incomplet
   paid: Payé
   total: Total des cotisations pour la période
+  filter-year: Cotisations pour
 
 moyenPaiement:
   cheque: Chèque

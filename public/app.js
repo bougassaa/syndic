@@ -14,7 +14,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('select').forEach(select => {
-        new TomSelect(select);
+        const options = {};
+
+        if (select.hasAttribute('data-select-no-search')) {
+            options.controlInput = null;
+        }
+
+        if (select.hasAttribute('data-select-label')) {
+            options.render = {
+                item: function(data, escape) {
+                    return `<div>
+                        ${select.getAttribute('data-select-label')}
+                        <strong>${escape(data.text)}</strong>
+                    </div>`;
+                }
+            }
+        }
+
+        new TomSelect(select, options);
     });
 
     document.querySelectorAll('input[type="date"]').forEach(date => {
@@ -53,7 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
         new bootstrap.Tooltip(element)
-    })
+    });
+
+    document.querySelectorAll('#cotisations-filter-form').forEach(form => {
+        form.addEventListener('input', function () {
+            form.submit();
+        });
+    });
 });
 
 function leaveAtVisibility(input) {

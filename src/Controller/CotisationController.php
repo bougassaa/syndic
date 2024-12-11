@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 class CotisationController extends AbstractController
@@ -26,14 +27,20 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationsDisplay $cotisationsDisplay): Response
+    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterYear): Response
     {
-        $year = 2024;
+        if (!$filterYear){
+            $currentTarif = $this->tarifRepository->getThisYearTarif($this->syndic);
+            $filterYear = $currentTarif?->getYear();
+        }
+
         $batimentKey = null;
 
         return $this->render('cotisation/list.html.twig', [
-            'items' => $cotisationsDisplay->getCotisations($year, $batimentKey),
+            'items' => $cotisationsDisplay->getCotisations($filterYear, $batimentKey),
             'totalCotisations' => $cotisationsDisplay->getTotalCotisations(),
+            'yearsFilter' => $this->tarifRepository->getYearsTarifs($this->syndic),
+            'yearSelected' => $filterYear
         ]);
     }
 

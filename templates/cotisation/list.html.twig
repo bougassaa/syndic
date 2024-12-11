@@ -9,6 +9,23 @@
         <h2 class="flex-fill">{{ 'cotisation.list'|trans }}</h2>
         <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
     </div>
+    <div>
+        <form action="{{ path('app_cotisation_list') }}"
+              method="get"
+              id="cotisations-filter-form"
+              class="d-flex align-items-center"
+        >
+            <select class="form-select-sm no-search"
+                    name="filterYear"
+                    data-select-no-search="true"
+                    data-select-label="{{ 'cotisation.filter-year'|trans }} :&nbsp;"
+            >
+                {% for year in yearsFilter %}
+                    <option value="{{ year.year }}" {% if year.year == yearSelected %}selected{% endif %}>{{ year.year }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover">
             <thead>
