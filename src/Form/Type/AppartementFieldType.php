@@ -20,7 +20,7 @@ class AppartementFieldType extends AbstractType
         $resolver->setDefaults([
             'class' => Appartement::class,
             'choice_label' => function (Appartement $appartement) {
-                return $appartement->getBatiment()->getNom() . '-' . $appartement->getNumero();
+                return $appartement->getAbsoluteName(false);
             },
             'group_by' => function (Appartement $appartement) {
                 return $appartement->getBatiment()->getNom();

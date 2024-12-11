@@ -101,9 +101,9 @@ class Proprietaire
         return $this->appartement;
     }
 
-    public function getAppartementAbsoluteName(): string
+    public function getAppartementAbsoluteName(bool $withSyndic = true): string
     {
-        return $this->appartement->getAbsoluteName();
+        return $this->appartement->getAbsoluteName($withSyndic);
     }
 
     public function setAppartement(?Appartement $appartement): static
@@ -141,5 +141,10 @@ class Proprietaire
         }
 
         return $this;
+    }
+
+    public function getAbsoluteName(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 }

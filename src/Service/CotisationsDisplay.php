@@ -40,13 +40,10 @@ class CotisationsDisplay
                     // get cotisations of current appartement
                     $cotisations = $appartement->getCotisations();
                     foreach ($cotisations as $cotisation) {
-                        // retrieve tarif related to cotisation
-                        foreach ($cotisation->getTarif() as $tar) {
-                            // compare if concerning year
-                            if ($tar->getYear() == $year) {
-                                $formatter->cotisations[] = $cotisation;
-                                $formatter->proprietaire = $cotisation->getProprietaire();
-                            }
+                        // compare if concerning year
+                        if ($cotisation->getTarif() === $tarif) {
+                            $formatter->cotisations[] = $cotisation;
+                            $formatter->proprietaire = $cotisation->getProprietaire();
                         }
                     }
 

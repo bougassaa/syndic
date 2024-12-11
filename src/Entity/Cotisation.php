@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CotisationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,19 +30,12 @@ class Cotisation
     #[ORM\ManyToOne(inversedBy: 'cotisations')]
     private ?Proprietaire $proprietaire = null;
 
-    /**
-     * @var Collection<int, Tarif>
-     */
-    #[ORM\ManyToMany(targetEntity: Tarif::class, inversedBy: 'cotisations')]
-    private Collection $tarif;
-
     #[ORM\Column(length: 30)]
     private ?string $moyenPaiement = null;
 
-    public function __construct()
-    {
-        $this->tarif = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'cotisations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tarif $tarif = null;
 
     public function getId(): ?int
     {
@@ -99,30 +90,6 @@ class Cotisation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Tarif>
-     */
-    public function getTarif(): Collection
-    {
-        return $this->tarif;
-    }
-
-    public function addTarif(Tarif $tarif): static
-    {
-        if (!$this->tarif->contains($tarif)) {
-            $this->tarif->add($tarif);
-        }
-
-        return $this;
-    }
-
-    public function removeTarif(Tarif $tarif): static
-    {
-        $this->tarif->removeElement($tarif);
-
-        return $this;
-    }
-
     public function getMoyenPaiement(): ?string
     {
         return $this->moyenPaiement;
@@ -131,6 +98,18 @@ class Cotisation
     public function setMoyenPaiement(string $moyenPaiement): static
     {
         $this->moyenPaiement = $moyenPaiement;
+
+        return $this;
+    }
+
+    public function getTarif(): ?Tarif
+    {
+        return $this->tarif;
+    }
+
+    public function setTarif(?Tarif $tarif): static
+    {
+        $this->tarif = $tarif;
 
         return $this;
     }

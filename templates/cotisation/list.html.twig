@@ -28,7 +28,7 @@
                     <td>{{ item.appartement.absoluteName}}</td>
                     <td>
                         {% if item.proprietaire is not null %}
-                            {{ item.proprietaire.nom }} {{ item.proprietaire.prenom }}
+                            {{ item.proprietaire.absoluteName }}
                         {% else %}
                             -
                         {% endif %}

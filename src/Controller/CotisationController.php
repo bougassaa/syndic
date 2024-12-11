@@ -45,13 +45,17 @@ class CotisationController extends AbstractController
         $yearTarif = $this->tarifRepository->getThisYearTarif($this->syndic);
         if ($yearTarif) {
             $cotisation->setMontant($yearTarif->getTarif());
-            $cotisation->addTarif($yearTarif);
+            $cotisation->setTarif($yearTarif);
         }
 
         $form = $this->createForm(CotisationType::class, $cotisation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($appartement = $cotisation->getProprietaire()?->getAppartement()) {
+                $cotisation->setAppartement($appartement);
+            }
+
             $manager->persist($cotisation);
             $manager->flush();
 

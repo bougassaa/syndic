@@ -21,15 +21,15 @@ class Tarif
     #[ORM\Column]
     private ?float $tarif = null;
 
-    /**
-     * @var Collection<int, Cotisation>
-     */
-    #[ORM\ManyToMany(targetEntity: Cotisation::class, mappedBy: 'tarif')]
-    private Collection $cotisations;
-
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Syndic $syndic = null;
+
+    /**
+     * @var Collection<int, Cotisation>
+     */
+    #[ORM\OneToMany(targetEntity: Cotisation::class, mappedBy: 'tarif')]
+    private Collection $cotisations;
 
     public function __construct()
     {
@@ -65,6 +65,18 @@ class Tarif
         return $this;
     }
 
+    public function getSyndic(): ?Syndic
+    {
+        return $this->syndic;
+    }
+
+    public function setSyndic(?Syndic $syndic): static
+    {
+        $this->syndic = $syndic;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Cotisation>
      */
@@ -77,7 +89,7 @@ class Tarif
     {
         if (!$this->cotisations->contains($cotisation)) {
             $this->cotisations->add($cotisation);
-            $cotisation->addTarif($this);
+            $cotisation->setTarif($this);
         }
 
         return $this;
@@ -86,20 +98,11 @@ class Tarif
     public function removeCotisation(Cotisation $cotisation): static
     {
         if ($this->cotisations->removeElement($cotisation)) {
-            $cotisation->removeTarif($this);
+            // set the owning side to null (unless already changed)
+            if ($cotisation->getTarif() === $this) {
+                $cotisation->setTarif(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function getSyndic(): ?Syndic
-    {
-        return $this->syndic;
-    }
-
-    public function setSyndic(?Syndic $syndic): static
-    {
-        $this->syndic = $syndic;
 
         return $this;
     }

@@ -46,23 +46,22 @@ class CotisationType extends AbstractType
                     Cotisation::MOYENS_PAIEMENTS
                 ),
             ])
-            ->add('appartement', AppartementFieldType::class, [
-                'placeholder' => $this->translator->trans('select-choose'),
-            ])
             ->add('proprietaire', EntityType::class, [
                 'class' => Proprietaire::class,
-                'choice_label' => fn(Proprietaire $proprietaire) => $proprietaire->getNom() . ' ' . $proprietaire->getPrenom(),
+                'choice_label' => function(Proprietaire $proprietaire) {
+                    return $proprietaire->getAppartementAbsoluteName(false) . ' ' . $proprietaire->getAbsoluteName();
+                },
                 'placeholder' => $this->translator->trans('select-choose'),
                 'label' => $this->translator->trans('cotisation.proprietaire'),
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('p')
-                        ->where('p.leaveAt IS NULL');
+                        ->where('p.leaveAt IS NULL')
+                        ->orderBy('p.appartement', 'ASC');
                 },
             ])
             ->add('tarif', EntityType::class, [
                 'class' => Tarif::class,
                 'choice_label' => fn(Tarif $tarif) => $tarif->getYear() . ' - ' . $tarif->getTarif() . ' Dh',
-                'multiple' => true,
                 'label' => $this->translator->trans('cotisation.tarif'),
             ])
             ->add('save', SubmitType::class, [

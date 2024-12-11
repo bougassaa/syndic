@@ -49,7 +49,7 @@ class CotisationFormatter
 
     public function getCotisations(): array
     {
-        return $this->cotisations;
+        return $this->cotisation;
     }
 
     public function getTarif(): ?Tarif

@@ -129,9 +129,9 @@ class Appartement
         return $this;
     }
 
-    public function getAbsoluteName(): string
+    public function getAbsoluteName(bool $withSyndic = true): string
     {
-        return $this->getBatiment()->getSyndic()->getNom() . ' ' .
+        return ($withSyndic ? $this->getBatiment()->getSyndic()->getNom() . ' ' : '') .
             $this->getBatiment()->getNom() . '-' .
             $this->getNumero();
     }
