@@ -46,12 +46,15 @@ class CotisationType extends AbstractType
                 'label_attr' => ['class' => 'checkbox-switch'],
                 'row_attr' => ['id' => 'isPartialPayment-row'],
                 'attr' => ['class' => 'isPartialPayment'],
-                'help' => "Exemple, le propriétaire paye la moitie de la cotisation car il est arrivé en milieu d'année"
+                'help' => $this->translator->trans('cotisation.isPartialPayment-help')
             ])
             ->add('partialReason', TextareaType::class, [
                 'label' => $this->translator->trans('cotisation.partialReason'),
                 'row_attr' => ['id' => 'partialPaymentReason-row'],
-                'attr' => ['rows' => 2],
+                'attr' => [
+                    'rows' => 2,
+                    'placeholder' => $this->translator->trans('cotisation.partialReason-placeholder'),
+                ],
             ])
             ->add('moyenPaiement', ChoiceType::class, [
                 'label' => $this->translator->trans('cotisation.moyenPaiement'),
