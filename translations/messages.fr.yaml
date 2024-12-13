@@ -46,6 +46,8 @@ cotisation:
 
 tarif:
   new: Nouvelle cotisation annuelle
+  montant: Tarif cotisation annuelle
+  annee: Année concernée
 
 moyenPaiement:
   cheque: Chèque

@@ -33,6 +33,17 @@ class TarifRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getMaxYearTarif(Syndic $syndic): ?Tarif
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.syndic = :syndic')
+            ->setParameter('syndic', $syndic)
+            ->orderBy('t.year', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /** @return Tarif[] */
     public function getYearsTarifs(Syndic $syndic): array
     {

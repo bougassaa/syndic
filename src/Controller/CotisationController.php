@@ -35,7 +35,7 @@ class CotisationController extends AbstractController
     public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterYear, #[MapQueryParameter] ?int $filterBatiment): Response
     {
         if (!$filterYear){
-            $currentTarif = $this->tarifRepository->getThisYearTarif($this->syndic);
+            $currentTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
             $filterYear = $currentTarif?->getYear();
         }
 
@@ -57,7 +57,7 @@ class CotisationController extends AbstractController
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
 
-        $yearTarif = $this->tarifRepository->getThisYearTarif($this->syndic);
+        $yearTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
         if ($yearTarif) {
             $cotisation->setMontant($yearTarif->getTarif());
             $cotisation->setTarif($yearTarif);
