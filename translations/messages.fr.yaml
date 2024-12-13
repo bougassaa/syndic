@@ -5,6 +5,8 @@ edit: Modifier
 status: Statut
 select-choose: Sélectionner une valeur
 appartement: N° appartement
+montant: Montant
+description: Déscription
 
 proprietaire:
   nav: Co-propriétaires
@@ -46,3 +48,14 @@ moyenPaiement:
   espece: Espece
   virement: Virement
   autre: Autre
+
+depense:
+  nav: Dépenses
+  new: Ajouter une dépense
+  paidAt: Date de règlement
+  montant: Montant de la dépense
+  description: Décrire ce qui a été dépensé
+  description-placeholder: Facultatif
+  type: Type de dépense
+  list: Liste des dépenses
+  new-type: Ajouter un nouveau type de dépense

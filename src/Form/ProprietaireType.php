@@ -26,11 +26,12 @@ class ProprietaireType extends AbstractType
         $builder
             ->add('nom', null, [
                 'label' => $this->translator->trans('proprietaire.nom'),
-                'attr' => ['class' => 'uppercase'],
+                'attr' => ['class' => 'text-uppercase'],
             ])
             ->add('prenom', null, [
                 'label' => $this->translator->trans('proprietaire.prenom'),
             ])
+            ->add('appartement', AppartementFieldType::class)
             ->add('beginAt', null, [
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.beginAt'),
@@ -52,7 +53,6 @@ class ProprietaireType extends AbstractType
                 'attr' => ['class' => 'leaveAt'],
                 'help' => $this->translator->trans('proprietaire.leaveAt-help')
             ])
-            ->add('appartement', AppartementFieldType::class)
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
             ])

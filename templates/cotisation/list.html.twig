@@ -9,11 +9,11 @@
         <h2 class="flex-fill">{{ 'cotisation.list'|trans }}</h2>
         <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
     </div>
-    <div>
+    <div class="bg-white position-sticky py-2 mb-md-1" style="top: 56px">
         <form action="{{ path('app_cotisation_list') }}"
               method="get"
               id="cotisations-filter-form"
-              class="d-flex flex-wrap gap-2 align-items-center my-2"
+              class="d-flex flex-wrap gap-2 align-items-center"
         >
             <select class="form-select-sm no-search"
                     name="filterYear"
@@ -56,7 +56,7 @@
                 {% for item in items %}
                 <tr class="{% if item.status == 'overdue' %}table-danger{% endif %}">
                     <td>{{ item.appartement.absoluteName}}</td>
-                    <td>
+                    <td {% if item.status == 'exempt' %}class="text-muted"{% endif %}>
                         {% if item.proprietaire is not null %}
                             {{ item.proprietaire.absoluteName }}
                         {% else %}

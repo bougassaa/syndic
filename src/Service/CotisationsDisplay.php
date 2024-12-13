@@ -55,8 +55,12 @@ class CotisationsDisplay
                     if (empty($formatter->proprietaire)) {
                         // set default proprietaire based on year and begin date
                         foreach ($appartement->getProprietaires() as $proprietaire) {
-                            $beginYear = (int) $proprietaire->getBeginAt()->format('y');
-                            if ($year >= $beginYear) {
+                            $beginYear = (int) $proprietaire->getBeginAt()->format('Y');
+                            $leaveYear = $proprietaire->getLeaveAt()?->format('Y');
+                            // ajouter le proprietaire
+                            // si l'adhésion est (égale ou avant) l'année de cotisation demandée
+                            // et que la date de fin est (égale ou apres) l'année de cotisation ou NULL (proprio présent)
+                            if ($year >= $beginYear && (is_null($leaveYear) || $year <= $leaveYear)) {
                                 $formatter->proprietaire = $proprietaire;
                             }
                         }

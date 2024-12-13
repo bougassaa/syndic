@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('input.uppercase').forEach(input => {
+    document.querySelectorAll('input.text-uppercase').forEach(input => {
         input.addEventListener('blur', function (event) {
             event.target.value = event.target.value.toUpperCase()
         })
@@ -87,10 +87,10 @@ function leaveAtVisibility(input) {
     const leaveAtInput = document.querySelector('.leaveAt');
     const leaveAtParent = leaveAtInput.parentElement;
     if (input.checked) {
-        leaveAtParent.classList.add('hidden');
+        leaveAtParent.classList.add('d-none');
         leaveAtInput.required = false;
     } else {
-        leaveAtParent.classList.remove('hidden');
+        leaveAtParent.classList.remove('d-none');
         leaveAtInput.required = true;
     }
 }

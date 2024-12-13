@@ -49,6 +49,7 @@ class CotisationType extends AbstractType
                 'help' => $this->translator->trans('cotisation.isPartialPayment-help')
             ])
             ->add('partialReason', TextareaType::class, [
+                'required' => false,
                 'label' => $this->translator->trans('cotisation.partialReason'),
                 'row_attr' => ['id' => 'partialPaymentReason-row'],
                 'attr' => [
