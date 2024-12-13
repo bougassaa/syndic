@@ -4,6 +4,7 @@ save: Sauvegarder
 edit: Modifier
 status: Statut
 select-choose: Sélectionner une valeur
+optional: Facultatif
 appartement: N° appartement
 montant: Montant
 description: Déscription
@@ -23,7 +24,7 @@ proprietaire:
 
 cotisation:
   nav: Cotisations
-  new: Ajouter une cotisation
+  new: Enregistrer un paiement
   list: Liste des cotisations
   montant: Montant du règlement
   moyenPaiement: Moyen de paiement
@@ -43,6 +44,9 @@ cotisation:
   filter-batiment: Batiment
   filter-batiment-all: Tous
 
+tarif:
+  new: Nouvelle cotisation annuelle
+
 moyenPaiement:
   cheque: Chèque
   espece: Espece
@@ -58,4 +62,18 @@ depense:
   description-placeholder: Facultatif
   type: Type de dépense
   list: Liste des dépenses
-  new-type: Ajouter un nouveau type de dépense
+
+type-depense:
+  nav: Types de dépenses
+  new: Ajouter un type de dépense
+  edit: Modifier un type de dépense
+  list: Liste des types de dépenses
+  montant: Montant approximatif
+  montant-help: Un montant approximatif, pour calculer une moyenne des dépenses à l'année
+  label: Nom de la catégorie
+  label-help: Par exemple, Salaire jardinier, Électricité, Frais annuel...
+  frequence: Fréquence de paiement
+  frequence-help: Est-ce un paiement qui se répète une fois tous les mois, par année ou occasionnellement ?
+  mensuelle: Mensuelle
+  annuelle: Annuelle
+  occasionnelle: Ocasionnelle

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'type-depense.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center flex-wrap">
+        <h2 class="flex-fill">{{ 'type-depense.list'|trans }}</h2>
+        <a href="{{ path('app_type_depense_new') }}" class="btn btn-primary" >{{ 'type-depense.new'|trans }}</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'type-depense.label'|trans }}</th>
+                    <th>{{ 'type-depense.frequence'|trans }}</th>
+                    <th>{{ 'type-depense.montant'|trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for typeDepense in typeDepenses %}
+                    <tr>
+                        <td>{{ typeDepense.label }}</td>
+                        <td>
+                            <span class="badge text-secondary-emphasis bg-secondary-subtle">{{ ('type-depense.' ~ typeDepense.frequence)|trans }}</span>
+                        </td>
+                        <td>{{ typeDepense.montant|format_currency('MAD') }}</td>
+                        <td>
+                            <a href="{{ path('app_type_depense_edit', {'typeDepense': typeDepense.id}) }}">
+                                {{ 'edit'|trans }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive">
+
+    </div>
+{% endblock %}

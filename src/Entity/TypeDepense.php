@@ -13,6 +13,7 @@ class TypeDepense
 
     const MENSUELLE = 'mensuelle';
     const ANNUELLE = 'annuelle';
+    const OCCASIONNELLE = "occasionnelle";
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,10 +23,10 @@ class TypeDepense
     #[ORM\Column(length: 300)]
     private ?string $label = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $montant = null;
 
-    #[ORM\Column(length: 50, nullable: true, options: ["comment" => "Fréquence de dépenses (mensuelle, annuelle ou null pour ponctuelle)"])]
+    #[ORM\Column(length: 50, nullable: true, options: ["comment" => "Fréquence de dépenses (mensuelle, annuelle, occasionnelle)"])]
     private ?string $frequence = null;
 
     /**
