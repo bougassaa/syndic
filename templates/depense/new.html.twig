@@ -12,4 +12,5 @@
         <a class="text-sm" href="#">{{ 'type-depense.new'|trans }}</a>
     </div>
     {{ form(form) }}
+    <input type="hidden" id="typesDepenseMontant" value="{{ types|json_encode }}">
 {% endblock %}

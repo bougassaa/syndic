@@ -81,6 +81,17 @@ document.addEventListener('DOMContentLoaded', function () {
             form.submit();
         });
     });
+
+    document.querySelectorAll('.selectTypeDepense').forEach(select => {
+        select.addEventListener('change', function () {
+            const inputMontant = document.querySelector('#depense_montant');
+            const typesMontant = document.querySelector('#typesDepenseMontant').value;
+            const json = JSON.parse(typesMontant);
+            if (select.value) {
+                inputMontant.value = json[select.value];
+            }
+        });
+    });
 });
 
 function leaveAtVisibility(input) {

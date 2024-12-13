@@ -6,6 +6,7 @@ use App\Entity\Depense;
 use App\Entity\Syndic;
 use App\Form\DepenseType;
 use App\Repository\DepenseRepository;
+use App\Repository\TypeDepenseRepository;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,12 +28,12 @@ class DepenseController extends AbstractController
     public function list(DepenseRepository $repository): Response
     {
         return $this->render('depense/list.html.twig', [
-            'depenses' => $repository->findBy([], ['paidAt' => 'DESC']),
+            'depenses' => $repository->findBy([], ['paidAt' => 'DESC', 'id' => 'DESC']),
         ]);
     }
 
     #[Route('/depense/new', name: 'app_depense_new')]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    public function new(Request $request, EntityManagerInterface $manager, TypeDepenseRepository $typeDepenseRepository): Response
     {
         $depense = new Depense();
         $depense->setPaidAt(new \DateTime());
@@ -48,8 +49,14 @@ class DepenseController extends AbstractController
             return $this->redirectToRoute('app_depense_list');
         }
 
+        $types = [];
+        foreach ($typeDepenseRepository->findBy(['syndic' => $this->syndic]) as $item) {
+            $types[$item->getId()] = $item->getMontant();
+        }
+
         return $this->render('depense/new.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'types' => $types
         ]);
     }
 }

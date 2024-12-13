@@ -24,6 +24,8 @@ class DepenseType extends AbstractType
         $builder
             ->add('type', EntityType::class, [
                 'label' => $this->translator->trans('depense.type'),
+                'placeholder' => $this->translator->trans('select-choose'),
+                'attr' => ['class' => 'selectTypeDepense'],
                 'class' => TypeDepense::class,
                 'choice_label' => 'label',
             ])
