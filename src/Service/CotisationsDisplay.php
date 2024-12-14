@@ -54,11 +54,7 @@ class CotisationsDisplay
                     if (empty($formatter->proprietaire)) {
                         // set default proprietaire based on year and begin date
                         foreach ($appartement->getProprietaires() as $proprietaire) {
-                            $beginAt = $proprietaire->getBeginAt()->getTimestamp();
-                            $leaveYear = $proprietaire->getBeginAt()?->getTimestamp();
-                            $start = $tarif->getDebutPeriode()->getTimestamp();
-                            $end = $tarif->getFinPeriode()->getTimestamp();
-                            if ($start >= $beginAt && (!$leaveYear || $leaveYear <= $end)) {
+                            if (!$proprietaire->isExempt($tarif)) {
                                 $formatter->proprietaire = $proprietaire;
                             }
                         }

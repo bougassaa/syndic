@@ -22,7 +22,7 @@
             >
                 {% for tarif in tarifs %}
                     <option value="{{ tarif.id }}" {% if tarif is same as tarifSelected %}selected{% endif %}>
-                        {{ tarif.debutPeriode|date('Y') }} - {{ tarif.finPeriode|date('Y') }}
+                        {{ tarif.periodeYear }}
                     </option>
                 {% endfor %}
             </select>

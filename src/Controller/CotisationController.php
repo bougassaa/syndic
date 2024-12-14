@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Cotisation;
 use App\Entity\Syndic;
-use App\Entity\Tarif;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;

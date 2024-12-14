@@ -122,4 +122,9 @@ class Tarif
 
         return $this;
     }
+
+    public function getPeriodeYear(): string
+    {
+        return $this->debutPeriode->format('Y') . ' - ' . $this->finPeriode->format('Y');
+    }
 }

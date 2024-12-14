@@ -27,6 +27,11 @@ class CotisationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('tarif', EntityType::class, [
+                'class' => Tarif::class,
+                'choice_label' => fn(Tarif $tarif) => $tarif->getPeriodeYear(),
+                'label' => $this->translator->trans('cotisation.tarif'),
+            ])
             ->add('paidAt', null, [
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('cotisation.paidAt'),
@@ -76,11 +81,6 @@ class CotisationType extends AbstractType
                         ->where('p.leaveAt IS NULL')
                         ->orderBy('p.appartement', 'ASC');
                 },
-            ])
-            ->add('tarif', EntityType::class, [
-                'class' => Tarif::class,
-                'choice_label' => fn(Tarif $tarif) => $tarif->getYear() . ' - ' . (new \NumberFormatter('fr', \NumberFormatter::CURRENCY))->formatCurrency($tarif->getTarif(), 'MAD'),
-                'label' => $this->translator->trans('cotisation.tarif'),
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
