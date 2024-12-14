@@ -82,6 +82,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.querySelectorAll('#tarif_debutPeriode').forEach(input => {
+        const finPeriode = document.querySelector('#tarif_finPeriode');
+        input.addEventListener('input', function () {
+            const date = input.valueAsDate;
+
+            date.setFullYear(date.getFullYear() + 1);
+            date.setDate(date.getDate() - 1);
+
+            finPeriode.valueAsDate = date;
+        });
+    });
+
     document.querySelectorAll('.selectTypeDepense').forEach(select => {
         select.addEventListener('change', function () {
             const inputMontant = document.querySelector('#depense_montant');

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TarifRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TarifRepository::class)]
@@ -14,9 +15,6 @@ class Tarif
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?int $year = null;
 
     #[ORM\Column]
     private ?float $tarif = null;
@@ -31,6 +29,12 @@ class Tarif
     #[ORM\OneToMany(targetEntity: Cotisation::class, mappedBy: 'tarif')]
     private Collection $cotisations;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $debutPeriode = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $finPeriode = null;
+
     public function __construct()
     {
         $this->cotisations = new ArrayCollection();
@@ -39,18 +43,6 @@ class Tarif
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): static
-    {
-        $this->year = $year;
-
-        return $this;
     }
 
     public function getTarif(): ?float
@@ -103,6 +95,30 @@ class Tarif
                 $cotisation->setTarif(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDebutPeriode(): ?\DateTimeInterface
+    {
+        return $this->debutPeriode;
+    }
+
+    public function setDebutPeriode(\DateTimeInterface $debutPeriode): static
+    {
+        $this->debutPeriode = $debutPeriode;
+
+        return $this;
+    }
+
+    public function getFinPeriode(): ?\DateTimeInterface
+    {
+        return $this->finPeriode;
+    }
+
+    public function setFinPeriode(\DateTimeInterface $finPeriode): static
+    {
+        $this->finPeriode = $finPeriode;
 
         return $this;
     }

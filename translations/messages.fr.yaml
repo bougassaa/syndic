@@ -47,7 +47,9 @@ cotisation:
 tarif:
   new: Nouvelle cotisation annuelle
   montant: Tarif cotisation annuelle
-  annee: Année concernée
+  debutPeriode: Début période de cotisation
+  finPeriode: Fin période de cotisation
+  finPeriode-help: La fin de période est calculée automatiquement (Début de periode + 12 mois)
 
 moyenPaiement:
   cheque: Chèque

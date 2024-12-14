@@ -2,12 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Syndic;
 use App\Entity\Tarif;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,9 +20,15 @@ class TarifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('year', NumberType::class, [
-                'label' => $this->translator->trans('tarif.annee'),
-                'html5' => true
+            ->add('debutPeriode', null, [
+                'label' => $this->translator->trans('tarif.debutPeriode'),
+            ])
+            ->add('finPeriode', null, [
+                'label' => $this->translator->trans('tarif.finPeriode'),
+                'help' => $this->translator->trans('tarif.finPeriode-help'),
+                'attr' => [
+                    'readonly' => true
+                ],
             ])
             ->add('tarif', MoneyType::class, [
                 'label' => $this->translator->trans('tarif.montant'),

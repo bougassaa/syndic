@@ -2,6 +2,12 @@
     font-size: 0.8rem;
 }
 
+input[readonly] {
+    pointer-events: none;
+    background: #0000000a;
+    color: #545454;
+}
+
 .form-switch {
     display: flex;
     align-items: flex-end;

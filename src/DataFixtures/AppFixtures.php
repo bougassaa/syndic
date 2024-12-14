@@ -6,7 +6,6 @@ use App\Entity\Appartement;
 use App\Entity\Batiment;
 use App\Entity\Proprietaire;
 use App\Entity\Syndic;
-use App\Entity\Tarif;
 use App\Entity\TypeDepense;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -16,14 +15,6 @@ class AppFixtures extends Fixture
     private array $batiments = ['A', 'B', 'C', 'D'];
 
     private array $appartements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    private array $tarifs = [
-        2020 => 1500,
-        2021 => 1500,
-        2022 => 1500,
-        2023 => 1500,
-        2024 => 1500,
-    ];
 
     public function load(ObjectManager $manager): void
     {
@@ -51,15 +42,6 @@ class AppFixtures extends Fixture
                     $monAppartement = $appartement;
                 }
             }
-        }
-
-        foreach ($this->tarifs as $year => $montant) {
-            $tarif = new Tarif();
-            $tarif->setYear($year);
-            $tarif->setTarif($montant);
-            $tarif->setSyndic($syndic);
-
-            $manager->persist($tarif);
         }
 
         $proprietaire = new Proprietaire();

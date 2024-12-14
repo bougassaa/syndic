@@ -17,11 +17,6 @@ class TarifRepository extends ServiceEntityRepository
         parent::__construct($registry, Tarif::class);
     }
 
-    public function getThisYearTarif(Syndic $syndic): ?Tarif
-    {
-        return $this->getYearTarif($syndic, date('Y'));
-    }
-
     public function getYearTarif(Syndic $syndic, int $year): ?Tarif
     {
         return $this->createQueryBuilder('t')
