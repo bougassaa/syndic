@@ -83,15 +83,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('#tarif_debutPeriode').forEach(input => {
-        const finPeriode = document.querySelector('#tarif_finPeriode');
-        input.addEventListener('input', function () {
+        const setOneYeatLater = () => {
             const date = input.valueAsDate;
+            if (date) {
+                date.setFullYear(date.getFullYear() + 1);
+                date.setDate(date.getDate() - 1);
 
-            date.setFullYear(date.getFullYear() + 1);
-            date.setDate(date.getDate() - 1);
+                const finPeriode = document.querySelector('#tarif_finPeriode');
+                finPeriode.valueAsDate = date;
+            }
+        }
 
-            finPeriode.valueAsDate = date;
-        });
+        setOneYeatLater();
+
+        input.addEventListener('input', setOneYeatLater);
     });
 
     document.querySelectorAll('.selectTypeDepense').forEach(select => {

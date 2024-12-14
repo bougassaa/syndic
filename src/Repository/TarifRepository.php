@@ -17,13 +17,13 @@ class TarifRepository extends ServiceEntityRepository
         parent::__construct($registry, Tarif::class);
     }
 
-    public function getYearTarif(Syndic $syndic, int $year): ?Tarif
+    public function getCurrentTarif(Syndic $syndic): ?Tarif
     {
         return $this->createQueryBuilder('t')
-            ->where('t.year = :year')
-            ->andWhere('t.syndic = :syndic')
-            ->setParameter('year', $year)
+            ->where('t.syndic = :syndic')
+            ->andWhere(':now BETWEEN t.debutPeriode AND t.finPeriode')
             ->setParameter('syndic', $syndic)
+            ->setParameter('now', date('Y-m-d'))
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -33,14 +33,14 @@ class TarifRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.syndic = :syndic')
             ->setParameter('syndic', $syndic)
-            ->orderBy('t.year', 'DESC')
+            ->orderBy('t.finPeriode', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
     /** @return Tarif[] */
-    public function getYearsTarifs(Syndic $syndic): array
+    public function getSyndicTarifs(Syndic $syndic): array
     {
         return $this->createQueryBuilder('t')
             ->where('t.syndic = :syndic')

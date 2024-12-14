@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cotisation;
 use App\Entity\Syndic;
+use App\Entity\Tarif;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;
@@ -32,21 +33,28 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterYear, #[MapQueryParameter] ?int $filterBatiment): Response
+    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterTarif, #[MapQueryParameter] ?int $filterBatiment): Response
     {
-        if (!$filterYear){
-            $currentTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
-            $filterYear = $currentTarif?->getYear();
+        if (!$filterTarif){
+            $tarifSelected = $this->tarifRepository->getCurrentTarif($this->syndic);
+            if (!$tarifSelected) {
+                $tarifSelected = $this->tarifRepository->getMaxYearTarif($this->syndic);
+                if (!$tarifSelected) {
+                    return $this->render('cotisation/empty-tarif.html.twig');
+                }
+            }
+        } else {
+            $tarifSelected = $this->tarifRepository->find($filterTarif);
         }
 
         $filterBatiment = $filterBatiment === 0 ? null : $filterBatiment;
 
         return $this->render('cotisation/list.html.twig', [
-            'items' => $cotisationsDisplay->getCotisations($filterYear, $filterBatiment),
+            'items' => $cotisationsDisplay->getCotisations($tarifSelected, $filterBatiment),
             'totalCotisations' => $cotisationsDisplay->getTotalCotisations(),
-            'yearsFilter' => $this->tarifRepository->getYearsTarifs($this->syndic),
+            'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
             'batimentsFilter' => $this->batimentRepository->getSyndicBatiments($this->syndic),
-            'yearSelected' => $filterYear,
+            'tarifSelected' => $tarifSelected,
             'batimentSelected' => $filterBatiment
         ]);
     }
@@ -57,7 +65,7 @@ class CotisationController extends AbstractController
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
 
-        $yearTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
+        $yearTarif = $this->tarifRepository->getCurrentTarif($this->syndic);
         if ($yearTarif) {
             $cotisation->setMontant($yearTarif->getTarif());
             $cotisation->setTarif($yearTarif);

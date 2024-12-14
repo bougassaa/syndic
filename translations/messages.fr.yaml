@@ -8,6 +8,7 @@ optional: Facultatif
 appartement: N° appartement
 montant: Montant
 description: Déscription
+montant-a-payer: Montant à payer
 
 proprietaire:
   nav: Co-propriétaires
@@ -43,13 +44,15 @@ cotisation:
   filter-year: Cotisations pour
   filter-batiment: Batiment
   filter-batiment-all: Tous
+  empty-tarif: Aucun tarif annuel n'a été défini dans les paramètres. Veuillez configurer un tarif annuel pour permettre l'affichage du tableau des cotisations.
 
 tarif:
   new: Nouvelle cotisation annuelle
   montant: Tarif cotisation annuelle
   debutPeriode: Début période de cotisation
   finPeriode: Fin période de cotisation
-  finPeriode-help: La fin de période est calculée automatiquement (Début de periode + 12 mois)
+  debutPeriode-help: Début de période = Fin de cotisation précédente + 1 jour
+  finPeriode-help: Fin de période = Début de période + 12 mois
 
 moyenPaiement:
   cheque: Chèque

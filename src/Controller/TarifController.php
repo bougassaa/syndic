@@ -27,10 +27,14 @@ class TarifController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $tarif = new Tarif();
-        $lastYear = $this->tarifRepository->getMaxYearTarif($this->syndic);
-        $tarif->setYear($lastYear->getYear() + 1);
-        $tarif->setTarif($lastYear->getTarif());
         $tarif->setSyndic($this->syndic);
+        $lastYear = $this->tarifRepository->getMaxYearTarif($this->syndic);
+        if ($lastYear) {
+            $tarif->setTarif($lastYear->getTarif());
+            $tarif->setDebutPeriode(
+                (clone $lastYear->getFinPeriode())->modify('+1 day')
+            );
+        }
 
         $form = $this->createForm(TarifType::class, $tarif);
         $form->handleRequest($request);

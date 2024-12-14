@@ -22,6 +22,7 @@ class TarifType extends AbstractType
         $builder
             ->add('debutPeriode', null, [
                 'label' => $this->translator->trans('tarif.debutPeriode'),
+                'help' => $this->translator->trans('tarif.debutPeriode-help'),
             ])
             ->add('finPeriode', null, [
                 'label' => $this->translator->trans('tarif.finPeriode'),

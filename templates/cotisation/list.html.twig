@@ -16,12 +16,14 @@
               class="d-flex flex-wrap gap-2 align-items-center"
         >
             <select class="form-select-sm no-search"
-                    name="filterYear"
+                    name="filterTarif"
                     data-select-no-search="true"
                     data-select-label="{{ 'cotisation.filter-year'|trans }} :&nbsp;"
             >
-                {% for year in yearsFilter %}
-                    <option value="{{ year.year }}" {% if year.year == yearSelected %}selected{% endif %}>{{ year.year }}</option>
+                {% for tarif in tarifs %}
+                    <option value="{{ tarif.id }}" {% if tarif is same as tarifSelected %}selected{% endif %}>
+                        {{ tarif.debutPeriode|date('Y') }} - {{ tarif.finPeriode|date('Y') }}
+                    </option>
                 {% endfor %}
             </select>
             <select class="form-select-sm no-search"
@@ -49,7 +51,7 @@
                     <th>{{ 'cotisation.paidAt'|trans }}</th>
                     <th>{{ 'cotisation.montant'|trans }}</th>
                     <th>{{ 'cotisation.moyenPaiement'|trans }}</th>
-                    <th>{{ 'cotisation.tarif'|trans }}</th>
+                    <th>{{ 'montant-a-payer'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -126,7 +128,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ item.tarif.year }} - {{ item.tarif.tarif|format_currency('MAD') }}
+                        {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
                 </tr>
                 {% endfor %}

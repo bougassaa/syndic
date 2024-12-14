@@ -150,8 +150,7 @@ class Proprietaire
 
     public function isExempt(Tarif $tarif): bool
     {
-        $yearTarif = $tarif->getYear();
-        $yearBeginAt = (int) $this->beginAt->format('Y');
-        return $yearBeginAt > $yearTarif;
+        $yearBeginAt = $this->beginAt->getTimestamp();
+        return $yearBeginAt > $tarif->getFinPeriode()->getTimestamp();
     }
 }

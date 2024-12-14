@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\CotisationFormatter;
+use App\Entity\Tarif;
 use App\Repository\BatimentRepository;
 use App\Repository\TarifRepository;
 
@@ -20,15 +21,13 @@ class CotisationsDisplay
     }
 
     /** @return CotisationFormatter[] */
-    public function getCotisations(int $year, int|null $batimentKey): array
+    public function getCotisations(Tarif $tarif, int|null $batimentKey): array
     {
         $cotisationsDisplay = [];
         // get selected syndic
         $syndic = $this->syndicSessionResolver->getSelectedSyndic();
         // get batiments of this syndic
         $batiments = $this->batimentRepository->findBy(['syndic' => $syndic], ['nom' => 'ASC']);
-        // get batiments of this syndic
-        $tarif = $this->tarifRepository->getYearTarif($syndic, $year);
         // init total cotisations
         $this->totalCotisations = 0;
 
@@ -55,12 +54,11 @@ class CotisationsDisplay
                     if (empty($formatter->proprietaire)) {
                         // set default proprietaire based on year and begin date
                         foreach ($appartement->getProprietaires() as $proprietaire) {
-                            $beginYear = (int) $proprietaire->getBeginAt()->format('Y');
-                            $leaveYear = $proprietaire->getLeaveAt()?->format('Y');
-                            // ajouter le proprietaire
-                            // si l'adhésion est (égale ou avant) l'année de cotisation demandée
-                            // et que la date de fin est (égale ou apres) l'année de cotisation ou NULL (proprio présent)
-                            if ($year >= $beginYear && (is_null($leaveYear) || $year <= $leaveYear)) {
+                            $beginAt = $proprietaire->getBeginAt()->getTimestamp();
+                            $leaveYear = $proprietaire->getBeginAt()?->getTimestamp();
+                            $start = $tarif->getDebutPeriode()->getTimestamp();
+                            $end = $tarif->getFinPeriode()->getTimestamp();
+                            if ($start >= $beginAt && (!$leaveYear || $leaveYear <= $end)) {
                                 $formatter->proprietaire = $proprietaire;
                             }
                         }
