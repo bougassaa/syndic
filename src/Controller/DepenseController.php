@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DepenseController extends AbstractController
@@ -25,10 +26,15 @@ class DepenseController extends AbstractController
     }
 
     #[Route('/depense', name: 'app_depense_list')]
-    public function list(DepenseRepository $repository): Response
+    public function list(DepenseRepository $repository, #[MapQueryParameter] ?string $selectedYear): Response
     {
+        $selectedYear = filter_var($selectedYear, FILTER_VALIDATE_INT);
+        $years = $this->getMinMaxYears($repository);
+
         return $this->render('depense/list.html.twig', [
-            'depenses' => $repository->findBy([], ['paidAt' => 'DESC', 'id' => 'DESC']),
+            'depenses' => $repository->getDepensesPerYear($selectedYear),
+            'selectedYear' => $selectedYear,
+            'years' => $years
         ]);
     }
 
@@ -58,5 +64,22 @@ class DepenseController extends AbstractController
             'form' => $form,
             'types' => $types
         ]);
+    }
+
+    public function getMinMaxYears(DepenseRepository $repository): array
+    {
+        $thisYear = (int)date("Y");
+        $startYear = $repository->getFirstOldDepense()?->getPaidAt()->format('Y');
+        $endYear = $repository->getLastNewDepense()?->getPaidAt()->format('Y');
+
+        if (!$startYear || $startYear >= $thisYear) {
+            $startYear = $thisYear - 1;
+        }
+
+        if (!$endYear || $endYear <= $thisYear) {
+            $endYear = $thisYear + 1;
+        }
+
+        return range($startYear, $endYear);
     }
 }

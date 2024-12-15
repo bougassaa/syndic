@@ -5,7 +5,6 @@ namespace App\Service;
 use App\DTO\CotisationFormatter;
 use App\Entity\Tarif;
 use App\Repository\BatimentRepository;
-use App\Repository\TarifRepository;
 
 class CotisationsDisplay
 {
@@ -14,14 +13,13 @@ class CotisationsDisplay
 
     public function __construct(
         private BatimentRepository $batimentRepository,
-        private TarifRepository $tarifRepository,
         private SyndicSessionResolver $syndicSessionResolver
     )
     {
     }
 
     /** @return CotisationFormatter[] */
-    public function getCotisations(Tarif $tarif, int|null $batimentKey): array
+    public function getCotisations(Tarif $tarif, int|false $batimentKey): array
     {
         $cotisationsDisplay = [];
         // get selected syndic
@@ -32,7 +30,7 @@ class CotisationsDisplay
         $this->totalCotisations = 0;
 
         foreach ($batiments as $batiment) {
-            if ($batiment->getId() == $batimentKey || is_null($batimentKey)) {
+            if ($batiment->getId() == $batimentKey || $batimentKey === false) {
                 // get appartements of current batiment
                 $appartements = $batiment->getAppartements();
                 foreach ($appartements as $appartement) {

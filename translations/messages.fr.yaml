@@ -69,6 +69,8 @@ depense:
   description-placeholder: Facultatif
   type: Type de dépense
   list: Liste des dépenses
+  filter-year: Dépenses pour
+  filter-year-all: Toutes les périodes
 
 type-depense:
   nav: Types de dépenses

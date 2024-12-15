@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         new bootstrap.Tooltip(element)
     });
 
-    document.querySelectorAll('#cotisations-filter-form').forEach(form => {
+    document.querySelectorAll('.list-filter-form').forEach(form => {
         form.addEventListener('input', function () {
             form.submit();
         });

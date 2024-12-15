@@ -16,28 +16,36 @@ class DepenseRepository extends ServiceEntityRepository
         parent::__construct($registry, Depense::class);
     }
 
-    //    /**
-    //     * @return Depense[] Returns an array of Depense objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getDepensesPerYear(int|false $year)
+    {
+        $qb = $this->createQueryBuilder('d');
 
-    //    public function findOneBySomeField($value): ?Depense
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($year !== false) {
+            $qb->where('YEAR(d.paidAt) = :year')
+                ->setParameter('year', $year);
+        }
+
+        return $qb->orderBy('d.paidAt', 'DESC')
+            ->addOrderBy('d.id',  'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getFirstOldDepense(): ?Depense
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.paidAt', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getLastNewDepense(): ?Depense
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.paidAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

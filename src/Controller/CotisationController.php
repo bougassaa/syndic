@@ -32,7 +32,7 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterTarif, #[MapQueryParameter] ?int $filterBatiment): Response
+    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterTarif, #[MapQueryParameter] ?string $filterBatiment): Response
     {
         if (!$filterTarif){
             $tarifSelected = $this->tarifRepository->getCurrentTarif($this->syndic);
@@ -46,7 +46,7 @@ class CotisationController extends AbstractController
             $tarifSelected = $this->tarifRepository->find($filterTarif);
         }
 
-        $filterBatiment = $filterBatiment === 0 ? null : $filterBatiment;
+        $filterBatiment = filter_var($filterBatiment, FILTER_VALIDATE_INT);
 
         return $this->render('cotisation/list.html.twig', [
             'items' => $cotisationsDisplay->getCotisations($tarifSelected, $filterBatiment),

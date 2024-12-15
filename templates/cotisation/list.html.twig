@@ -9,11 +9,10 @@
         <h2 class="flex-fill">{{ 'cotisation.list'|trans }}</h2>
         <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
     </div>
-    <div class="bg-white position-sticky py-2 mb-md-1" style="top: 56px">
+    <div class="bg-white position-sticky py-2 mb-md-1" style="top: var(--filter-list-top)">
         <form action="{{ path('app_cotisation_list') }}"
               method="get"
-              id="cotisations-filter-form"
-              class="d-flex flex-wrap gap-2 align-items-center"
+              class="list-filter-form d-flex flex-wrap gap-2 align-items-center"
         >
             <select class="form-select-sm no-search"
                     name="filterTarif"
@@ -32,7 +31,7 @@
                     data-select-allow-empty="true"
                     data-select-label="{{ 'cotisation.filter-batiment'|trans }} :&nbsp;"
             >
-                <option value="0" {% if batimentSelected is null %}selected{% endif %}>
+                <option value="" {% if batimentSelected == false %}selected{% endif %}>
                     {{ 'cotisation.filter-batiment-all'|trans }}
                 </option>
                 {% for batiment in batimentsFilter %}

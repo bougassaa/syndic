@@ -1,3 +1,7 @@
+:root {
+    --filter-list-top: 56px;
+}
+
 .text-sm {
     font-size: 0.8rem;
 }
