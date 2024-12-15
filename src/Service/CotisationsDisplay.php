@@ -9,7 +9,7 @@ use App\Repository\BatimentRepository;
 class CotisationsDisplay
 {
 
-    private ?int $totalCotisations = null;
+    private ?float $totalCotisations = null;
 
     public function __construct(
         private BatimentRepository $batimentRepository,
@@ -66,7 +66,7 @@ class CotisationsDisplay
         return $cotisationsDisplay;
     }
 
-    public function getTotalCotisations(): int
+    public function getTotalCotisations(): float
     {
         if (is_null($this->totalCotisations)) {
             throw new \Exception('call getCotisations first');

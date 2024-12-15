@@ -33,7 +33,7 @@ class DepenseController extends AbstractController
         $years = $this->getMinMaxYears($repository);
 
         $total = array_reduce($depenses, function ($carry, Depense $depense) {
-            return $carry + (int) $depense->getMontant();
+            return $carry + (float) $depense->getMontant();
         }, 0);
 
         return $this->render('depense/list.html.twig', [
