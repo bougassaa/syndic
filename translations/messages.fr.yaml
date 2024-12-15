@@ -71,6 +71,7 @@ depense:
   list: Liste des dépenses
   filter-year: Dépenses pour
   filter-year-all: Toutes les périodes
+  total: Total des dépenses pour la période
 
 type-depense:
   nav: Types de dépenses

@@ -49,6 +49,17 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <tfoot class="table-info">
+            <tr>
+                <th colspan="7">
+                    {{ 'depense.total'|trans }}
+                    <i class="fa-solid fa-arrow-right-long mx-1"></i>
+                    <span class="border-bottom border-dark border-2">
+                        {{ totalDepenses|format_currency('MAD') }}
+                    </span>
+                </th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 {% endblock %}

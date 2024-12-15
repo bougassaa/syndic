@@ -29,10 +29,16 @@ class DepenseController extends AbstractController
     public function list(DepenseRepository $repository, #[MapQueryParameter] ?string $selectedYear): Response
     {
         $selectedYear = filter_var($selectedYear, FILTER_VALIDATE_INT);
+        $depenses = $repository->getDepensesPerYear($selectedYear);
         $years = $this->getMinMaxYears($repository);
 
+        $total = array_reduce($depenses, function ($carry, Depense $depense) {
+            return $carry + (int) $depense->getMontant();
+        }, 0);
+
         return $this->render('depense/list.html.twig', [
-            'depenses' => $repository->getDepensesPerYear($selectedYear),
+            'depenses' => $depenses,
+            'totalDepenses' => $total,
             'selectedYear' => $selectedYear,
             'years' => $years
         ]);
