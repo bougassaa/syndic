@@ -32,3 +32,7 @@ input[readonly] {
 #partialPaymentReason-row {
     display: none;
 }
+
+tr.table-danger td {
+    --bs-table-bg-type: unset !important;
+}

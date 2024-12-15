@@ -15,22 +15,4 @@ class AppartementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Appartement::class);
     }
-
-    public function getAppartementsProprietaires(): array
-    {
-        $result = $this->createQueryBuilder('a')
-            ->select('a.id AS appartement, p.id AS proprietaire')
-            ->join('a.proprietaires', 'p')
-            ->where('p.leaveAt IS NULL')
-            ->getQuery()
-            ->getResult();
-
-        $mapping = [];
-
-        foreach ($result as $item) {
-            $mapping[$item['appartement']] = $item['proprietaire'];
-        }
-
-        return $mapping;
-    }
 }

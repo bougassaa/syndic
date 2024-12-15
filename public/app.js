@@ -46,11 +46,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.querySelectorAll('select.cotisationTarif').forEach(select => {
+        const montantInput = document.querySelector('#cotisation_montant');
+        const tarifsMapping = jsonParse(document.querySelector('#tarifsMapping').value);
+        select.addEventListener('change', () => {
+            if (tarifsMapping[select.value]) {
+                montantInput.value = tarifsMapping[select.value];
+            }
+        })
+    });
+
     document.querySelectorAll('#cotisation_montant').forEach(input => {
-        const defaultValue = input.value;
+        const tarifsMapping = jsonParse(document.querySelector('#tarifsMapping').value);
+        const tarifSelect = document.querySelector('select.cotisationTarif');
         const isPartialPayment = document.querySelector('#isPartialPayment-row');
-        input.addEventListener('input', function (event) {
-            if (!defaultValue || Number(event.target.value) < Number(defaultValue)) {
+
+        input.addEventListener('input', () => {
+            const montant = tarifsMapping[tarifSelect.value];
+            if (!montant || Number(input.value) < Number(montant)) {
                 isPartialPayment.style.display = 'block';
             } else {
                 isPartialPayment.style.display = 'none';
@@ -103,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         select.addEventListener('change', function () {
             const inputMontant = document.querySelector('#depense_montant');
             const typesMontant = document.querySelector('#typesDepenseMontant').value;
-            const json = JSON.parse(typesMontant);
+            const json = jsonParse(typesMontant);
             if (select.value) {
                 inputMontant.value = json[select.value];
             }
@@ -120,5 +133,13 @@ function leaveAtVisibility(input) {
     } else {
         leaveAtParent.classList.remove('d-none');
         leaveAtInput.required = true;
+    }
+}
+
+function jsonParse(value) {
+    try {
+        return JSON.parse(value);
+    } catch (e) {
+        return [];
     }
 }

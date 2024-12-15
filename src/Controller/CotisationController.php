@@ -86,7 +86,19 @@ class CotisationController extends AbstractController
 
         return $this->render('cotisation/new.html.twig', [
             'form' => $form,
-            'appartementsMapping' => $appartementRepository->getAppartementsProprietaires()
+            'tarifsMapping' => $this->getTarifsMapping()
         ]);
+    }
+
+    private function getTarifsMapping(): array
+    {
+        $mapping = [];
+        $tarifs = $this->tarifRepository->getSyndicTarifs($this->syndic);
+
+        foreach ($tarifs as $tarif) {
+            $mapping[$tarif->getId()] = $tarif->getTarif();
+        }
+
+        return $mapping;
     }
 }

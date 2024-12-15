@@ -31,6 +31,7 @@ class CotisationType extends AbstractType
                 'class' => Tarif::class,
                 'choice_label' => fn(Tarif $tarif) => $tarif->getPeriodeYear(),
                 'label' => $this->translator->trans('cotisation.tarif'),
+                'attr' => ['class' => 'cotisationTarif'],
             ])
             ->add('paidAt', null, [
                 'widget' => 'single_text',
