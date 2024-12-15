@@ -10,6 +10,7 @@ use App\Repository\TypeDepenseRepository;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -54,6 +55,17 @@ class DepenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile[] $preuves */
+            $preuves = $form->get('preuves')->getData();
+
+            if (!empty($preuves)) {
+                foreach ($preuves as $file) {
+                    $filename = uniqid() . '.' . $file->guessExtension();
+                    $file->move($this->getParameter('depenses_preuves'), $filename);
+                    $depense->addPreuve($filename);
+                }
+            }
+
             $depense->setSyndic($this->syndic);
             $manager->persist($depense);
             $manager->flush();

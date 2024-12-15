@@ -31,6 +31,9 @@ class Depense
     #[ORM\JoinColumn(nullable: false)]
     private ?Syndic $syndic = null;
 
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private ?array $preuves = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +96,24 @@ class Depense
     {
         $this->syndic = $syndic;
 
+        return $this;
+    }
+
+    public function getPreuves(): ?array
+    {
+        return $this->preuves;
+    }
+
+    public function setPreuves(?array $preuves): static
+    {
+        $this->preuves = $preuves;
+
+        return $this;
+    }
+
+    public function addPreuve(string $fileName): static
+    {
+        $this->preuves[] = $fileName;
         return $this;
     }
 }

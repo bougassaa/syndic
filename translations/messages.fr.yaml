@@ -72,6 +72,7 @@ depense:
   filter-year: Dépenses pour
   filter-year-all: Toutes les périodes
   total: Total des dépenses pour la période
+  preuves: Justificatifs de la dépense
 
 type-depense:
   nav: Types de dépenses
@@ -87,3 +88,6 @@ type-depense:
   mensuelle: Mensuelle
   annuelle: Annuelle
   occasionnelle: Ocasionnelle
+
+upload:
+  mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
