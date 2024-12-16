@@ -91,3 +91,4 @@ type-depense:
 
 upload:
   mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
+  help: Uniquement les PDF et images PNG, JPG, JPEG. Maximum %size%b par fichier.
