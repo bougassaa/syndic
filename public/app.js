@@ -122,6 +122,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    document.querySelectorAll('input[type=file]').forEach(input => {
+        input.addEventListener('change', async e => {
+            const files = e.target.files;
+            const dataTransfer = new DataTransfer();
+
+            // Create an array of Promises to wait for all compressions to complete
+            const filePromises = Array.from(files).map(file => {
+                if (file.type.startsWith('image/')) {
+                    return new Promise(resolve => {
+                        new Compressor(file, {
+                            quality: 0.7, // Compression quality
+                            maxWidth: 1100, // Max width of compressed image
+                            maxHeight: 800, // Max height of compressed image
+                            success(result) {
+                                const compressedFile = new File([result], file.name, {
+                                    type: file.type,
+                                    lastModified: Date.now()
+                                });
+                                resolve(compressedFile); // Resolve with the compressed file
+                            },
+                            error() {
+                                resolve(file); // Resolve with the original file if compression fails
+                            }
+                        });
+                    });
+                } else {
+                    return Promise.resolve(file); // Non-image files don't need compression
+                }
+            });
+            // Wait for all Promises to resolve
+            const processedFiles = await Promise.all(filePromises);
+            // Add all processed files to dataTransfer
+            processedFiles.forEach(file => dataTransfer.items.add(file));
+            // Update the input's files property
+            input.files = dataTransfer.files;
+        });
+
+    });
 });
 
 function leaveAtVisibility(input) {
