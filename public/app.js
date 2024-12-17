@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     for (let pageNumber = 1; pageNumber <= pdfDoc.numPages; pageNumber++) {
                         const page = await pdfDoc.getPage(pageNumber);
-                        const viewport = page.getViewport({ scale: 2 }); // Adjust scale as needed
+                        const viewport = page.getViewport({ scale: 1.2 }); // Adjust scale as needed
                         const canvas = document.createElement('canvas');
                         const context = canvas.getContext('2d');
 
