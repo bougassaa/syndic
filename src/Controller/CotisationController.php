@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Appartement;
 use App\Entity\Cotisation;
 use App\Entity\Syndic;
+use App\Entity\Tarif;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;
@@ -12,6 +14,7 @@ use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -78,6 +81,17 @@ class CotisationController extends AbstractController
                 $cotisation->setAppartement($appartement);
             }
 
+            /** @var UploadedFile[] $preuves */
+            $preuves = $form->get('preuves')->getData();
+
+            if (!empty($preuves)) {
+                foreach ($preuves as $file) {
+                    $filename = uniqid() . '.' . $file->guessExtension();
+                    $file->move($this->getParameter('cotisations_preuves'), $filename);
+                    $cotisation->addPreuve($filename);
+                }
+            }
+
             $manager->persist($cotisation);
             $manager->flush();
 
@@ -87,6 +101,23 @@ class CotisationController extends AbstractController
         return $this->render('cotisation/new.html.twig', [
             'form' => $form,
             'tarifsMapping' => $this->getTarifsMapping()
+        ]);
+    }
+
+    #[Route('/cotisation/more-infos/{tarif}/{appartement}', name: 'app_cotisation_more_infos')]
+    public function moreInfos(Tarif $tarif, Appartement $appartement): Response
+    {
+        $preuves = [];
+
+        foreach ($tarif->getCotisations() as $cotisation) {
+            if ($cotisation->getAppartement() === $appartement) {
+                $preuves = array_merge($preuves, $cotisation->getPreuves());
+            }
+        }
+
+        return $this->render('_components/preuves-modal.html.twig', [
+            'preuves' => $preuves,
+            'pathFolder' => 'uploads/cotisations/'
         ]);
     }
 

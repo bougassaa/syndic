@@ -87,8 +87,9 @@ class DepenseController extends AbstractController
     #[Route('/depense/more-infos/{depense}', name: 'app_depense_more_infos')]
     public function moreInfos(Depense $depense): Response
     {
-        return $this->render('depense/more-infos.html.twig', [
-            'depense' => $depense
+        return $this->render('_components/preuves-modal.html.twig', [
+            'preuves' => $depense->getPreuves(),
+            'pathFolder' => 'uploads/depenses/'
         ]);
     }
 

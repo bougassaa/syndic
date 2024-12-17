@@ -4,16 +4,14 @@ namespace App\Form;
 
 use App\Entity\Depense;
 use App\Entity\TypeDepense;
+use App\Form\Type\PreuvesType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\All;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DepenseType extends AbstractType
@@ -53,28 +51,8 @@ class DepenseType extends AbstractType
                     'placeholder' => $this->translator->trans('depense.description-placeholder'),
                 ],
             ])
-            ->add('preuves', FileType::class, [
-                'label' => $this->translator->trans('depense.preuves'),
-                'mapped' => false,
-                'required' => false,
-                'multiple' => true,
-                'attr' => [
-                    'accept' =>  'image/jpeg, image/png, image/webp, application/pdf'
-                ],
-                'help' => $this->translator->trans('upload.help'),
-                'constraints' => [
-                    new All([
-                        new File(
-                            mimeTypes: [
-                                'image/jpeg',
-                                'image/png',
-                                'image/webp',
-                                'application/pdf',
-                            ],
-                            mimeTypesMessage: $this->translator->trans('upload.mimeTypesMessage'),
-                        ),
-                    ])
-                ],
+            ->add('preuves', PreuvesType::class, [
+                'label' => $this->translator->trans('depense.preuves')
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')

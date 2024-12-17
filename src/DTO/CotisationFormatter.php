@@ -79,4 +79,14 @@ class CotisationFormatter
         return '';
     }
 
+    public function hasPreuves(): bool
+    {
+        foreach ($this->cotisations as $cotisation) {
+            if (!empty($cotisation->getPreuves())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -46,6 +46,7 @@ cotisation:
   filter-batiment: Batiment
   filter-batiment-all: Tous
   empty-tarif: Aucun tarif annuel n'a été défini dans les paramètres. Veuillez configurer un tarif annuel pour permettre l'affichage du tableau des cotisations.
+  preuves: Justificatifs de la cotisation
 
 tarif:
   new: Nouvelle cotisation annuelle

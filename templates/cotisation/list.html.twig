@@ -55,8 +55,19 @@
             </thead>
             <tbody>
                 {% for item in items %}
-                <tr class="{% if item.status == 'overdue' %}table-danger{% endif %}">
-                    <td>{{ item.appartement.absoluteName}}</td>
+                <tr class="{% if item.status == 'overdue' %}table-danger{% endif %} {% if item.preuves %}row-clickable{% endif %}"
+                    data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                >
+                    <td>
+                        <span class="row-trigger">
+                            {% if item.preuves %}
+                                <a href="#" class="text-decoration-none">
+                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                </a>
+                            {% endif%}
+                        </span>
+                        {{ item.appartement.absoluteName}}
+                    </td>
                     <td {% if item.status == 'exempt' %}class="text-muted"{% endif %}>
                         {% if item.proprietaire is not null %}
                             {{ item.proprietaire.absoluteName }}

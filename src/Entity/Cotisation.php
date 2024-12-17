@@ -43,6 +43,9 @@ class Cotisation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $partialReason = null;
 
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private array $preuves = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,6 +144,24 @@ class Cotisation
     {
         $this->partialReason = $partialReason;
 
+        return $this;
+    }
+
+    public function getPreuves(): array
+    {
+        return $this->preuves;
+    }
+
+    public function setPreuves(array $preuves): static
+    {
+        $this->preuves = $preuves;
+
+        return $this;
+    }
+
+    public function addPreuve(string $fileName): static
+    {
+        $this->preuves[] = $fileName;
         return $this;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Cotisation;
 use App\Entity\Proprietaire;
 use App\Entity\Tarif;
+use App\Form\Type\PreuvesType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -82,6 +83,9 @@ class CotisationType extends AbstractType
                         ->where('p.leaveAt IS NULL')
                         ->orderBy('p.appartement', 'ASC');
                 },
+            ])
+            ->add('preuves', PreuvesType::class, [
+                'label' => $this->translator->trans('cotisation.preuves'),
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
