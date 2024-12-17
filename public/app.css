@@ -6,10 +6,6 @@
     font-size: 0.8rem;
 }
 
-.border-none {
-    border: none !important;
-}
-
 input[readonly] {
     pointer-events: none;
     background: #0000000a;

@@ -58,7 +58,7 @@
                 <tr class="{% if item.status == 'overdue' %}table-danger{% endif %} {% if item.preuves %}row-clickable{% endif %}"
                     data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
                 >
-                    <td>
+                    <td class="text-nowrap">
                         <span class="row-trigger">
                             {% if item.preuves %}
                                 <a href="#" class="text-decoration-none">

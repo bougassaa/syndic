@@ -4,18 +4,7 @@
             <div class="modal-body">
                 <div class="d-flex flex-column gap-2">
                     {% for image in preuves %}
-                        {% if not (image ends with '.pdf') %}
-                            <img class="img-fluid" src="{{ asset(pathFolder ~ image) }}" alt="{{ image }}">
-                        {% endif %}
-                    {% endfor %}
-
-                    {% for image in preuves %}
-                        {% if image ends with '.pdf' %}
-                            <embed src="{{ asset(pathFolder ~ image) }}"
-                                   type="application/pdf" width="100%" height="500px" tabindex="-1"
-                                   class="border-none"
-                            >
-                        {% endif %}
+                        <img class="img-fluid" src="{{ asset(pathFolder ~ image) }}" alt="{{ image }}">
                     {% endfor %}
                 </div>
             </div>

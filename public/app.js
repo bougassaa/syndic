@@ -132,21 +132,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const modal = new bootstrap.Modal(modalElement); // Créer l'instance de modal
             modal.show(); // Afficher la modal
-
-            modalElement.addEventListener('shown.bs.modal', function (event) {
-                const modal = event.target;
-                modal.querySelector('.modal-body').scrollTop = 0;
-            });
         });
     });
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/public/pdfjs/pdf.worker.min.js';
 
     document.querySelectorAll('input[type=file]').forEach(input => {
         input.addEventListener('change', async e => {
             const files = e.target.files;
             const dataTransfer = new DataTransfer();
 
-            // Create an array of Promises to wait for all compressions to complete
-            const filePromises = Array.from(files).map(file => {
+            const filePromises = Array.from(files).map(async file => {
                 if (file.type.startsWith('image/')) {
                     return new Promise(resolve => {
                         new Compressor(file, {
@@ -154,10 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             maxWidth: 1100, // Max width of compressed image
                             maxHeight: 800, // Max height of compressed image
                             success(result) {
-                                const compressedFile = new File([result], file.name, {
-                                    type: file.type,
-                                    lastModified: Date.now()
-                                });
+                                const compressedFile = new File([result], file.name, { type: file.type });
                                 resolve(compressedFile); // Resolve with the compressed file
                             },
                             error() {
@@ -165,18 +158,38 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         });
                     });
-                } else {
-                    return Promise.resolve(file); // Non-image files don't need compression
+                } else if (file.type === 'application/pdf')  {
+                    const pdfFiles = [];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+                    for (let pageNumber = 1; pageNumber <= pdfDoc.numPages; pageNumber++) {
+                        const page = await pdfDoc.getPage(pageNumber);
+                        const viewport = page.getViewport({ scale: 2 }); // Adjust scale as needed
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+
+                        await page.render({ canvasContext: context, viewport }).promise;
+
+                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                        const pdfFile = new File([blob], `page-${pageNumber}.png`, { type: 'image/png' });
+                        pdfFiles.push(pdfFile);
+                    }
+                    return Promise.resolve(pdfFiles);
                 }
             });
             // Wait for all Promises to resolve
             const processedFiles = await Promise.all(filePromises);
             // Add all processed files to dataTransfer
-            processedFiles.forEach(file => dataTransfer.items.add(file));
+            processedFiles.flat().forEach(file => {
+                dataTransfer.items.add(file)
+            });
             // Update the input's files property
             input.files = dataTransfer.files;
         });
-
     });
 });
 
