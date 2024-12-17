@@ -61,7 +61,7 @@ class DepenseType extends AbstractType
                 'attr' => [
                     'accept' =>  'image/jpeg, image/png, image/webp, application/pdf'
                 ],
-                'help' => $this->translator->trans('upload.help', ['%size%' => ini_get('upload_max_filesize')]),
+                'help' => $this->translator->trans('upload.help'),
                 'constraints' => [
                     new All([
                         new File(

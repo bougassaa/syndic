@@ -1,0 +1,29 @@
+<div class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex flex-column gap-2">
+                    {% for image in depense.preuves %}
+                        {% if not (image ends with '.pdf') %}
+                            <img class="img-fluid" src="{{ asset('uploads/depenses/' ~ image) }}" alt="{{ image }}">
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for image in depense.preuves %}
+                        {% if image ends with '.pdf' %}
+                            <embed src="{{ asset('uploads/depenses/' ~ image) }}"
+                                   type="application/pdf" width="100%" height="500px" tabindex="-1"
+                                   class="border-none"
+                            >
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {{ 'close'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

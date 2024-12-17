@@ -84,6 +84,14 @@ class DepenseController extends AbstractController
         ]);
     }
 
+    #[Route('/depense/more-infos/{depense}', name: 'app_depense_more_infos')]
+    public function moreInfos(Depense $depense): Response
+    {
+        return $this->render('depense/more-infos.html.twig', [
+            'depense' => $depense
+        ]);
+    }
+
     public function getMinMaxYears(DepenseRepository $repository): array
     {
         $thisYear = (int)date("Y");

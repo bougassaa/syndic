@@ -123,6 +123,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.querySelectorAll('.row-clickable[data-url]').forEach(row => {
+        row.addEventListener('click', async () => {
+            const response = await fetch(row.dataset.url);
+            const data = await response.text();
+            const modalElement = createElementFromString(data);
+            document.body.appendChild(modalElement);
+
+            const modal = new bootstrap.Modal(modalElement); // Créer l'instance de modal
+            modal.show(); // Afficher la modal
+
+            modalElement.addEventListener('shown.bs.modal', function (event) {
+                const modal = event.target;
+                modal.querySelector('.modal-body').scrollTop = 0;
+            });
+        });
+    });
+
     document.querySelectorAll('input[type=file]').forEach(input => {
         input.addEventListener('change', async e => {
             const files = e.target.files;
@@ -181,4 +198,10 @@ function jsonParse(value) {
     } catch (e) {
         return [];
     }
+}
+
+function createElementFromString(string) {
+    const div = document.createElement('div');
+    div.innerHTML = string.trim();
+    return div.firstElementChild;
 }

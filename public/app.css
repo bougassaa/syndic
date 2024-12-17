@@ -6,6 +6,10 @@
     font-size: 0.8rem;
 }
 
+.border-none {
+    border: none !important;
+}
+
 input[readonly] {
     pointer-events: none;
     background: #0000000a;
@@ -39,4 +43,19 @@ input[readonly] {
 
 tr.table-danger td {
     --bs-table-bg-type: unset !important;
+}
+
+.row-clickable {
+    cursor: pointer;
+}
+.row-trigger {
+    width: 22px;
+    display: inline-block;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .modal-lg, .modal-xl {
+        --bs-modal-width: 800px;
+    }
 }

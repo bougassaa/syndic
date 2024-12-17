@@ -16,6 +16,7 @@ class DepenseRepository extends ServiceEntityRepository
         parent::__construct($registry, Depense::class);
     }
 
+    /** @return Depense[] */
     public function getDepensesPerYear(int|false $year)
     {
         $qb = $this->createQueryBuilder('d');

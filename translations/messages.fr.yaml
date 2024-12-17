@@ -3,11 +3,12 @@ parametres: Paramètres
 save: Sauvegarder
 edit: Modifier
 status: Statut
+close: Fermer
 select-choose: Sélectionner une valeur
 optional: Facultatif
 appartement: N° appartement
 montant: Montant
-description: Déscription
+description: Description
 montant-a-payer: Montant à payer
 
 proprietaire:
@@ -91,4 +92,4 @@ type-depense:
 
 upload:
   mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
-  help: Uniquement les PDF et images PNG, JPG, JPEG. Maximum %size%b par fichier.
+  help: Uniquement les PDF et images PNG, JPG, JPEG.

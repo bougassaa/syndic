@@ -32,7 +32,7 @@ class Depense
     private ?Syndic $syndic = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    private ?array $preuves = [];
+    private array $preuves = [];
 
     public function getId(): ?int
     {
@@ -99,12 +99,12 @@ class Depense
         return $this;
     }
 
-    public function getPreuves(): ?array
+    public function getPreuves(): array
     {
         return $this->preuves;
     }
 
-    public function setPreuves(?array $preuves): static
+    public function setPreuves(array $preuves): static
     {
         $this->preuves = $preuves;
 

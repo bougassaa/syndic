@@ -41,8 +41,19 @@
             </thead>
             <tbody>
                 {% for item in depenses %}
-                    <tr>
-                        <td>{{ item.paidAt|date }}</td>
+                    <tr {% if item.preuves is not empty %}class="row-clickable"{% endif%}
+                        data-url="{{ url('app_depense_more_infos', {'depense': item.id}) }}"
+                    >
+                        <td>
+                            <span class="row-trigger">
+                                {% if item.preuves is not empty %}
+                                    <a href="#" class="text-decoration-none">
+                                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                    </a>
+                                {% endif%}
+                            </span>
+                            {{ item.paidAt|date }}
+                        </td>
                         <td>{{ item.montant|format_currency('MAD') }}</td>
                         <td>{{ item.type.label }}</td>
                         <td style="max-width: 300px;" class="text-truncate">{{ item.description }}</td>
