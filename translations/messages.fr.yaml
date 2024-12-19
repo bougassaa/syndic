@@ -11,10 +11,10 @@ description: Description
 montant-a-payer: Montant à payer
 
 proprietaire:
-  nav: Co-propriétaires
+  nav: Propriétaires
   new: Ajouter un propriétaire
   edit: Modifier un propriétaire
-  list: Liste des co-propriétaires
+  list: Liste des propriétaires
   nom: Nom de famille
   prenom: Prénom
   beginAt: Date début adhésion
@@ -30,7 +30,7 @@ cotisation:
   montant: Montant du règlement
   moyenPaiement: Moyen de paiement
   paidAt: Date de règlement
-  proprietaire: Co-propriétaire
+  proprietaire: Propriétaire
   tarif: Périodes concernées
   isPartialPayment: Est un paiement partiel accepté ?
   partialReason: Raison du paiement partiel
