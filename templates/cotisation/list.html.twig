@@ -9,7 +9,7 @@
         <h2 class="flex-fill">{{ 'cotisation.list'|trans }}</h2>
         <a href="{{ path('app_cotisation_new') }}" class="btn btn-primary" >{{ 'cotisation.new'|trans }}</a>
     </div>
-    <div class="bg-white position-sticky py-2 mb-md-1" style="top: var(--filter-list-top)">
+    <div class="bg-white position-sticky py-2 mb-md-1 z-1" style="top: var(--filter-list-top)">
         <form action="{{ path('app_cotisation_list') }}"
               method="get"
               class="list-filter-form d-flex flex-wrap gap-2 align-items-center"
