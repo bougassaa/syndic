@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Permet l'accès direct aux fichiers dans le répertoire public
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Redirige tout le reste vers /public/index.php
+RewriteRule ^(.*)$ public/$1 [L]
