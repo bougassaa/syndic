@@ -25,7 +25,7 @@ class AppartementFieldType extends AbstractType
             'group_by' => function (Appartement $appartement) {
                 return $appartement->getBatiment()->getNom();
             },
-            'label' => $this->translator->trans('appartement'),
+            'label' => $this->translator->trans('appartement.nom'),
         ]);
     }
 

@@ -6,7 +6,6 @@ status: Statut
 close: Fermer
 select-choose: Sélectionner une valeur
 optional: Facultatif
-appartement: N° appartement
 montant: Montant
 description: Description
 montant-a-payer: Montant à payer
@@ -94,6 +93,7 @@ type-depense:
 upload:
   mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
   help: Uniquement les PDF et images PNG, JPG, JPEG.
+
 batiment:
   nav: Batiments
   nom: N° Batiment
@@ -101,3 +101,9 @@ batiment:
   list: Liste des batiments
   countAppartements: '%count% appartements'
   nom-help: Par exemple A, B, C,D...
+
+appartement:
+  nav: Appartements
+  nom: N° appartement
+  new: Ajouter un appartement
+  list: Liste des appartements

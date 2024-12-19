@@ -135,4 +135,18 @@ class Appartement
             $this->getBatiment()->getNom() . '-' .
             $this->getNumero();
     }
+
+    public function getLastProprietaire(): ?Proprietaire
+    {
+        if ($this->proprietaires->isEmpty()) {
+            return null;
+        }
+
+        $proprietaires = $this->proprietaires->toArray();
+
+        usort($proprietaires, fn (Proprietaire $a, Proprietaire $b) => $b->getBeginAt() <=> $a->getBeginAt());
+
+        return $proprietaires[0];
+    }
+
 }
