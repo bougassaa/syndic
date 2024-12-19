@@ -117,7 +117,7 @@ class CotisationController extends AbstractController
 
         return $this->render('_components/preuves-modal.html.twig', [
             'preuves' => $preuves,
-            'pathFolder' => 'uploads/cotisations/'
+            'pathFolder' => 'cotisations'
         ]);
     }
 

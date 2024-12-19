@@ -4,7 +4,7 @@
             <div class="modal-body px-1 px-sm-3 px-md-4 px-lg-5">
                 <div class="d-flex flex-column gap-2">
                     {% for image in preuves %}
-                        <img class="img-fluid" src="{{ asset(pathFolder ~ image) }}" alt="{{ image }}">
+                        <img class="img-fluid" src="{{ path('app_serve_image', {'filename': image, 'folder': pathFolder}) }}" alt="{{ image }}">
                     {% endfor %}
                 </div>
             </div>

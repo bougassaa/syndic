@@ -89,7 +89,7 @@ class DepenseController extends AbstractController
     {
         return $this->render('_components/preuves-modal.html.twig', [
             'preuves' => $depense->getPreuves(),
-            'pathFolder' => 'uploads/depenses/'
+            'pathFolder' => 'depenses'
         ]);
     }
 
