@@ -94,3 +94,10 @@ type-depense:
 upload:
   mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
   help: Uniquement les PDF et images PNG, JPG, JPEG.
+batiment:
+  nav: Batiments
+  nom: N° Batiment
+  new: Ajouter un batiment
+  list: Liste des batiments
+  countAppartements: '%count% appartements'
+  nom-help: Par exemple A, B, C,D...

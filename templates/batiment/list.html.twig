@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'batiment.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center flex-wrap">
+        <h2 class="flex-fill">{{ 'batiment.list'|trans }}</h2>
+        <a href="{{ path('app_batiment_new') }}" class="btn btn-primary" >{{ 'batiment.new'|trans }}</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'batiment.nom'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for batiment in batiments %}
+                <tr>
+                    <th>{{ batiment.nom }}</th>
+                    <td>
+                        {{ 'batiment.countAppartements'|trans({'%count%': batiment.appartements.count}) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

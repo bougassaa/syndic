@@ -23,6 +23,7 @@ class BatimentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->where('b.syndic = :syndic')
             ->setParameter('syndic', $syndic)
+            ->orderBy('b.nom', 'ASC')
             ->getQuery()
             ->getResult();
     }
