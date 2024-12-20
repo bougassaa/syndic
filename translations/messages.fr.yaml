@@ -9,6 +9,13 @@ optional: Facultatif
 montant: Montant
 description: Description
 montant-a-payer: Montant à payer
+for: 'Pour %for%'
+
+home:
+  cotisations: Voir le tableau des cotisations
+  depenses: Voir ce qui a été dépensé
+  cotisations-paid: Cotisations payées
+  cotisations-tooltip: La somme des cotisations annuelles correspond au nombre de propriétaires multiplié par le tarif annuel, sans inclure les montants partiels acceptés.
 
 proprietaire:
   nav: Propriétaires
