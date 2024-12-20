@@ -146,8 +146,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('input[type=file]').forEach(input => {
         input.addEventListener('change', async e => {
+            const sumbitButton = document.querySelector('form button[type="submit"]');
             const files = e.target.files;
             const dataTransfer = new DataTransfer();
+
+            loading(sumbitButton, true);
 
             const filePromises = Array.from(files).map(async file => {
                 if (file.type.startsWith('image/')) {
@@ -196,6 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             // Update the input's files property
             input.files = dataTransfer.files;
+
+            loading(sumbitButton, false);
         });
     });
 });
@@ -243,4 +248,19 @@ function initCopy(parent = document) {
             });
         });
     });
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {boolean} load
+ */
+function loading(element, load) {
+    if (load) {
+        const spinner = createElementFromString('<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>')
+        element.setAttribute('disabled', 'disabled');
+        element.prepend(spinner);
+    } else {
+        element.removeAttribute('disabled');
+        element.querySelectorAll('.spinner-border').forEach(el => el.remove());
+    }
 }
