@@ -3,6 +3,7 @@ parametres: Paramètres
 save: Sauvegarder
 edit: Modifier
 status: Statut
+copy: Copier
 close: Fermer
 select-choose: Sélectionner une valeur
 optional: Facultatif
@@ -15,6 +16,7 @@ for-year: "Pour l'année %year%"
 home:
   cotisations: Voir le tableau des cotisations
   depenses: Voir ce qui a été dépensé
+  rib: Afficher le RIB
   cotisations-paid: Cotisations payées
   cotisations-tooltip: La somme des cotisations annuelles correspond au nombre de propriétaires multiplié par le tarif annuel, sans inclure les montants partiels acceptés.
   depenses-paid: Argent dépensé

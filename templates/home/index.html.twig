@@ -5,16 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <div class="d-flex flex-column gap-3">
-        <div class="row g-3 g-md-4">
+    <div class="d-flex flex-column gap-5">
+        <div class="row g-3">
             <div class="col-md">
                 <a href="{{ path('app_cotisation_list') }}" class="btn btn-primary d-block">
+                    <i class="fa-solid fa-receipt"></i>
                     {{ 'home.cotisations'|trans }}
                 </a>
             </div>
             <div class="col-md">
                 <a href="{{ path('app_depense_list') }}" class="btn btn-primary d-block">
+                    <i class="fa-solid fa-basket-shopping"></i>
                     {{ 'home.depenses'|trans }}
+                </a>
+            </div>
+            <div class="col-md">
+                <a href="javascript:void(0)" data-url="{{ path('app_show_rib_modal') }}" class="btn btn-primary d-block">
+                    <i class="fa-solid fa-credit-card"></i>
+                    {{ 'home.rib'|trans }}
                 </a>
             </div>
         </div>

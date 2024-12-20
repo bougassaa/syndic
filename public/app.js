@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    initTooltip();
+    initCopy();
+
     document.querySelectorAll('input.text-uppercase').forEach(input => {
         input.addEventListener('blur', function (event) {
             event.target.value = event.target.value.toUpperCase()
@@ -85,10 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
-        new bootstrap.Tooltip(element)
-    });
-
     document.querySelectorAll('.list-filter-form').forEach(form => {
         form.addEventListener('input', function () {
             form.submit();
@@ -123,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.querySelectorAll('.row-clickable[data-url]').forEach(row => {
+    // used for all [data-url]
+    document.querySelectorAll('[data-url]').forEach(row => {
         row.addEventListener('click', async () => {
             const response = await fetch(row.dataset.url);
             const data = await response.text();
@@ -132,6 +132,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const modal = new bootstrap.Modal(modalElement); // Créer l'instance de modal
             modal.show(); // Afficher la modal
+
+            modalElement.addEventListener('shown.bs.modal', () => {
+                initTooltip(modalElement);
+                initCopy(modalElement).then(function () {
+                    modal.hide();
+                })
+            })
         });
     });
 
@@ -217,4 +224,23 @@ function createElementFromString(string) {
     const div = document.createElement('div');
     div.innerHTML = string.trim();
     return div.firstElementChild;
+}
+
+function initTooltip(parent = document) {
+    parent.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
+        new bootstrap.Tooltip(element)
+    });
+}
+
+function initCopy(parent = document) {
+    return new Promise((resolve) => {
+        parent.querySelectorAll('[data-copy]').forEach(button => {
+            button.addEventListener('click', async () => {
+                const id = button.dataset.copy;
+                const element = parent.querySelector(id);
+                const value = element.value.replaceAll(' ', '');
+                navigator.clipboard.writeText(value).then(resolve)
+            });
+        });
+    });
 }
