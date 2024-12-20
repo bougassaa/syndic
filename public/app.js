@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     initTooltip();
-    initCopy();
+    new ClipboardJS('.clipboard');
 
     document.querySelectorAll('input.text-uppercase').forEach(input => {
         input.addEventListener('blur', function (event) {
@@ -135,9 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             modalElement.addEventListener('shown.bs.modal', () => {
                 initTooltip(modalElement);
-                initCopy(modalElement).then(function () {
-                    modal.hide();
-                })
             })
         });
     });
@@ -234,19 +231,6 @@ function createElementFromString(string) {
 function initTooltip(parent = document) {
     parent.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
         new bootstrap.Tooltip(element)
-    });
-}
-
-function initCopy(parent = document) {
-    return new Promise((resolve) => {
-        parent.querySelectorAll('[data-copy]').forEach(button => {
-            button.addEventListener('click', async () => {
-                const id = button.dataset.copy;
-                const element = parent.querySelector(id);
-                const value = element.value.replaceAll(' ', '');
-                navigator.clipboard.writeText(value).then(resolve)
-            });
-        });
     });
 }
 
