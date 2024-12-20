@@ -17,16 +17,22 @@ class ProprietaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Proprietaire::class);
     }
 
-    public function getNumberOfProprietaire(Syndic $syndic): int
+    /** @return Proprietaire[] */
+    public function getSyndicProprietaires(Syndic $syndic): array
     {
         return $this->createQueryBuilder('p')
-            ->select('COUNT(p)')
             ->join('p.appartement', 'a')
             ->join('a.batiment', 'b')
             ->where('p.leaveAt IS NULL')
             ->andWhere('b.syndic = :syndic')
             ->setParameter('syndic', $syndic)
+            ->orderBy('p.appartement', 'ASC')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getResult();
+    }
+
+    public function getNumberOfProprietaires(Syndic $syndic): int
+    {
+        return count($this->getSyndicProprietaires($syndic));
     }
 }

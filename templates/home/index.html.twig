@@ -25,15 +25,34 @@
                         <h6 class="card-subtitle text-body-secondary">
                             {{ 'home.cotisations-paid'|trans }}
                         </h6>
-                        <div class="mt-3 mb-2 fs-3 lh-1">
-                            {{ totalCotisations|format_currency('MAD') }}
+                        <div class="my-2">
+                            <span class="fs-3 text-underline-success">
+                                {{ totalCotisations|format_currency('MAD') }}
+                            </span>
                             <span class="fs-6 text-nowrap">
                                 / {{ totalCotisationsAttendues|format_currency('MAD') }}
                                 <i class="fa-solid fa-circle-info text-secondary"></i>
                             </span>
                         </div>
+                        {% if currentTarif is not null %}
+                            <small class="fw-light">
+                                {{ 'for'|trans({'%for%': currentTarif.periodeYear}) }}
+                            </small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-body-secondary">
+                            {{ 'home.depenses-paid'|trans }}
+                        </h6>
+                        <div class="my-2 fs-3 text-underline-danger">
+                            {{ totalDepenses|format_currency('MAD') }}
+                        </div>
                         <small class="fw-light">
-                            {{ 'for'|trans({'%for%': currentTarif.periodeYear}) }}
+                            {{ 'for-year'|trans({'%year%': totalDepensesYear}) }}
                         </small>
                     </div>
                 </div>
@@ -41,14 +60,32 @@
             <div class="col-md">
                 <div class="card h-100">
                     <div class="card-body">
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="card h-100">
-                    <div class="card-body">
-
+                        <h6 class="card-subtitle text-body-secondary">
+                            {{ 'home.cotisations-statut'|trans }}
+                        </h6>
+                        <div class="my-2">
+                            {% if paidCotisations > 0 and pendingCotisations == 0 %}
+                                <span class="badge text-bg-success">{{ 'home.cotisations-statut-all-paid'|trans }}</span>
+                            {% elseif paidCotisations == 0 and pendingCotisations == 0 %}
+                                <span class="badge text-bg-secondary">{{ 'home.cotisations-statut-empty'|trans }}</span>
+                            {% else %}
+                                {% if paidCotisations > 0 %}
+                                    <div>
+                                        <span class="badge text-bg-success">{{ 'home.cotisations-statut-paid'|trans({'%no%': pendingCotisations}) }}</span>
+                                    </div>
+                                {% endif %}
+                                {% if pendingCotisations > 0 %}
+                                    <div>
+                                        <span class="badge text-bg-danger">{{ 'home.cotisations-statut-pending'|trans({'%no%': pendingCotisations}) }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% if currentTarif is not null %}
+                            <small class="fw-light">
+                                {{ 'for'|trans({'%for%': currentTarif.periodeYear}) }}
+                            </small>
+                        {% endif %}
                     </div>
                 </div>
             </div>

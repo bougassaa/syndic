@@ -24,7 +24,7 @@ class CotisationRepository extends ServiceEntityRepository
             ->where('c.tarif = :tarif')
             ->setParameter('tarif', $tarif)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult() ?? 0;
     }
 
 }

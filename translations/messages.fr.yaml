@@ -10,12 +10,19 @@ montant: Montant
 description: Description
 montant-a-payer: Montant à payer
 for: 'Pour %for%'
+for-year: "Pour l'année %year%"
 
 home:
   cotisations: Voir le tableau des cotisations
   depenses: Voir ce qui a été dépensé
   cotisations-paid: Cotisations payées
   cotisations-tooltip: La somme des cotisations annuelles correspond au nombre de propriétaires multiplié par le tarif annuel, sans inclure les montants partiels acceptés.
+  depenses-paid: Argent dépensé
+  cotisations-statut: Status des cotisations
+  cotisations-statut-empty: Aucun status pour le moment
+  cotisations-statut-all-paid: Toutes les cotisations on été payées
+  cotisations-statut-paid: '%no% cotisations ont été payées'
+  cotisations-statut-pending: '%no% cotisations ne sont pas payées'
 
 proprietaire:
   nav: Propriétaires
@@ -41,15 +48,15 @@ cotisation:
   tarif: Périodes concernées
   isPartialPayment: Est un paiement partiel accepté ?
   partialReason: Raison du paiement partiel
-  isPartialPayment-help: Exemple, le propriétaire paye la moitié de la cotisation car il est arrivé en milieu d'année.
-  partialReason-placeholder: Écrire la raison du paiement partiel...
+  isPartialPayment-help: Par exemple, le propriétaire paie la moitié de la cotisation car il est arrivé en milieu d'année.
+  partialReason-placeholder: Indiquez la raison du paiement partiel...
   exempt: Exonéré
   overdue: Non payé
   incomplete: Incomplet
   paid: Payé
   total: Total des cotisations pour la période
   filter-year: Cotisations pour
-  filter-batiment: Batiment
+  filter-batiment: Bâtiment
   filter-batiment-all: Tous
   empty-tarif: Aucun tarif annuel n'a été défini dans les paramètres. Veuillez configurer un tarif annuel pour permettre l'affichage du tableau des cotisations.
   preuves: Justificatifs de la cotisation
@@ -64,7 +71,7 @@ tarif:
 
 moyenPaiement:
   cheque: Chèque
-  espece: Espece
+  espece: Espèces
   virement: Virement
   autre: Autre
 
@@ -88,29 +95,29 @@ type-depense:
   edit: Modifier un type de dépense
   list: Liste des types de dépenses
   montant: Montant approximatif
-  montant-help: Un montant approximatif, pour calculer une moyenne des dépenses à l'année
+  montant-help: Un montant approximatif pour calculer une moyenne des dépenses à l'année
   label: Nom de la catégorie
-  label-help: Par exemple, Salaire jardinier, Électricité, Frais annuel...
+  label-help: 'Par exemple : Salaire jardinier, Électricité, Frais annuels...'
   frequence: Fréquence de paiement
   frequence-help: Est-ce un paiement qui se répète une fois tous les mois, par année ou occasionnellement ?
   mensuelle: Mensuelle
   annuelle: Annuelle
-  occasionnelle: Ocasionnelle
+  occasionnelle: Occasionnelle
 
 upload:
-  mimeTypesMessage: Fichiers acceptés (PDF, images PNG, JPEG...)
+  mimeTypesMessage: 'Fichiers acceptés : PDF, images PNG, JPEG...'
   help: Uniquement les PDF et images PNG, JPG, JPEG.
 
 batiment:
-  nav: Batiments
-  nom: N° Batiment
-  new: Ajouter un batiment
-  list: Liste des batiments
+  nav: Bâtiments
+  nom: N° Bâtiment
+  new: Ajouter un bâtiment
+  list: Liste des bâtiments
   countAppartements: '%count% appartements'
-  nom-help: Par exemple A, B, C,D...
+  nom-help: 'Par exemple : A, B, C, D...'
 
 appartement:
   nav: Appartements
-  nom: N° appartement
+  nom: N° Appartement
   new: Ajouter un appartement
   list: Liste des appartements

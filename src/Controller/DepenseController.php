@@ -30,7 +30,7 @@ class DepenseController extends AbstractController
     public function list(DepenseRepository $repository, #[MapQueryParameter] ?string $selectedYear): Response
     {
         $selectedYear = filter_var($selectedYear, FILTER_VALIDATE_INT);
-        $depenses = $repository->getDepensesPerYear($selectedYear);
+        $depenses = $repository->getDepensesPerYear($selectedYear, $this->syndic);
         $years = $this->getMinMaxYears($repository);
 
         $total = array_reduce($depenses, function ($carry, Depense $depense) {
@@ -96,8 +96,8 @@ class DepenseController extends AbstractController
     public function getMinMaxYears(DepenseRepository $repository): array
     {
         $thisYear = (int)date("Y");
-        $startYear = $repository->getFirstOldDepense()?->getPaidAt()->format('Y');
-        $endYear = $repository->getLastNewDepense()?->getPaidAt()->format('Y');
+        $startYear = $repository->getFirstOldDepense($this->syndic)?->getPaidAt()->format('Y');
+        $endYear = $repository->getLastNewDepense($this->syndic)?->getPaidAt()->format('Y');
 
         if (!$startYear || $startYear >= $thisYear) {
             $startYear = $thisYear - 1;

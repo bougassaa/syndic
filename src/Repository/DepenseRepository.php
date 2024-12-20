@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Depense;
+use App\Entity\Syndic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,7 +18,7 @@ class DepenseRepository extends ServiceEntityRepository
     }
 
     /** @return Depense[] */
-    public function getDepensesPerYear(int|false $year)
+    public function getDepensesPerYear(int|false $year, Syndic $syndic)
     {
         $qb = $this->createQueryBuilder('d');
 
@@ -26,24 +27,42 @@ class DepenseRepository extends ServiceEntityRepository
                 ->setParameter('year', $year);
         }
 
-        return $qb->orderBy('d.paidAt', 'DESC')
+        return $qb->andWhere('d.syndic = :syndic')
+            ->setParameter('syndic', $syndic)
+            ->orderBy('d.paidAt', 'DESC')
             ->addOrderBy('d.id',  'DESC')
             ->getQuery()
             ->getResult();
     }
 
-    public function getFirstOldDepense(): ?Depense
+    public function getTotalDepensesPerYear(int $year, Syndic $syndic): float
     {
         return $this->createQueryBuilder('d')
+            ->select('SUM(d.montant)')
+            ->where('YEAR(d.paidAt) = :year')
+            ->andWhere('d.syndic = :syndic')
+            ->setParameter('year', $year)
+            ->setParameter('syndic', $syndic)
+            ->getQuery()
+            ->getSingleScalarResult() ?? 0;
+    }
+
+    public function getFirstOldDepense(Syndic $syndic): ?Depense
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.syndic = :syndic')
+            ->setParameter('syndic', $syndic)
             ->orderBy('d.paidAt', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getLastNewDepense(): ?Depense
+    public function getLastNewDepense(Syndic $syndic): ?Depense
     {
         return $this->createQueryBuilder('d')
+            ->andWhere('d.syndic = :syndic')
+            ->setParameter('syndic', $syndic)
             ->orderBy('d.paidAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()

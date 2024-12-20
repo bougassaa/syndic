@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProprietaireRepository::class)]
 class Proprietaire
@@ -28,6 +29,7 @@ class Proprietaire
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true, options: ['comment' => "Date vente de l'appartement"])]
     private ?\DateTimeInterface $leaveAt = null;
 
+    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'proprietaires')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Appartement $appartement = null;

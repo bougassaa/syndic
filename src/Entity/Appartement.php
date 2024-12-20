@@ -6,6 +6,7 @@ use App\Repository\AppartementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppartementRepository::class)]
 class Appartement
@@ -18,6 +19,7 @@ class Appartement
     #[ORM\Column]
     private ?int $numero = null;
 
+    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'appartements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Batiment $batiment = null;
