@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         ${select.getAttribute('data-select-label')}
                         <strong>${escape(data.text)}</strong>
                     </div>`;
-                }
+                }, ...options.render
             }
         }
 

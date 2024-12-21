@@ -49,7 +49,7 @@ tr.table-danger td {
     --bs-table-bg-type: unset !important;
 }
 
-.row-clickable {
+tr[data-url] {
     cursor: pointer;
 }
 .row-trigger {

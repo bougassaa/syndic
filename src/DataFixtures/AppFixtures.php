@@ -12,34 +12,42 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private array $batiments = ['A', 'B', 'C', 'D'];
 
-    private array $appartements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    private array $mapping = [
+        'GH16' => [
+            'A' => 25,
+            'B' => 13,
+            'C' => 14,
+            'D' => 25
+        ]
+    ];
+
 
     public function load(ObjectManager $manager): void
     {
-        $syndic = new Syndic();
-        $syndic->setNom('GH16');
-
-        $manager->persist($syndic);
-
         $monAppartement = null;
-        foreach ($this->batiments as $name) {
-            $batiment = new Batiment();
-            $batiment->setNom($name);
-            $batiment->setSyndic($syndic);
+        foreach ($this->mapping as $syndicName => $batiments) {
+            $syndic = new Syndic();
+            $syndic->setNom($syndicName);
 
-            $manager->persist($batiment);
+            $manager->persist($syndic);
+            foreach ($batiments as $batimentName => $noApparts) {
+                $batiment = new Batiment();
+                $batiment->setNom($batimentName);
+                $batiment->setSyndic($syndic);
 
-            foreach ($this->appartements as $number) {
-                $appartement = new Appartement();
-                $appartement->setNumero($number);
-                $appartement->setBatiment($batiment);
+                $manager->persist($batiment);
 
-                $manager->persist($appartement);
+                for ($noAppart = 1; $noAppart <= $noApparts; $noAppart++) {
+                    $appartement = new Appartement();
+                    $appartement->setNumero($noAppart);
+                    $appartement->setBatiment($batiment);
 
-                if ($name == 'B' && $number == 9) {
-                    $monAppartement = $appartement;
+                    $manager->persist($appartement);
+
+                    if ($batimentName == 'B' && $noAppart == 9) {
+                        $monAppartement = $appartement;
+                    }
                 }
             }
         }

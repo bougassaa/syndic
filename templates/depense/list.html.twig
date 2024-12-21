@@ -41,9 +41,7 @@
             </thead>
             <tbody>
                 {% for item in depenses %}
-                    <tr {% if item.preuves is not empty %}class="row-clickable"{% endif%}
-                        data-url="{{ url('app_depense_more_infos', {'depense': item.id}) }}"
-                    >
+                    <tr {% if item.preuves is not empty %}data-url="{{ url('app_depense_more_infos', {'depense': item.id}) }}"{% endif%}>
                         <td>
                             <span class="row-trigger">
                                 {% if item.preuves is not empty %}
