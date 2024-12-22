@@ -16,17 +16,24 @@
                 <th scope="col">{{ 'appartement.nom'|trans }}</th>
                 <th scope="col">{{ 'proprietaire.nom'|trans }}</th>
                 <th scope="col">{{ 'proprietaire.prenom'|trans }}</th>
-                <th scope="col">{{ 'proprietaire.beginAt'|trans }}</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for proprietaire in proprietaires %}
                 <tr>
-                    <td>{{ proprietaire.appartementAbsoluteName }}</td>
+                    <td>
+                        {% for possession in proprietaire.possessions %}
+                            <div class="d-flex gap-2 align-items-center">
+                                {{ possession.appartement.absoluteName(false) }}
+                                {{ include('_components/badge.html.twig', {
+                                    content: 'from'|trans({'%from%': (possession.beginAt|date)})
+                                }) }}
+                            </div>
+                        {% endfor %}
+                    </td>
                     <td>{{ proprietaire.nom }}</td>
                     <td>{{ proprietaire.prenom }}</td>
-                    <td>{{ proprietaire.beginAt|date }}</td>
                     <td>
                         <a href="{{ path('app_proprietaire_edit', {'proprietaire': proprietaire.id}) }}">
                             {{ 'edit'|trans }}

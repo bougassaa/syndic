@@ -1,0 +1,21 @@
+{% set badge_classes = {
+    'danger' : 'text-bg-danger',
+    'success': 'text-success-emphasis bg-success-subtle border-success-subtle border',
+    'warning': 'text-warning-emphasis bg-warning-subtle border-warning-subtle border',
+    'default': 'text-dark-emphasis bg-secondary-subtle border-dark-subtle border'
+} %}
+
+{% set type = type|default('default') %}
+{% set badge_class = badge_classes[type] ?? badge_classes['default'] %}
+
+<span class="badge {{ badge_class }}"
+    {% if tooltip is defined and tooltip %}
+        data-bs-toggle="tooltip"
+        data-bs-title="{{ tooltip }}"
+    {% endif %}
+>
+    {% if icon is defined and icon %}
+        <i class="{{ icon }}"></i>
+    {% endif %}
+    {{ content|default('') }}
+</span>

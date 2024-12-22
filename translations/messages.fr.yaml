@@ -10,6 +10,7 @@ optional: Facultatif
 montant: Montant
 description: Description
 montant-a-payer: Montant à payer
+from: 'Depuis %from%'
 for: 'Pour %for%'
 for-year: "Pour l'année %year%"
 

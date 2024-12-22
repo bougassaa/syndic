@@ -77,28 +77,27 @@
                     </td>
                     <td>
                         {% if item.status == 'paid' %}
-                            <span class="badge text-success-emphasis bg-success-subtle border-success-subtle border"
-                                {% if item.partialPayment and item.partialReason is not empty %}
-                                    data-bs-toggle="tooltip" data-bs-title="{{ item.partialReason }}"
-                                {% endif %}
-                            >
-                                {{ 'cotisation.paid'|trans }}
-                                {% if item.partialPayment and item.partialReason is not empty %}
-                                    <i class="fa-regular fa-circle-question"></i>
-                                {% endif %}
-                            </span>
+                            {% set isPartial = (item.partialPayment and item.partialReason is not empty) %}
+                            {{ include('_components/badge.html.twig', {
+                                type: 'success',
+                                tooltip: isPartial ? item.partialReason : null,
+                                icon:  isPartial ? 'fa-regular fa-circle-question' : null,
+                                content: 'cotisation.paid'|trans
+                            }) }}
                         {% elseif item.status == 'incomplete' %}
-                            <span class="badge text-warning-emphasis bg-warning-subtle border-warning-subtle border">
-                                {{ 'cotisation.incomplete'|trans }}
-                            </span>
+                            {{ include('_components/badge.html.twig', {
+                                type: 'warning',
+                                content: 'cotisation.incomplete'|trans
+                            }) }}
                         {% elseif item.status == 'overdue' %}
-                            <span class="badge text-bg-danger">
-                                {{ 'cotisation.overdue'|trans }}
-                            </span>
+                            {{ include('_components/badge.html.twig', {
+                                type: 'danger',
+                                content: 'cotisation.overdue'|trans
+                            }) }}
                         {% elseif item.status == 'exempt' %}
-                            <span class="badge text-dark-emphasis bg-secondary-subtle border-dark-subtle border">
-                                {{ 'cotisation.exempt'|trans }}
-                            </span>
+                            {{ include('_components/badge.html.twig', {
+                                content: 'cotisation.exempt'|trans
+                            }) }}
                         {% endif %}
                     </td>
                     <td>
