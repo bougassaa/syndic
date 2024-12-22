@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Appartement;
 use App\Entity\Batiment;
+use App\Entity\Possession;
 use App\Entity\Proprietaire;
 use App\Entity\Syndic;
 use App\Entity\TypeDepense;
@@ -55,10 +56,14 @@ class AppFixtures extends Fixture
         $proprietaire = new Proprietaire();
         $proprietaire->setNom('BOUGASSAA');
         $proprietaire->setPrenom('Amine');
-        $proprietaire->setBeginAt(new \DateTime('2024-01-03'));
-        $proprietaire->setAppartement($monAppartement);
+
+        $possession = new Possession();
+        $possession->setProprietaire($proprietaire);
+        $possession->setAppartement($monAppartement);
+        $possession->setBeginAt(new \DateTime('2024-01-03'));
 
         $manager->persist($proprietaire);
+        $manager->persist($possession);
 
         $typeDepense = new TypeDepense();
         $typeDepense->setLabel('Salaire jardinier');
