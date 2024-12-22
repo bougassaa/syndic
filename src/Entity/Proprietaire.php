@@ -5,9 +5,7 @@ namespace App\Entity;
 use App\Repository\ProprietaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProprietaireRepository::class)]
 class Proprietaire
@@ -23,16 +21,11 @@ class Proprietaire
     #[ORM\Column(length: 100)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, options: ['comment' => "Date achat de l'appartement"])]
-    private ?\DateTimeInterface $beginAt = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true, options: ['comment' => "Date vente de l'appartement"])]
-    private ?\DateTimeInterface $leaveAt = null;
-
-    #[Assert\NotBlank]
-    #[ORM\ManyToOne(inversedBy: 'proprietaires')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Appartement $appartement = null;
+    /**
+     * @var Collection<int, Possession>
+     */
+    #[ORM\OneToMany(targetEntity: Possession::class, mappedBy: 'proprietaire')]
+    private Collection $possessions;
 
     /**
      * @var Collection<int, Cotisation>
@@ -42,6 +35,7 @@ class Proprietaire
 
     public function __construct()
     {
+        $this->possessions = new ArrayCollection();
         $this->cotisations = new ArrayCollection();
     }
 
@@ -74,43 +68,32 @@ class Proprietaire
         return $this;
     }
 
-    public function getBeginAt(): ?\DateTimeInterface
+    /**
+     * @return Collection<int, Possession>
+     */
+    public function getPossessions(): Collection
     {
-        return $this->beginAt;
+        return $this->possessions;
     }
 
-    public function setBeginAt(\DateTimeInterface $beginAt): static
+    public function addPossession(Possession $possession): static
     {
-        $this->beginAt = $beginAt;
+        if (!$this->possessions->contains($possession)) {
+            $this->possessions->add($possession);
+            $possession->setProprietaire($this);
+        }
 
         return $this;
     }
 
-    public function getLeaveAt(): ?\DateTimeInterface
+    public function removePossession(Possession $possession): static
     {
-        return $this->leaveAt;
-    }
-
-    public function setLeaveAt(?\DateTimeInterface $leaveAt): static
-    {
-        $this->leaveAt = $leaveAt;
-
-        return $this;
-    }
-
-    public function getAppartement(): ?Appartement
-    {
-        return $this->appartement;
-    }
-
-    public function getAppartementAbsoluteName(bool $withSyndic = true): string
-    {
-        return $this->appartement->getAbsoluteName($withSyndic);
-    }
-
-    public function setAppartement(?Appartement $appartement): static
-    {
-        $this->appartement = $appartement;
+        if ($this->possessions->removeElement($possession)) {
+            // set the owning side to null (unless already changed)
+            if ($possession->getProprietaire() === $this) {
+                $possession->setProprietaire(null);
+            }
+        }
 
         return $this;
     }
@@ -152,12 +135,6 @@ class Proprietaire
 
     public function isExempt(Tarif $tarif): bool
     {
-        $tarifStart = $tarif->getDebutPeriode()->getTimestamp();
-        $tarifEnd = $tarif->getFinPeriode()->getTimestamp();
-
-        $beginAt = $this->beginAt->getTimestamp();
-        $leaveAt = $this->leaveAt?->getTimestamp();
-
-        return $beginAt > $tarifEnd || $leaveAt && $leaveAt < $tarifStart;
+        throw new \Exception('handle it');
     }
 }

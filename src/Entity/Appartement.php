@@ -25,10 +25,10 @@ class Appartement
     private ?Batiment $batiment = null;
 
     /**
-     * @var Collection<int, Proprietaire>
+     * @var Collection<int, Possession>
      */
-    #[ORM\OneToMany(targetEntity: Proprietaire::class, mappedBy: 'appartement')]
-    private Collection $proprietaires;
+    #[ORM\OneToMany(targetEntity: Possession::class, mappedBy: 'appartement')]
+    private Collection $possessions;
 
     /**
      * @var Collection<int, Cotisation>
@@ -38,7 +38,7 @@ class Appartement
 
     public function __construct()
     {
-        $this->proprietaires = new ArrayCollection();
+        $this->possessions = new ArrayCollection();
         $this->cotisations = new ArrayCollection();
     }
 
@@ -72,29 +72,29 @@ class Appartement
     }
 
     /**
-     * @return Collection<int, Proprietaire>
+     * @return Collection<int, Possession>
      */
-    public function getProprietaires(): Collection
+    public function getPossessions(): Collection
     {
-        return $this->proprietaires;
+        return $this->possessions;
     }
 
-    public function addProprietaire(Proprietaire $proprietaire): static
+    public function addPossession(Possession $possession): static
     {
-        if (!$this->proprietaires->contains($proprietaire)) {
-            $this->proprietaires->add($proprietaire);
-            $proprietaire->setAppartement($this);
+        if (!$this->possessions->contains($possession)) {
+            $this->possessions->add($possession);
+            $possession->setAppartement($this);
         }
 
         return $this;
     }
 
-    public function removeProprietaire(Proprietaire $proprietaire): static
+    public function removePossession(Possession $possession): static
     {
-        if ($this->proprietaires->removeElement($proprietaire)) {
+        if ($this->possessions->removeElement($possession)) {
             // set the owning side to null (unless already changed)
-            if ($proprietaire->getAppartement() === $this) {
-                $proprietaire->setAppartement(null);
+            if ($possession->getAppartement() === $this) {
+                $possession->setAppartement(null);
             }
         }
 
@@ -140,15 +140,15 @@ class Appartement
 
     public function getLastProprietaire(): ?Proprietaire
     {
-        if ($this->proprietaires->isEmpty()) {
+        if ($this->possessions->isEmpty()) {
             return null;
         }
 
-        $proprietaires = $this->proprietaires->toArray();
+        $possessions = $this->possessions->toArray();
 
-        usort($proprietaires, fn (Proprietaire $a, Proprietaire $b) => $b->getBeginAt() <=> $a->getBeginAt());
+        usort($possessions, fn (Possession $a, Possession $b) => $b->getBeginAt() <=> $a->getBeginAt());
 
-        return $proprietaires[0];
+        return $possessions[0]?->getProprietaire();
     }
 
 }
