@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('select').forEach(select => {
-        const options = {};
+        const options = {maxOptions: 300};
 
         if (select.hasAttribute('data-select-no-search')) {
             options.controlInput = null;
