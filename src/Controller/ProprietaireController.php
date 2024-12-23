@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Possession;
 use App\Entity\Proprietaire;
 use App\Entity\Syndic;
 use App\Form\ProprietaireType;
@@ -35,6 +36,7 @@ class ProprietaireController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $proprietaire = new Proprietaire();
+        $proprietaire->addPossession(new Possession());
 
         $form = $this->createForm(ProprietaireType::class, $proprietaire);
         $form->handleRequest($request);

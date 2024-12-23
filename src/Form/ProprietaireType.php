@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Proprietaire;
-use App\Form\Type\AppartementFieldType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -27,8 +29,13 @@ class ProprietaireType extends AbstractType
             ->add('prenom', null, [
                 'label' => $this->translator->trans('proprietaire.prenom'),
             ])
-            ->add('appartement', AppartementFieldType::class, [
-                'mapped' => false,
+            ->add('possessions', CollectionType::class, [
+                'entry_type' => PossessionType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'entry_options' => [
+                    'label' => false,
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
@@ -41,5 +48,14 @@ class ProprietaireType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Proprietaire::class,
         ]);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        foreach ($view->children as $child) {
+            if (isset($options['row_attr'])) {
+                $child->vars['row_attr']['class'] = ' ';
+            }
+        }
     }
 }

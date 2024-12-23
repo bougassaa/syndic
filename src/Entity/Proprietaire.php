@@ -24,7 +24,7 @@ class Proprietaire
     /**
      * @var Collection<int, Possession>
      */
-    #[ORM\OneToMany(targetEntity: Possession::class, mappedBy: 'proprietaire')]
+    #[ORM\OneToMany(targetEntity: Possession::class, mappedBy: 'proprietaire', cascade: ['persist'])]
     private Collection $possessions;
 
     /**
