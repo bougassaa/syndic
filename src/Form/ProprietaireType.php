@@ -30,6 +30,7 @@ class ProprietaireType extends AbstractType
                 'label' => $this->translator->trans('proprietaire.prenom'),
             ])
             ->add('possessions', CollectionType::class, [
+                'label' => $this->translator->trans('proprietaire.appartements'),
                 'entry_type' => PossessionType::class,
                 'by_reference' => false,
                 'allow_add' => true,

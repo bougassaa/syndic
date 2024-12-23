@@ -39,6 +39,8 @@ proprietaire:
   beginAt-help: Quand le propriétaire a commencé à habiter
   leaveAt-help: Quand le propriétaire à quitté la résidence
   isCurrentOwner: Est actuellement le propriétaire ?
+  appartements: Appartements
+  appartements-add: + autre appartement
 
 cotisation:
   nav: Cotisations

@@ -48,8 +48,9 @@ class ProprietaireController extends AbstractController
             return $this->redirectToRoute('app_proprietaire_list');
         }
 
-        return $this->render('proprietaire/new.html.twig', [
+        return $this->render('proprietaire/save.html.twig', [
             'form' => $form,
+            'mode' => 'new',
         ]);
     }
 
@@ -65,8 +66,9 @@ class ProprietaireController extends AbstractController
             return $this->redirectToRoute('app_proprietaire_list');
         }
 
-        return $this->render('proprietaire/edit.html.twig', [
+        return $this->render('proprietaire/save.html.twig', [
             'form' => $form,
+            'mode' => 'edit',
         ]);
     }
 }

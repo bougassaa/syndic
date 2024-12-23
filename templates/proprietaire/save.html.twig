@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ ('proprietaire.' ~ mode)|trans }}
+{% endblock %}
+
+{% block body %}
+    <h2>{{ ('proprietaire.' ~ mode)|trans }}</h2>
+    {{ form_start(form) }}
+        <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+                {{ form_row(form.nom) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.prenom) }}
+            </div>
+        </div>
+
+        {{ form_row(form.possessions) }}
+        <div class="text-end">
+            <button class="btn btn-link p-0" type="button" id="addAppartement">
+                {{ 'proprietaire.appartements-add'|trans }}
+            </button>
+        </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

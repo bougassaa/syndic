@@ -42,6 +42,7 @@ class PossessionType extends AbstractType
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.leaveAt'),
                 'attr' => ['class' => 'leaveAt'],
+                'row_attr' => ['class' => ' '],
                 'help' => $this->translator->trans('proprietaire.leaveAt-help')
             ])
         ;
@@ -63,13 +64,5 @@ class PossessionType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Possession::class,
         ]);
-    }
-    public function finishView(FormView $view, FormInterface $form, array $options): void
-    {
-        foreach ($view->children as $child) {
-            if (isset($options['row_attr'])) {
-                $child->vars['row_attr']['class'] = ' ';
-            }
-        }
     }
 }
