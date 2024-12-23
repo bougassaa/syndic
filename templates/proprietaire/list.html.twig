@@ -25,7 +25,9 @@
                     <td>
                         {% for possession in proprietaire.possessions %}
                             <div class="d-flex gap-2 align-items-center">
-                                {{ possession.appartement.absoluteName(false) }}
+                                <span style="min-width: 36px">
+                                    {{ possession.appartement.absoluteName(false) }}
+                                </span>
                                 {{ include('_components/badge.html.twig', {
                                     content: 'from'|trans({'%from%': (possession.beginAt|date)})
                                 }) }}

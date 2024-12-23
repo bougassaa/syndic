@@ -42,7 +42,6 @@ class PossessionType extends AbstractType
                 'widget' => 'single_text',
                 'label' => $this->translator->trans('proprietaire.leaveAt'),
                 'attr' => ['class' => 'leaveAt'],
-                'row_attr' => ['class' => ' '],
                 'help' => $this->translator->trans('proprietaire.leaveAt-help')
             ])
         ;

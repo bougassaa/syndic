@@ -1,52 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     initTooltip();
+    initOwnerSwitch();
+    initSelect();
+    initDatepicker();
     new ClipboardJS('.clipboard');
 
     document.querySelectorAll('input.text-uppercase').forEach(input => {
         input.addEventListener('blur', function (event) {
             event.target.value = event.target.value.toUpperCase()
         })
-    });
-
-    document.querySelectorAll('input.isCurrentOwner').forEach(input => {
-        leaveAtVisibility(input);
-
-        input.addEventListener('change', function (event) {
-            leaveAtVisibility(input);
-        })
-    });
-
-    document.querySelectorAll('select').forEach(select => {
-        const options = {maxOptions: 300};
-
-        if (select.hasAttribute('data-select-no-search')) {
-            options.controlInput = null;
-        }
-
-        if (select.hasAttribute('data-select-allow-empty')) {
-            options.allowEmptyOption = true;
-        }
-
-        if (select.hasAttribute('data-select-label')) {
-            options.render = {
-                item: function(data, escape) {
-                    return `<div>
-                        ${select.getAttribute('data-select-label')}
-                        <strong>${escape(data.text)}</strong>
-                    </div>`;
-                }, ...options.render
-            }
-        }
-
-        new TomSelect(select, options);
-    });
-
-    document.querySelectorAll('input[type="date"]').forEach(date => {
-        date.addEventListener('focus', function (event) {
-            if (event.target.showPicker) {
-                event.target.showPicker();
-            }
-        });
     });
 
     document.querySelectorAll('select.cotisationTarif').forEach(select => {
@@ -91,6 +53,21 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.list-filter-form').forEach(form => {
         form.addEventListener('input', function () {
             form.submit();
+        });
+    });
+
+    document.querySelectorAll('#addAppartement').forEach(button => {
+        const wrapper = document.getElementById('proprietaire_possessions');
+        const prototype = wrapper.dataset.prototype;
+        let index = wrapper.children.length;
+
+        button.addEventListener('click', function () {
+            let element = prototype.replace(/__name__/g, index++);
+            element = createElementFromString(element);
+            wrapper.appendChild(element);
+            initOwnerSwitch(element);
+            initSelect(element);
+            initDatepicker(element);
         });
     });
 
@@ -202,16 +179,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function leaveAtVisibility(input) {
-    const leaveAtInput = document.querySelector('.leaveAt');
-    const leaveAtParent = leaveAtInput.parentElement;
-    if (input.checked) {
-        leaveAtParent.classList.add('d-none');
-        leaveAtInput.required = false;
-    } else {
-        leaveAtParent.classList.remove('d-none');
-        leaveAtInput.required = true;
+function initOwnerSwitch(parent = document) {
+    const leaveAtVisibility = (input) => {
+        input.closest('.card-body')
+            .querySelectorAll('.leaveAt')
+            .forEach(leaveAtInput => {
+                const leaveAtParent = leaveAtInput.parentElement;
+                if (input.checked) {
+                    leaveAtParent.classList.add('d-none');
+                    leaveAtInput.required = false;
+                    leaveAtInput.value = "";
+                } else {
+                    leaveAtParent.classList.remove('d-none');
+                    leaveAtInput.required = true;
+                }
+            });
     }
+
+    parent.querySelectorAll('input.isCurrentOwner').forEach(input => {
+        leaveAtVisibility(input);
+
+        input.addEventListener('change', function (event) {
+            leaveAtVisibility(input);
+        })
+    });
 }
 
 function jsonParse(value) {
@@ -231,6 +222,43 @@ function createElementFromString(string) {
 function initTooltip(parent = document) {
     parent.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
         new bootstrap.Tooltip(element)
+    });
+}
+
+function initSelect(parent = document) {
+    parent.querySelectorAll('select').forEach(select => {
+        const options = {maxOptions: 300};
+
+        if (select.hasAttribute('data-select-no-search')) {
+            options.controlInput = null;
+        }
+
+        if (select.hasAttribute('data-select-allow-empty')) {
+            options.allowEmptyOption = true;
+        }
+
+        if (select.hasAttribute('data-select-label')) {
+            options.render = {
+                item: function(data, escape) {
+                    return `<div>
+                        ${select.getAttribute('data-select-label')}
+                        <strong>${escape(data.text)}</strong>
+                    </div>`;
+                }, ...options.render
+            }
+        }
+
+        new TomSelect(select, options);
+    });
+}
+
+function initDatepicker(parent = document) {
+    parent.querySelectorAll('input[type="date"]').forEach(date => {
+        date.addEventListener('focus', function (event) {
+            if (event.target.showPicker) {
+                event.target.showPicker();
+            }
+        });
     });
 }
 
