@@ -45,7 +45,11 @@ class CotisationController extends AbstractController
 
         $filterBatiment = filter_var($filterBatiment, FILTER_VALIDATE_INT);
 
-        return $this->render('cotisation/list.html.twig', [
+        return $this->render(
+            $tarifSelected->isBeforeDohaPeriode() ?
+                'cotisation/before-doha-period.html.twig' :
+                'cotisation/list.html.twig',
+            [
             'items' => $cotisationsDisplay->getCotisations($tarifSelected, $filterBatiment),
             'totalCotisations' => $cotisationsDisplay->getTotalCotisations(),
             'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),

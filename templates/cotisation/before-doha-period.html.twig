@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'cotisation.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% include 'cotisation/list-header.html.twig' %}
+
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">{{ 'cotisation.before-doha-period-title'|trans }}</h4>
+        <p>
+            {{ 'cotisation.before-doha-period-body-1'|trans }}
+        </p>
+        <p>
+            {{ 'cotisation.before-doha-period-body-2'|trans }}
+        </p>
+    </div>
+{% endblock %}
+

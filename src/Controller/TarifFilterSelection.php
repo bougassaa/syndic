@@ -15,12 +15,15 @@ trait TarifFilterSelection
                 $tarifSelected = $this->tarifRepository->getMaxYearTarif($this->syndic);
             }
         } else if($filterPeriode === -1) {
-            $minYearTarif = $this->tarifRepository->getMinYearTarif($this->syndic);
             // gérer le cas avant 2022
+            $endPeriod = new \DateTime('2022-07-31');
+            if ($minYearTarif = $this->tarifRepository->getMinYearTarif($this->syndic)) {
+                $endPeriod = $minYearTarif->getDebutPeriode();
+            }
             $tarifSelected = new Tarif();
             $tarifSelected->setBeforeDohaPeriode(true);
             $tarifSelected->setDebutPeriode(new \DateTime('2014-01-01'));
-            $tarifSelected->setFinPeriode($minYearTarif->getDebutPeriode());
+            $tarifSelected->setFinPeriode($endPeriod);
         } else {
             $tarifSelected = $this->tarifRepository->find($filterPeriode);
         }

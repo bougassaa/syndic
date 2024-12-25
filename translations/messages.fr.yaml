@@ -66,6 +66,9 @@ cotisation:
   filter-batiment-all: Tous
   empty-tarif: Aucun tarif annuel n'a été défini dans les paramètres. Veuillez configurer un tarif annuel pour permettre l'affichage du tableau des cotisations.
   preuves: Justificatifs de la cotisation
+  before-doha-period-title: Cotisations avant 2022
+  before-doha-period-body-1: Avant 2022, plusieurs appartements de la résidence n'étaient pas encore vendus. La société Doha, chargée de leur commercialisation, a pris en charge les cotisations de ces logements pour garantir l'équilibre financier.
+  before-doha-period-body-2: En 2024, Doha a régularisé ces cotisations pour un montant total de 45 000 MAD, couvrant la période allant jusqu'à 2022. Depuis, les cotisations sont gérées directement entre les copropriétaires.
 
 tarif:
   new: Nouvelle cotisation annuelle
