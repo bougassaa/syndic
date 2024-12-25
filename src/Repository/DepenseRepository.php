@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Depense;
 use App\Entity\Syndic;
+use App\Entity\Tarif;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,13 +19,14 @@ class DepenseRepository extends ServiceEntityRepository
     }
 
     /** @return Depense[] */
-    public function getDepensesPerYear(int|false $year, Syndic $syndic)
+    public function getDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic): array
     {
         $qb = $this->createQueryBuilder('d');
 
-        if ($year !== false) {
-            $qb->where('YEAR(d.paidAt) = :year')
-                ->setParameter('year', $year);
+        if ($tarifPeriode) {
+            $qb->where('d.paidAt BETWEEN :start AND :end')
+                ->setParameter('start', $tarifPeriode->getDebutPeriode())
+                ->setParameter('end', $tarifPeriode->getFinPeriode());
         }
 
         return $qb->andWhere('d.syndic = :syndic')

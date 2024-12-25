@@ -22,6 +22,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class CotisationController extends AbstractController
 {
 
+    use TarifFilterSelection;
+
     private Syndic $syndic;
 
     public function __construct(
@@ -36,16 +38,9 @@ class CotisationController extends AbstractController
     #[Route('/cotisation', name: 'app_cotisation_list')]
     public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterPeriode, #[MapQueryParameter] ?string $filterBatiment): Response
     {
-        if (!$filterPeriode){
-            $tarifSelected = $this->tarifRepository->getCurrentTarif($this->syndic);
-            if (!$tarifSelected) {
-                $tarifSelected = $this->tarifRepository->getMaxYearTarif($this->syndic);
-                if (!$tarifSelected) {
-                    return $this->render('cotisation/empty-tarif.html.twig');
-                }
-            }
-        } else {
-            $tarifSelected = $this->tarifRepository->find($filterPeriode);
+        $tarifSelected = $this->getSelectedTarif($filterPeriode);
+        if (!$tarifSelected) {
+            return $this->render('cotisation/empty-tarif.html.twig');
         }
 
         $filterBatiment = filter_var($filterBatiment, FILTER_VALIDATE_INT);

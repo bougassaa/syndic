@@ -14,19 +14,7 @@
               method="get"
               class="list-filter-form d-flex flex-wrap gap-2 align-items-center"
         >
-            <select class="form-select-sm no-search"
-                    name="selectedYear"
-                    data-select-no-search="true"
-                    data-select-allow-empty="true"
-                    data-select-label="{{ 'depense.filter-year'|trans }} :&nbsp;"
-            >
-                <option value="" selected>{{ 'depense.filter-year-all'|trans }}</option>
-                {% for year in years %}
-                    <option value="{{ year }}" {% if year == selectedYear %}selected{% endif %}>
-                        {{ year }}
-                    </option>
-                {% endfor %}
-            </select>
+            {% include '_components/filter-periode.html.twig' %}
         </form>
     </div>
     <div class="table-responsive">

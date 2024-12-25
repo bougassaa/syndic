@@ -6,6 +6,7 @@ use App\Entity\Depense;
 use App\Entity\Syndic;
 use App\Form\DepenseType;
 use App\Repository\DepenseRepository;
+use App\Repository\TarifRepository;
 use App\Repository\TypeDepenseRepository;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,19 +20,25 @@ use Symfony\Component\Routing\Attribute\Route;
 class DepenseController extends AbstractController
 {
 
+    use TarifFilterSelection;
+
     private Syndic $syndic;
 
-    public function __construct(private SyndicSessionResolver $syndicSessionResolver)
+    public function __construct(private SyndicSessionResolver $syndicSessionResolver, private TarifRepository $tarifRepository)
     {
         $this->syndic = $this->syndicSessionResolver->getSelectedSyndic();
     }
 
     #[Route('/depense', name: 'app_depense_list')]
-    public function list(DepenseRepository $repository, #[MapQueryParameter] ?string $selectedYear): Response
+    public function list(DepenseRepository $repository, #[MapQueryParameter] ?int $filterPeriode): Response
     {
-        $selectedYear = filter_var($selectedYear, FILTER_VALIDATE_INT);
-        $depenses = $repository->getDepensesPerYear($selectedYear, $this->syndic);
-        $years = $this->getMinMaxYears($repository);
+        $tarifSelected = $this->getSelectedTarif($filterPeriode);
+        if (!$tarifSelected) {
+            // todo : make template for depenses only
+            return $this->render('cotisation/empty-tarif.html.twig');
+        }
+
+        $depenses = $repository->getDepensesPerPeriode($tarifSelected, $this->syndic);
 
         $total = array_reduce($depenses, function ($carry, Depense $depense) {
             return $carry + (float) $depense->getMontant();
@@ -40,8 +47,8 @@ class DepenseController extends AbstractController
         return $this->render('depense/list.html.twig', [
             'depenses' => $depenses,
             'totalDepenses' => $total,
-            'selectedYear' => $selectedYear,
-            'years' => $years
+            'tarifSelected' => $tarifSelected,
+            'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
         ]);
     }
 
