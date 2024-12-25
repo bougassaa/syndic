@@ -1,10 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
+{% block title %}
+    {{ 'admin.list'|trans }}
 {% endblock %}
 
-{% block title %}
-
+{% block body %}
+    <div class="d-flex align-items-center flex-wrap">
+        <h2 class="flex-fill">{{ 'admin.list'|trans }}</h2>
+        <a href="{{ path('app_register') }}" class="btn btn-primary" >{{ 'admin.new'|trans }}</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+            <tr>
+                <th>{{ 'admin.username'|trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for admin in admins %}
+                <tr>
+                    <th>{{ admin.username }}</th>
+                    <td>
+                        <a href="{{ path('app_register_edit', {'user': admin.id}) }}">
+                            {{ 'edit'|trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Admin;
 use App\Form\RegistrationFormType;
+use App\Repository\AdminRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // todo : only for syndic
             $plainPassword = $form->get('plainPassword')->getData();
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
@@ -62,8 +64,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register/list', name: 'app_register_list')]
-    public function list(): Response
+    public function list(AdminRepository $repository): Response
     {
-        return $this->render('registration/list.html.twig');
+        return $this->render('registration/list.html.twig', [
+            'admins' => $repository->findAll() // todo : only for syndic and not SUPER_ADMIN
+        ]);
     }
 }
