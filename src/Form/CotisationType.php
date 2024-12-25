@@ -3,10 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Cotisation;
-use App\Entity\Proprietaire;
 use App\Entity\Tarif;
+use App\Form\Type\AppartementFieldType;
 use App\Form\Type\PreuvesType;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -71,19 +70,7 @@ class CotisationType extends AbstractType
                     Cotisation::MOYENS_PAIEMENTS
                 ),
             ])
-            ->add('proprietaire', EntityType::class, [
-                'class' => Proprietaire::class,
-                'choice_label' => function(Proprietaire $proprietaire) {
-                    return $proprietaire->getAppartementAbsoluteName(false) . ' ' . $proprietaire->getAbsoluteName();
-                },
-                'placeholder' => $this->translator->trans('select-choose'),
-                'label' => $this->translator->trans('cotisation.proprietaire'),
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('p')
-                        ->where('p.leaveAt IS NULL')
-                        ->orderBy('p.appartement', 'ASC');
-                },
-            ])
+            ->add('appartement', AppartementFieldType::class)
             ->add('preuves', PreuvesType::class, [
                 'label' => $this->translator->trans('cotisation.preuves'),
             ])

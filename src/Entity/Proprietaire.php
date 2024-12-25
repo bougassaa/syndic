@@ -136,11 +136,6 @@ class Proprietaire
         return $this->nom . ' ' . $this->prenom;
     }
 
-    public function isExempt(Tarif $tarif): bool
-    {
-        throw new \Exception('handle it');
-    }
-
     public function isSystem(): ?bool
     {
         return $this->isSystem;

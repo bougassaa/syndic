@@ -50,12 +50,7 @@ class CotisationsDisplay
                     }
 
                     if (empty($formatter->proprietaire)) {
-                        // set default proprietaire based on year and begin date
-                        foreach ($appartement->getProprietaires() as $proprietaire) {
-                            if (!$proprietaire->isExempt($tarif)) {
-                                $formatter->proprietaire = $proprietaire;
-                            }
-                        }
+                        $formatter->proprietaire = $appartement->getLastProprietaire();
                     }
 
                     // add to results

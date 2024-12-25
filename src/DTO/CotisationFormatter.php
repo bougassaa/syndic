@@ -32,8 +32,6 @@ class CotisationFormatter
             return 'paid';
         } elseif ($sum > 0) {
             return 'incomplete';
-        } elseif ($this->proprietaire->isExempt($this->tarif)) {
-            return 'exempt';
         } else {
             return 'overdue';
         }

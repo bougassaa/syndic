@@ -14,8 +14,8 @@
         data-bs-title="{{ tooltip }}"
     {% endif %}
 >
+    {{ content|default('') }}
     {% if icon is defined and icon %}
         <i class="{{ icon }}"></i>
     {% endif %}
-    {{ content|default('') }}
 </span>
