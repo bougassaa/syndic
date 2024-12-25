@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h2>
+        {{ ('admin.' ~ mode) |trans }}
+    </h2>
+    {{ form(form) }}
+{% endblock %}

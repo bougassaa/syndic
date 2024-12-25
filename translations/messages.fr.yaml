@@ -131,3 +131,10 @@ appartement:
   list: Liste des appartements
   count: '%count% appartements'
   empty: Aucune possession
+
+admin:
+  list: Administrateurs
+  new: Ajouter un administrateur
+  edit: Modifier le mot de passe
+  username: Identifiant
+  passwword: Mot de passe
