@@ -24,16 +24,18 @@ class ProprietaireRepository extends ServiceEntityRepository
             ->join('p.possessions', 'po')
             ->join('po.appartement', 'a')
             ->join('a.batiment', 'b')
-            ->where('po.leaveAt IS NULL')
-            ->andWhere('b.syndic = :syndic')
+            ->where('b.syndic = :syndic')
             ->setParameter('syndic', $syndic)
-            ->orderBy('po.appartement', 'ASC')
+            ->orderBy('p.isSystem', 'ASC')
+            ->addOrderBy('CASE WHEN po.leaveAt IS NOT NULL THEN 1 ELSE 0 END', 'ASC')
+            ->addOrderBy('po.appartement', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     public function getNumberOfProprietaires(Syndic $syndic): int
     {
-        return count($this->getSyndicProprietaires($syndic));
+        // todo : use no of appartement in home controller
+        return 0;
     }
 }

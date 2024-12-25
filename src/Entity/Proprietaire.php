@@ -152,4 +152,11 @@ class Proprietaire
 
         return $this;
     }
+
+    public function getNumberOfCurrentAppartement(): int
+    {
+        return $this->possessions
+            ->filter(fn (Possession $possession) => !$possession->getLeaveAt())
+            ->count();
+    }
 }

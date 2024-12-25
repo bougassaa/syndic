@@ -126,3 +126,4 @@ appartement:
   new: Ajouter un appartement
   list: Liste des appartements
   count: '%count% appartements'
+  empty: Aucune possession

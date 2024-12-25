@@ -25,7 +25,11 @@
                     <td>
                         {% if proprietaire.system %}
                             {{ include('_components/badge.html.twig', {
-                                content: 'appartement.count'|trans({'%count%': proprietaire.possessions.count})
+                                content: 'appartement.count'|trans({'%count%': proprietaire.numberOfCurrentAppartement})
+                            }) }}
+                        {% elseif proprietaire.numberOfCurrentAppartement == 0 %}
+                            {{ include('_components/badge.html.twig', {
+                                content: 'appartement.empty'|trans
                             }) }}
                         {% else %}
                             {% for possession in proprietaire.possessions %}

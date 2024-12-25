@@ -80,7 +80,8 @@ class HomeController extends AbstractController
         $paidCotisations = 0;
         $pendingCotisations = 0;
         if ($currentTarif) {
-            $proprietaires = $this->proprietaireRepository->getSyndicProprietaires($this->syndic);
+            $proprietaires = []; // todo : handle it + isExempt
+//            $proprietaires = $this->proprietaireRepository->getSyndicProprietaires($this->syndic);
             foreach ($proprietaires as $proprietaire) {
                 if (!$proprietaire->isExempt($currentTarif)) {
                     if ($proprietaire->getCotisations()->isEmpty()) {
