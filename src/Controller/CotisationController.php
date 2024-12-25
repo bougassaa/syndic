@@ -7,7 +7,6 @@ use App\Entity\Cotisation;
 use App\Entity\Syndic;
 use App\Entity\Tarif;
 use App\Form\CotisationType;
-use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;
 use App\Repository\TarifRepository;
 use App\Service\CotisationsDisplay;
@@ -62,7 +61,7 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation/new', name: 'app_cotisation_new')]
-    public function new(Request $request, EntityManagerInterface $manager, AppartementRepository $appartementRepository): Response
+    public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
@@ -77,8 +76,8 @@ class CotisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($appartement = $cotisation->getProprietaire()?->getAppartement()) {
-                $cotisation->setAppartement($appartement);
+            if ($proprietaire = $cotisation->getAppartement()?->getLastProprietaire()) {
+                $cotisation->setProprietaire($proprietaire);
             }
 
             /** @var UploadedFile[] $preuves */
