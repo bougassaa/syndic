@@ -21,7 +21,7 @@
                 <tr>
                     <th>{{ batiment.nom }}</th>
                     <td>
-                        {{ 'batiment.countAppartements'|trans({'%count%': batiment.appartements.count}) }}
+                        {{ 'appartement.count'|trans({'%count%': batiment.appartements.count}) }}
                     </td>
                 </tr>
             {% endfor %}

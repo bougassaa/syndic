@@ -21,6 +21,9 @@ class Proprietaire
     #[ORM\Column(length: 100)]
     private ?string $prenom = null;
 
+    #[ORM\Column]
+    private ?bool $isSystem = false;
+
     /**
      * @var Collection<int, Possession>
      */
@@ -136,5 +139,17 @@ class Proprietaire
     public function isExempt(Tarif $tarif): bool
     {
         throw new \Exception('handle it');
+    }
+
+    public function isSystem(): ?bool
+    {
+        return $this->isSystem;
+    }
+
+    public function setSystem(bool $isSystem): static
+    {
+        $this->isSystem = $isSystem;
+
+        return $this;
     }
 }

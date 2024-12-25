@@ -118,7 +118,6 @@ batiment:
   nom: N° Bâtiment
   new: Ajouter un bâtiment
   list: Liste des bâtiments
-  countAppartements: '%count% appartements'
   nom-help: 'Par exemple : A, B, C, D...'
 
 appartement:
@@ -126,3 +125,4 @@ appartement:
   nom: N° Appartement
   new: Ajouter un appartement
   list: Liste des appartements
+  count: '%count% appartements'

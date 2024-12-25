@@ -30,6 +30,7 @@ class AppFixtures extends Fixture
         $doha = new Proprietaire();
         $doha->setNom('SOCIÉTÉ');
         $doha->setPrenom('Doha');
+        $doha->setSystem(true);
 
         $manager->persist($doha);
 
