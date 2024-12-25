@@ -92,21 +92,4 @@ class DepenseController extends AbstractController
             'pathFolder' => 'depenses'
         ]);
     }
-
-    public function getMinMaxYears(DepenseRepository $repository): array
-    {
-        $thisYear = (int)date("Y");
-        $startYear = $repository->getFirstOldDepense($this->syndic)?->getPaidAt()->format('Y');
-        $endYear = $repository->getLastNewDepense($this->syndic)?->getPaidAt()->format('Y');
-
-        if (!$startYear || $startYear >= $thisYear) {
-            $startYear = $thisYear - 1;
-        }
-
-        if (!$endYear || $endYear <= $thisYear) {
-            $endYear = $thisYear + 1;
-        }
-
-        return range($startYear, $endYear);
-    }
 }

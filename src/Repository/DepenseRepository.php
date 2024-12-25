@@ -46,26 +46,4 @@ class DepenseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult() ?? 0;
     }
-
-    public function getFirstOldDepense(Syndic $syndic): ?Depense
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.syndic = :syndic')
-            ->setParameter('syndic', $syndic)
-            ->orderBy('d.paidAt', 'ASC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function getLastNewDepense(Syndic $syndic): ?Depense
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.syndic = :syndic')
-            ->setParameter('syndic', $syndic)
-            ->orderBy('d.paidAt', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

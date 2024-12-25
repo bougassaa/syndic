@@ -14,17 +14,7 @@
               method="get"
               class="list-filter-form d-flex flex-wrap gap-2 align-items-center"
         >
-            <select class="form-select-sm no-search"
-                    name="filterTarif"
-                    data-select-no-search="true"
-                    data-select-label="{{ 'cotisation.filter-year'|trans }} :&nbsp;"
-            >
-                {% for tarif in tarifs %}
-                    <option value="{{ tarif.id }}" {% if tarif is same as tarifSelected %}selected{% endif %}>
-                        {{ tarif.periodeYear }}
-                    </option>
-                {% endfor %}
-            </select>
+            {% include '_components/filter-periode.html.twig' %}
             <select class="form-select-sm no-search"
                     name="filterBatiment"
                     data-select-no-search="true"

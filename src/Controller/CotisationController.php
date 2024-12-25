@@ -34,9 +34,9 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation', name: 'app_cotisation_list')]
-    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterTarif, #[MapQueryParameter] ?string $filterBatiment): Response
+    public function list(CotisationsDisplay $cotisationsDisplay, #[MapQueryParameter] ?int $filterPeriode, #[MapQueryParameter] ?string $filterBatiment): Response
     {
-        if (!$filterTarif){
+        if (!$filterPeriode){
             $tarifSelected = $this->tarifRepository->getCurrentTarif($this->syndic);
             if (!$tarifSelected) {
                 $tarifSelected = $this->tarifRepository->getMaxYearTarif($this->syndic);
@@ -45,7 +45,7 @@ class CotisationController extends AbstractController
                 }
             }
         } else {
-            $tarifSelected = $this->tarifRepository->find($filterTarif);
+            $tarifSelected = $this->tarifRepository->find($filterPeriode);
         }
 
         $filterBatiment = filter_var($filterBatiment, FILTER_VALIDATE_INT);

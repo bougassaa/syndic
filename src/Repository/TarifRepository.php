@@ -45,6 +45,7 @@ class TarifRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.syndic = :syndic')
             ->setParameter('syndic', $syndic)
+            ->orderBy('t.debutPeriode', 'DESC')
             ->getQuery()
             ->getResult();
     }

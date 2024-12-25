@@ -1,0 +1,11 @@
+<select class="form-select-sm no-search"
+        name="filterPeriode"
+        data-select-no-search="true"
+        data-select-label="{{ 'cotisation.filter-year'|trans }} :&nbsp;"
+>
+    {% for tarif in tarifs %}
+        <option value="{{ tarif.id }}" {% if tarif is same as tarifSelected %}selected{% endif %}>
+            {{ tarif.periodeYear }}
+        </option>
+    {% endfor %}
+</select>
