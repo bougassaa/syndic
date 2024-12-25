@@ -27,11 +27,12 @@ class RegistrationController extends AbstractController
             $plainPassword = $form->get('plainPassword')->getData();
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setRoles([Admin::ROLE_ADMIN]);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_register_list');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -54,7 +55,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_register_list');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -67,7 +68,7 @@ class RegistrationController extends AbstractController
     public function list(AdminRepository $repository): Response
     {
         return $this->render('registration/list.html.twig', [
-            'admins' => $repository->findAll() // todo : only for syndic and not SUPER_ADMIN
+            'admins' => $repository->getAdmins()
         ]);
     }
 }

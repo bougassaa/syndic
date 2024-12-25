@@ -29,6 +29,8 @@ doctrine:
         dql:
             datetime_functions:
                 year: DoctrineExtensions\Query\Mysql\Year
+            string_functions:
+                json_contains: DoctrineExtensions\Query\Mysql\JsonContains
 
 when@test:
     doctrine:

@@ -32,4 +32,14 @@ class AdminRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    /** @return Admin[] */
+    public function getAdmins(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('JSON_CONTAINS(a.roles, :role) = 0')
+            ->setParameter('role', '"'.Admin::ROLE_SUPER_ADMIN.'"')
+            ->getQuery()
+            ->getResult();
+    }
 }

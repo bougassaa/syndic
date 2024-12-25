@@ -34,10 +34,13 @@ class AppFixtures extends Fixture
     {
         // super admin
         $admin = new Admin();
-        $admin->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
+        $admin->setUsername('amine');
+        $admin->setRoles([Admin::ROLE_ADMIN, Admin::ROLE_SUPER_ADMIN]);
         $admin->setPassword(
             $this->userPasswordHasher->hashPassword($admin, 'amine2019')
         );
+
+        $manager->persist($admin);
 
         // create doha proprietaire
         $doha = new Proprietaire();
