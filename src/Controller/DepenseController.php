@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DepenseController extends AbstractController
 {
@@ -53,6 +54,7 @@ class DepenseController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/depense/new', name: 'app_depense_new')]
     public function new(Request $request, EntityManagerInterface $manager, TypeDepenseRepository $typeDepenseRepository): Response
     {

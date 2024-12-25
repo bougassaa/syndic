@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProprietaireController extends AbstractController
 {
@@ -32,6 +33,7 @@ class ProprietaireController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/proprietaire/new', name: 'app_proprietaire_new')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -54,6 +56,7 @@ class ProprietaireController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/proprietaire/edit/{proprietaire}', name: 'app_proprietaire_edit')]
     public function edit(Proprietaire $proprietaire, Request $request, EntityManagerInterface $manager): Response
     {

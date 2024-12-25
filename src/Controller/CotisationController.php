@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CotisationController extends AbstractController
 {
@@ -60,6 +61,7 @@ class CotisationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/cotisation/new', name: 'app_cotisation_new')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
