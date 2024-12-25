@@ -26,7 +26,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $monAppartement = null;
+        // create doha proprietaire
+        $doha = new Proprietaire();
+        $doha->setNom('SOCIÉTÉ');
+        $doha->setPrenom('Doha');
+
+        $manager->persist($doha);
+
         foreach ($this->mapping as $syndicName => $batiments) {
             $syndic = new Syndic();
             $syndic->setNom($syndicName);
@@ -46,24 +52,14 @@ class AppFixtures extends Fixture
 
                     $manager->persist($appartement);
 
-                    if ($batimentName == 'B' && $noAppart == 9) {
-                        $monAppartement = $appartement;
-                    }
+                    // attach to doha
+                    $possession = new Possession();
+                    $possession->setAppartement($appartement);
+                    $possession->setBeginAt(new \DateTime('2016-01-01'));
+                    $doha->addPossession($possession);
                 }
             }
         }
-
-        $proprietaire = new Proprietaire();
-        $proprietaire->setNom('BOUGASSAA');
-        $proprietaire->setPrenom('Amine');
-
-        $possession = new Possession();
-        $possession->setProprietaire($proprietaire);
-        $possession->setAppartement($monAppartement);
-        $possession->setBeginAt(new \DateTime('2024-01-03'));
-
-        $manager->persist($proprietaire);
-        $manager->persist($possession);
 
         $typeDepense = new TypeDepense();
         $typeDepense->setLabel('Salaire jardinier');

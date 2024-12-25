@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Appartement;
+use App\Entity\Proprietaire;
 use App\Entity\Syndic;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityRepository;
@@ -26,7 +27,9 @@ class AppartementFieldType extends AbstractType
             'class' => Appartement::class,
             'placeholder' => $this->translator->trans('select-choose'),
             'choice_label' => function (Appartement $appartement) {
-                return $appartement->getAbsoluteName(false);
+                return $appartement->getAbsoluteName(false) .
+                    ($appartement->getLastProprietaire() instanceof Proprietaire ?
+                        " ({$appartement->getLastProprietaire()->getAbsoluteName()})" : "");
             },
             'group_by' => function (Appartement $appartement) {
                 return $appartement->getBatiment()->getNom();

@@ -24,14 +24,16 @@
                 <tr>
                     <td>
                         {% for possession in proprietaire.possessions %}
-                            <div class="d-flex gap-2 align-items-center">
-                                <span style="min-width: 36px">
-                                    {{ possession.appartement.absoluteName(false) }}
-                                </span>
-                                {{ include('_components/badge.html.twig', {
-                                    content: 'from'|trans({'%from%': (possession.beginAt|date)})
-                                }) }}
-                            </div>
+                            {% if possession.leaveAt is null %}
+                                <div class="d-flex gap-2 align-items-center">
+                                    <span style="min-width: 36px">
+                                        {{ possession.appartement.absoluteName(false) }}
+                                    </span>
+                                    {{ include('_components/badge.html.twig', {
+                                        content: 'from'|trans({'%from%': (possession.beginAt|date)})
+                                    }) }}
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ proprietaire.nom }}</td>
