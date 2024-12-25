@@ -39,6 +39,17 @@ class TarifRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getMinYearTarif(Syndic $syndic): ?Tarif
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.syndic = :syndic')
+            ->setParameter('syndic', $syndic)
+            ->orderBy('t.debutPeriode', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /** @return Tarif[] */
     public function getSyndicTarifs(Syndic $syndic): array
     {

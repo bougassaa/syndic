@@ -51,7 +51,8 @@ class CotisationController extends AbstractController
             'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
             'batimentsFilter' => $this->batimentRepository->getSyndicBatiments($this->syndic),
             'tarifSelected' => $tarifSelected,
-            'batimentSelected' => $filterBatiment
+            'batimentSelected' => $filterBatiment,
+            'syndic' => $this->syndic,
         ]);
     }
 

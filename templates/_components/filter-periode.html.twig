@@ -8,4 +8,9 @@
             {{ tarif.periodeYear }}
         </option>
     {% endfor %}
+    {% if syndic.beforeDohaPeriode %}
+        <option value="-1" {% if tarifSelected is not null and tarifSelected.beforeDohaPeriode %}selected{% endif %}>
+            {{ 'before-2022'|trans }}
+        </option>
+    {% endif %}
 </select>

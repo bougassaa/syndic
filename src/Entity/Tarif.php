@@ -35,6 +35,9 @@ class Tarif
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $finPeriode = null;
 
+    // handle the case of before 2022 periode
+    private bool $isBeforeDohaPeriode = false;
+
     public function __construct()
     {
         $this->cotisations = new ArrayCollection();
@@ -127,4 +130,16 @@ class Tarif
     {
         return $this->debutPeriode->format('Y') . ' - ' . $this->finPeriode->format('Y');
     }
+
+    public function isBeforeDohaPeriode(): bool
+    {
+        return $this->isBeforeDohaPeriode;
+    }
+
+    public function setBeforeDohaPeriode(bool $beforeDohaPeriode): Tarif
+    {
+        $this->isBeforeDohaPeriode = $beforeDohaPeriode;
+        return $this;
+    }
+
 }

@@ -49,6 +49,7 @@ class DepenseController extends AbstractController
             'totalDepenses' => $total,
             'tarifSelected' => $tarifSelected,
             'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
+            'syndic' => $this->syndic,
         ]);
     }
 

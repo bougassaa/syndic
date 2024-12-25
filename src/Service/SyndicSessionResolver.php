@@ -19,7 +19,7 @@ class SyndicSessionResolver
 
     public function getSelectedSyndic(): Syndic
     {
-        return $this->syndicRepository->findOneBy(['nom' => 'GH16']);
+        return $this->syndicRepository->findOneBy(['nom' => Syndic::GH_16]);
     }
 
 }

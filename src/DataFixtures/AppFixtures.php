@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
 {
 
     private array $mapping = [
-        'GH16' => [
+        Syndic::GH_16 => [
             'A' => 25,
             'B' => 13,
             'C' => 14,

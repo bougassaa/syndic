@@ -13,6 +13,7 @@ montant-a-payer: Montant à payer
 from: 'Depuis %from%'
 for: 'Pour %for%'
 for-year: "Pour l'année %year%"
+before-2022: Avant 2022
 
 home:
   cotisations: Voir le tableau des cotisations

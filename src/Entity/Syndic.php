@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: SyndicRepository::class)]
 class Syndic
 {
+
+    const GH_16 = 'GH16';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -185,5 +188,10 @@ class Syndic
         }
 
         return $this;
+    }
+
+    public function hasBeforeDohaPeriode(): bool
+    {
+        return $this->nom == self::GH_16;
     }
 }
