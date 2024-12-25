@@ -139,3 +139,4 @@ admin:
   username: Identifiant
   passwword: Mot de passe
   login: Se connecter
+  logout: Déconnexion
