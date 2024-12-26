@@ -113,6 +113,10 @@ document.addEventListener('DOMContentLoaded', function () {
             modalElement.addEventListener('shown.bs.modal', () => {
                 initTooltip(modalElement);
             })
+
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modalElement.remove();
+            })
         });
     });
 

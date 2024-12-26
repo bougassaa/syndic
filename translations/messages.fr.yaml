@@ -139,3 +139,9 @@ admin:
   passwword: Mot de passe
   login: Se connecter
   logout: Déconnexion
+
+bank:
+  rib: RIB
+  agence: Agence
+  account: Numéro de compte
+  label: Intitulé du compte
