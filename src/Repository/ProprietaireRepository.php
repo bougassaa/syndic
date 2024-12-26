@@ -32,10 +32,4 @@ class ProprietaireRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function getNumberOfProprietaires(Syndic $syndic): int
-    {
-        // todo : use no of appartement in home controller
-        return 0;
-    }
 }

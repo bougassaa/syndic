@@ -59,9 +59,11 @@
                         <div class="my-2 fs-3 text-underline-danger">
                             {{ totalDepenses|format_currency('MAD') }}
                         </div>
-                        <small class="fw-light">
-                            {{ 'for-year'|trans({'%year%': totalDepensesYear}) }}
-                        </small>
+                        {% if currentTarif is not null %}
+                            <small class="fw-light">
+                                {{ 'for'|trans({'%for%': currentTarif.periodeYear}) }}
+                            </small>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Syndic;
 use App\Entity\Tarif;
+use App\Repository\AppartementRepository;
 use App\Repository\CotisationRepository;
 use App\Repository\DepenseRepository;
-use App\Repository\ProprietaireRepository;
 use App\Repository\TarifRepository;
 use App\Service\SyndicSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +21,7 @@ class HomeController extends AbstractController
 
     public function __construct(private SyndicSessionResolver $syndicSessionResolver,
                                 private TarifRepository $tarifRepository,
-                                private ProprietaireRepository $proprietaireRepository,
+                                private AppartementRepository $appartementRepository,
                                 private DepenseRepository $depenseRepository,
                                 private CotisationRepository $cotisationRepository)
     {
@@ -32,18 +32,27 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         list($currentTarif, $totalCotisations, $totalCotisationsAttendues) = $this->getCotisationsWidgetValues();
-        list($totalDepenses, $totalDepensesYear) = $this->getDepensesWidgetValues();
         list($paidCotisations, $pendingCotisations) = $this->getStatusCotisationsWidgetValues($currentTarif);
 
         return $this->render('home/index.html.twig', [
             'totalCotisationsAttendues' => $totalCotisationsAttendues,
             'totalCotisations' => $totalCotisations,
-            'totalDepenses' => $totalDepenses,
-            'totalDepensesYear' => $totalDepensesYear,
+            'totalDepenses' => $this->getDepensesWidgetValues(),
             'currentTarif' => $currentTarif,
             'paidCotisations' => $paidCotisations,
             'pendingCotisations' => $pendingCotisations
         ]);
+    }
+
+    private function getCurrentTarif(): ?Tarif
+    {
+        $currentTarif = $this->tarifRepository->getCurrentTarif($this->syndic);
+
+        if (!$currentTarif) { // get last tarif as fallback
+            $currentTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
+        }
+
+        return $currentTarif;
     }
 
     private function getCotisationsWidgetValues(): array
@@ -51,28 +60,22 @@ class HomeController extends AbstractController
         $totalCotisations = 0;
         $totalCotisationsAttendues = 0;
 
-        $currentTarif = $this->tarifRepository->getCurrentTarif($this->syndic);
-
-        if (!$currentTarif) { // get last tarif as fallback
-            $currentTarif = $this->tarifRepository->getMaxYearTarif($this->syndic);
-        }
+        $currentTarif = $this->getCurrentTarif();
 
         if ($currentTarif) {
             $totalCotisations = $this->cotisationRepository->getSumOfYear($currentTarif);
 
-            $numberOfProprietaires = $this->proprietaireRepository->getNumberOfProprietaires($this->syndic);
-            $totalCotisationsAttendues = $numberOfProprietaires * $currentTarif->getTarif();
+            $numberOfAppartements = $this->appartementRepository->getNumberOfAppartements($this->syndic);
+            $totalCotisationsAttendues = $numberOfAppartements * $currentTarif->getTarif();
         }
 
         return [$currentTarif, $totalCotisations, $totalCotisationsAttendues];
     }
 
-    private function getDepensesWidgetValues(): array
+    private function getDepensesWidgetValues(): float
     {
-        $totalDepensesYear = date('Y');
-        $totalDepenses = $this->depenseRepository->getTotalDepensesPerYear($totalDepensesYear, $this->syndic);
-
-        return [$totalDepenses, $totalDepensesYear];
+        $currentTarif = $this->getCurrentTarif();
+        return $this->depenseRepository->getTotalDepensesPerPeriode($currentTarif, $this->syndic);
     }
 
     private function getStatusCotisationsWidgetValues(Tarif|null $currentTarif): array

@@ -40,14 +40,11 @@ class DepenseController extends AbstractController
         }
 
         $depenses = $repository->getDepensesPerPeriode($tarifSelected, $this->syndic);
-
-        $total = array_reduce($depenses, function ($carry, Depense $depense) {
-            return $carry + (float) $depense->getMontant();
-        }, 0);
+        $totalDepenses = $repository->getTotalDepensesPerPeriode($tarifSelected, $this->syndic);
 
         return $this->render('depense/list.html.twig', [
             'depenses' => $depenses,
-            'totalDepenses' => $total,
+            'totalDepenses' => $totalDepenses,
             'tarifSelected' => $tarifSelected,
             'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
             'syndic' => $this->syndic,

@@ -37,15 +37,11 @@ class DepenseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getTotalDepensesPerYear(int $year, Syndic $syndic): float
+    public function getTotalDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic): float
     {
-        return $this->createQueryBuilder('d')
-            ->select('SUM(d.montant)')
-            ->where('YEAR(d.paidAt) = :year')
-            ->andWhere('d.syndic = :syndic')
-            ->setParameter('year', $year)
-            ->setParameter('syndic', $syndic)
-            ->getQuery()
-            ->getSingleScalarResult() ?? 0;
+        $depenses = $this->getDepensesPerPeriode($tarifPeriode, $syndic);
+        return array_reduce($depenses, function ($carry, Depense $depense) {
+            return $carry + (float) $depense->getMontant();
+        }, 0);
     }
 }
