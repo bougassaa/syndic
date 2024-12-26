@@ -1,0 +1,147 @@
+syndic: السنديك
+parametres: الإعدادات
+save: حفظ
+edit: تعديل
+status: الحالة
+copy: نسخ
+close: إغلاق
+select-choose: اختر قيمة
+optional: اختياري
+montant: المبلغ
+description: الوصف
+montant-a-payer: المبلغ المستحق
+from: 'منذ %from%'
+for: 'لـ %for%'
+before-2022: قبل 2022
+
+home:
+  cotisations: عرض جدول الاشتراكات
+  depenses: عرض النفقات
+  rib: عرض رقم الحساب البنكي
+  cotisations-paid: الاشتراكات المدفوعة
+  cotisations-tooltip: مجموع الاشتراكات السنوية يعادل عدد الملاك مضروبًا في التعريفة السنوية، دون احتساب المبالغ الجزئية المقبولة.
+  depenses-paid: الأموال المصروفة
+  cotisations-statut: حالة الاشتراكات
+  cotisations-statut-empty: لا توجد حالة في الوقت الحالي
+  cotisations-statut-all-paid: تم دفع جميع الاشتراكات
+  cotisations-statut-paid: '%no% اشتراكات مدفوعة'
+  cotisations-statut-pending: '%no% اشتراكات غير مدفوعة'
+
+proprietaire:
+  nav: الملاك
+  new: إضافة مالك
+  edit: تعديل مالك
+  list: قائمة الملاك
+  nom: اسم العائلة
+  prenom: الاسم الأول
+  beginAt: تاريخ بدء العضوية
+  leaveAt: تاريخ الانسحاب
+  beginAt-help: عندما بدأ المالك في السكن
+  leaveAt-help: عندما غادر المالك الإقامة
+  isCurrentOwner: هل هو المالك الحالي؟
+  appartements: الشقق
+  appartements-add: + شقة إضافية
+
+cotisation:
+  nav: الاشتراكات
+  new: تسجيل دفعة
+  list: قائمة الاشتراكات
+  montant: مبلغ الدفع
+  moyenPaiement: وسيلة الدفع
+  paidAt: تاريخ الدفع
+  proprietaire: المالك
+  tarif: الفترات المعنية
+  isPartialPayment: هل هو دفع جزئي مقبول؟
+  partialReason: سبب الدفع الجزئي
+  isPartialPayment-help: على سبيل المثال، يدفع المالك نصف الاشتراك لأنه وصل في منتصف العام.
+  partialReason-placeholder: اذكر سبب الدفع الجزئي...
+  exempt: معفى
+  overdue: غير مدفوع
+  incomplete: غير مكتمل
+  paid: مدفوع
+  total: إجمالي الاشتراكات للفترة
+  filter-year: الاشتراكات للسنة
+  filter-batiment: المبنى
+  filter-batiment-all: الكل
+  empty-tarif: لم يتم تحديد تعريفة سنوية في الإعدادات. يرجى إعداد تعريفة سنوية لعرض جدول الاشتراكات.
+  preuves: مبررات الاشتراك
+  before-doha-period-title: اشتراكات قبل 2022
+  before-doha-period-body-1: قبل 2022، لم يتم بيع العديد من الشقق في الإقامة بعد. تولت شركة الدوحة مسؤولية دفع اشتراكات هذه الوحدات لضمان التوازن المالي.
+  before-doha-period-body-2: في عام 2024، قامت الدوحة بتسوية هذه الاشتراكات بمبلغ إجمالي قدره 45,000 درهم مغربي، يغطي الفترة حتى عام 2022. منذ ذلك الحين، تتم إدارة الاشتراكات مباشرة بين الملاك المشتركين.
+
+tarif:
+  new: اشتراك سنوي جديد
+  montant: تعريفة الاشتراك السنوي
+  debutPeriode: بداية فترة الاشتراك
+  finPeriode: نهاية فترة الاشتراك
+  debutPeriode-help: بداية الفترة = نهاية الاشتراك السابق + يوم واحد
+  finPeriode-help: نهاية الفترة = بداية الفترة + 12 شهرًا
+
+moyenPaiement:
+  cheque: شيك
+  espece: نقدًا
+  virement: تحويل بنكي
+  autre: أخرى
+
+depense:
+  nav: النفقات
+  new: إضافة نفقة
+  paidAt: تاريخ الدفع
+  montant: مبلغ النفقة
+  description: وصف ما تم إنفاقه
+  description-placeholder: اختياري
+  type: نوع النفقة
+  list: قائمة النفقات
+  filter-year: النفقات للسنة
+  filter-year-all: كل الفترات
+  total: إجمالي النفقات للفترة
+  preuves: مبررات النفقة
+
+type-depense:
+  nav: أنواع النفقات
+  new: إضافة نوع نفقة
+  edit: تعديل نوع النفقة
+  list: قائمة أنواع النفقات
+  montant: المبلغ التقريبي
+  montant-help: مبلغ تقريبي لحساب متوسط النفقات السنوية
+  label: اسم الفئة
+  label-help: 'على سبيل المثال: راتب البستاني، الكهرباء، المصاريف السنوية...'
+  frequence: تكرار الدفع
+  frequence-help: هل هو دفع يتكرر شهريًا، سنويًا أم مرة واحدة فقط؟
+  mensuelle: شهرية
+  annuelle: سنوية
+  occasionnelle: مرة واحدة
+
+upload:
+  mimeTypesMessage: 'الملفات المقبولة: PDF، صور PNG، JPEG...'
+  help: فقط ملفات PDF وصور PNG، JPG، JPEG.
+
+batiment:
+  nav: المباني
+  nom: رقم المبنى
+  new: إضافة مبنى
+  list: قائمة المباني
+  nom-help: 'على سبيل المثال: A، B، C، D...'
+
+appartement:
+  nav: الشقق
+  nom: رقم الشقة
+  new: إضافة شقة
+  list: قائمة الشقق
+  count: '%count% شقق'
+  empty: لا توجد ملكية
+
+admin:
+  list: المدراء
+  new: إضافة مدير
+  edit: تعديل كلمة المرور
+  username: اسم المستخدم
+  passwword: كلمة المرور
+  login: تسجيل الدخول
+  logout: تسجيل الخروج
+
+bank:
+  rib: رقم الحساب البنكي
+  agence: الوكالة
+  account: رقم الحساب
+  label: اسم الحساب

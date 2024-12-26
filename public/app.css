@@ -36,8 +36,18 @@ input[readonly] {
     }
 }
 
-.form-select-sm .ts-control {
-    padding: 0 34px 0 6px !important;
+.form-select-sm:not(.rtl) .ts-control {
+    padding: 0 26px 0 6px !important;
+    background-position: right 0.45rem center !important;
+}
+
+.form-select-sm.rtl .ts-control {
+    padding: 0 6px 0 26px !important;
+    background-position: left 0.45rem center !important;
+}
+
+.ts-wrapper.rtl .ts-control {
+    padding-right: .7rem !important;
 }
 
 #isPartialPayment-row,

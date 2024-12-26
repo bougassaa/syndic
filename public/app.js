@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 
-    document.querySelectorAll('.list-filter-form').forEach(form => {
+    document.querySelectorAll('.list-filter-form, .change-lang').forEach(form => {
         form.addEventListener('input', function () {
             form.submit();
         });
@@ -239,6 +239,17 @@ function initSelect(parent = document) {
 
         if (select.hasAttribute('data-select-allow-empty')) {
             options.allowEmptyOption = true;
+        }
+
+        if (select.hasAttribute('data-select-icon')) {
+            options.render = {
+                item: function(data, escape) {
+                    return `<div class="gap-2">
+                        <i class="${select.getAttribute('data-select-icon')} fs-4"></i>
+                        <strong>${escape(data.text)}</strong>
+                    </div>`;
+                }, ...options.render
+            }
         }
 
         if (select.hasAttribute('data-select-label')) {

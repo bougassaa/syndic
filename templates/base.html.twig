@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html {% if app.locale == 'ar' %}dir="rtl" lang="ar"{% endif %}>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+            {% if app.locale == 'ar' %}
+                <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.rtl.min.css') }}">
+            {% else %}
+                <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+            {% endif %}
             <link rel="stylesheet" href="{{ asset('tom-select/tom-select.min.css') }}">
             <link rel="stylesheet" href="{{ asset('font-awesome/font-awesome.min.css') }}">
             <link rel="stylesheet" href="{{ asset('app.css') }}">
@@ -17,9 +21,12 @@
                 <a class="navbar-brand" href="{{ path('app_home') }}">
                     <i class="fa-solid fa-home"></i> {{ 'syndic'|trans }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="d-flex align-items-center gap-2">
+                    {{ _self.selectLang("d-md-none") }}
+                    <button class="navbar-toggler border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto gap-3 my-md-0 my-3">
                         <li class="nav-item">
@@ -35,7 +42,10 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav gap-3 align-items-center">
+                        <li class="nav-item">
+                            {{ _self.selectLang("d-none d-md-block") }}
+                        </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item dropdown">
                                 <a href="#" class="btn btn-sm btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,3 +129,18 @@
         {% endblock %}
     </body>
 </html>
+{% macro selectLang(class) %}
+    <form method="get"
+          action="{{ path('app_lang') }}"
+          data-bs-theme="light"
+          class="change-lang {{ class }}"
+    >
+        <select class="form-select-sm" name="lang"
+                data-select-no-search="true"
+                data-select-icon="fa-solid fa-language"
+        >
+            <option value="fr" {% if app.locale == 'fr' %}selected{% endif %}>Français</option>
+            <option value="ar" {% if app.locale == 'ar' %}selected{% endif %}>العربية</option>
+        </select>
+    </form>
+{% endmacro %}
