@@ -18,6 +18,7 @@ class HomeController extends AbstractController
 {
 
     private Syndic $syndic;
+    private ?Tarif $currentTarif;
 
     public function __construct(private SyndicSessionResolver $syndicSessionResolver,
                                 private TarifRepository $tarifRepository,
@@ -26,22 +27,7 @@ class HomeController extends AbstractController
                                 private CotisationRepository $cotisationRepository)
     {
         $this->syndic = $this->syndicSessionResolver->getSelectedSyndic();
-    }
-
-    #[Route('/', name: 'app_home')]
-    public function index(): Response
-    {
-        list($currentTarif, $totalCotisations, $totalCotisationsAttendues) = $this->getCotisationsWidgetValues();
-        list($paidCotisations, $pendingCotisations) = $this->getStatusCotisationsWidgetValues($currentTarif);
-
-        return $this->render('home/index.html.twig', [
-            'totalCotisationsAttendues' => $totalCotisationsAttendues,
-            'totalCotisations' => $totalCotisations,
-            'totalDepenses' => $this->getDepensesWidgetValues(),
-            'currentTarif' => $currentTarif,
-            'paidCotisations' => $paidCotisations,
-            'pendingCotisations' => $pendingCotisations
-        ]);
+        $this->currentTarif = $this->getCurrentTarif();
     }
 
     private function getCurrentTarif(): ?Tarif
@@ -55,52 +41,78 @@ class HomeController extends AbstractController
         return $currentTarif;
     }
 
+    #[Route('/', name: 'app_home')]
+    public function index(): Response
+    {
+        list($totalCotisations, $totalCotisationsAttendues) = $this->getCotisationsWidgetValues();
+        list($paidCotisations, $pendingCotisations) = $this->getStatusCotisationsWidgetValues();
+
+        return $this->render('home/index.html.twig', [
+            'totalCotisationsAttendues' => $totalCotisationsAttendues,
+            'totalCotisations' => $totalCotisations,
+            'totalDepenses' => $this->getDepensesWidgetValues(),
+            'currentTarif' => $this->currentTarif,
+            'paidCotisations' => $paidCotisations,
+            'pendingCotisations' => $pendingCotisations
+        ]);
+    }
+
     private function getCotisationsWidgetValues(): array
     {
         $totalCotisations = 0;
         $totalCotisationsAttendues = 0;
 
-        $currentTarif = $this->getCurrentTarif();
+        if ($this->currentTarif) {
+            $totalCotisations = $this->cotisationRepository->getSumOfYear($this->currentTarif);
 
-        if ($currentTarif) {
-            $totalCotisations = $this->cotisationRepository->getSumOfYear($currentTarif);
-
-            $numberOfAppartements = $this->appartementRepository->getNumberOfAppartements($this->syndic);
-            $totalCotisationsAttendues = $numberOfAppartements * $currentTarif->getTarif();
+            $numberOfAppartements = $this->getNumberOfAppartements();
+            $totalCotisationsAttendues = $numberOfAppartements * $this->currentTarif->getTarif();
         }
 
-        return [$currentTarif, $totalCotisations, $totalCotisationsAttendues];
+        return [$totalCotisations, $totalCotisationsAttendues];
+    }
+
+    private function getNumberOfAppartements(): int
+    {
+        $number = 0;
+        $appartements = $this->appartementRepository->getSyndicAppartements($this->syndic);
+        foreach ($appartements as $appartement) {
+            if (!$appartement->getPossessions()->isEmpty()) {
+                $number++;
+            }
+        }
+
+        return $number;
     }
 
     private function getDepensesWidgetValues(): float
     {
-        $currentTarif = $this->getCurrentTarif();
-        return $this->depenseRepository->getTotalDepensesPerPeriode($currentTarif, $this->syndic);
+        return $this->depenseRepository->getTotalDepensesPerPeriode($this->currentTarif, $this->syndic);
     }
 
-    private function getStatusCotisationsWidgetValues(Tarif|null $currentTarif): array
+    private function getStatusCotisationsWidgetValues(): array
     {
         $paidCotisations = 0;
         $pendingCotisations = 0;
-        if ($currentTarif) {
-            $proprietaires = []; // todo : handle it + isExempt
-//            $proprietaires = $this->proprietaireRepository->getSyndicProprietaires($this->syndic);
-            foreach ($proprietaires as $proprietaire) {
-                if (!$proprietaire->isExempt($currentTarif)) {
-                    if ($proprietaire->getCotisations()->isEmpty()) {
+
+        if ($this->currentTarif) {
+            $appartements = $this->appartementRepository->getSyndicAppartements($this->syndic);
+            foreach ($appartements as $appartement) {
+                if (!$appartement->getPossessions()->isEmpty()) {
+                    if ($appartement->getCotisations()->isEmpty()) {
                         $pendingCotisations++;
                     } else {
                         $sum = 0;
                         $hasPartial = false;
-                        foreach ($proprietaire->getCotisations() as $cotisation) {
-                            if ($cotisation->getTarif() === $currentTarif) {
+                        foreach ($appartement->getCotisations() as $cotisation) {
+                            if ($cotisation->getTarif() === $this->currentTarif) {
                                 $sum += $cotisation->getMontant();
                                 if ($cotisation->isPartial()) {
                                     $hasPartial = true;
                                 }
                             }
                         }
-                        if ($sum >= $currentTarif->getTarif() || $hasPartial) {
+                        if ($sum >= $this->currentTarif->getTarif() || $hasPartial) {
                             $paidCotisations++;
                         } else {
                             $pendingCotisations++;

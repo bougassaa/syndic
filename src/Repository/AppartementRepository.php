@@ -30,16 +30,4 @@ class AppartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getNumberOfAppartements(Syndic $syndic): int
-    {
-        $number = 0;
-
-        foreach ($this->getSyndicAppartements($syndic) as $appartement) {
-            if (!$appartement->getPossessions()->isEmpty()) {
-                $number++;
-            }
-        }
-
-        return $number;
-    }
 }

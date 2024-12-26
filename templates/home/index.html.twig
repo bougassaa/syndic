@@ -81,12 +81,18 @@
                             {% else %}
                                 {% if paidCotisations > 0 %}
                                     <div>
-                                        <span class="badge text-bg-success">{{ 'home.cotisations-statut-paid'|trans({'%no%': pendingCotisations}) }}</span>
+                                        {{ include('_components/badge.html.twig', {
+                                            type: 'success',
+                                            content: 'home.cotisations-statut-paid'|trans({'%no%': paidCotisations})
+                                        }) }}
                                     </div>
                                 {% endif %}
                                 {% if pendingCotisations > 0 %}
                                     <div>
-                                        <span class="badge text-bg-danger">{{ 'home.cotisations-statut-pending'|trans({'%no%': pendingCotisations}) }}</span>
+                                        {{ include('_components/badge.html.twig', {
+                                            type: 'danger',
+                                            content: 'home.cotisations-statut-pending'|trans({'%no%': pendingCotisations})
+                                        }) }}
                                     </div>
                                 {% endif %}
                             {% endif %}
