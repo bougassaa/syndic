@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'garage.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center flex-wrap">
+        <h2 class="flex-fill">{{ 'garage.list'|trans }}</h2>
+        <a href="{{ path('app_garage_new') }}" class="btn btn-primary" >{{ 'garage.new'|trans }}</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>{{ 'garage.nom'|trans }}</th>
+                    <th>{{ 'garage.proprietaire'|trans }}</th>
+                    <th>{{ 'garage.dateAchat'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for garage in garages %}
+                <tr>
+                    <th>{{ garage.nom }}</th>
+                    <td>
+                        {{ garage.proprietaire.absoluteName }}
+                    </td>
+                    <td>{{ garage.dateAchat|date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

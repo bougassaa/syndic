@@ -36,10 +36,17 @@ class Proprietaire
     #[ORM\OneToMany(targetEntity: Cotisation::class, mappedBy: 'proprietaire')]
     private Collection $cotisations;
 
+    /**
+     * @var Collection<int, Garage>
+     */
+    #[ORM\OneToMany(targetEntity: Garage::class, mappedBy: 'proprietaire')]
+    private Collection $garages;
+
     public function __construct()
     {
         $this->possessions = new ArrayCollection();
         $this->cotisations = new ArrayCollection();
+        $this->garages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,5 +160,35 @@ class Proprietaire
         return $this->possessions
             ->filter(fn (Possession $possession) => !$possession->getLeaveAt())
             ->count();
+    }
+
+    /**
+     * @return Collection<int, Garage>
+     */
+    public function getGarages(): Collection
+    {
+        return $this->garages;
+    }
+
+    public function addGarage(Garage $garage): static
+    {
+        if (!$this->garages->contains($garage)) {
+            $this->garages->add($garage);
+            $garage->setProprietaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGarage(Garage $garage): static
+    {
+        if ($this->garages->removeElement($garage)) {
+            // set the owning side to null (unless already changed)
+            if ($garage->getProprietaire() === $this) {
+                $garage->setProprietaire(null);
+            }
+        }
+
+        return $this;
     }
 }
