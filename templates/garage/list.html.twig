@@ -7,7 +7,9 @@
 {% block body %}
     <div class="d-flex align-items-center flex-wrap">
         <h2 class="flex-fill">{{ 'garage.list'|trans }}</h2>
-        <a href="{{ path('app_garage_new') }}" class="btn btn-primary" >{{ 'garage.new'|trans }}</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_garage_new') }}" class="btn btn-primary" >{{ 'garage.new'|trans }}</a>
+        {% endif %}
     </div>
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover">
@@ -24,6 +26,14 @@
                     <th>{{ garage.nom }}</th>
                     <td>
                         {{ garage.proprietaire.absoluteName }}
+
+                        {% if garage.proprietaire.system == false %}
+                            {% for possession in garage.proprietaire.possessions %}
+                                {{ include('_components/badge.html.twig', {
+                                    content: possession.appartement.absoluteName(false)
+                                }) }}
+                            {% endfor %}
+                        {% endif %}
                     </td>
                     <td>{{ garage.dateAchat|date }}</td>
                 </tr>
