@@ -145,3 +145,11 @@ bank:
   agence: الوكالة
   account: رقم الحساب
   label: اسم الحساب
+
+garage:
+  nav: المرائب
+  nom: رقم الموقع
+  new: إضافة مرآب
+  list: قائمة المرائب
+  proprietaire: المالك
+  dateAchat: تاريخ الشراء

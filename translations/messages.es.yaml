@@ -145,3 +145,11 @@ bank:
   agence: Agencia
   account: Número de cuenta
   label: Nombre de la cuenta
+
+garage:
+  nav: Garajes
+  nom: Nº de ubicación
+  new: Añadir un garaje
+  list: Lista de garajes
+  proprietaire: Propietario
+  dateAchat: Fecha de compra
