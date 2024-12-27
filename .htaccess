@@ -1,5 +1,9 @@
 RewriteEngine On
 
+# Permet l'accès direct au fichier deploy.php
+RewriteCond %{REQUEST_URI} ^/deploy\.php$ [NC]
+RewriteRule ^(.*)$ $1 [L]
+
 # Permet l'accès direct aux fichiers dans le répertoire public
 RewriteCond %{REQUEST_URI} !^/public/
 
