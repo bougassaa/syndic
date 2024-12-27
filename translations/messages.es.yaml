@@ -1,0 +1,147 @@
+syndic: Administrador
+parametres: Configuraciones
+save: Guardar
+edit: Editar
+status: Estado
+copy: Copiar
+close: Cerrar
+select-choose: Seleccionar un valor
+optional: Opcional
+montant: Monto
+description: Descripción
+montant-a-payer: Monto a pagar
+from: 'Desde %from%'
+for: 'Para %for%'
+before-2022: Antes de 2022
+
+home:
+  cotisations: Ver la tabla de cuotas
+  depenses: Ver los gastos realizados
+  rib: Mostrar el RIB
+  cotisations-paid: Cuotas pagadas
+  cotisations-tooltip: La suma de las cuotas anuales corresponde al número de propietarios multiplicado por la tarifa anual, sin incluir los montos parciales aceptados.
+  depenses-paid: Dinero gastado
+  cotisations-statut: Estado de las cuotas
+  cotisations-statut-empty: No hay estado por el momento
+  cotisations-statut-all-paid: Todas las cuotas han sido pagadas
+  cotisations-statut-paid: '%no% cuotas han sido pagadas'
+  cotisations-statut-pending: '%no% cuotas no están pagadas'
+
+proprietaire:
+  nav: Propietarios
+  new: Agregar un propietario
+  edit: Editar un propietario
+  list: Lista de propietarios
+  nom: Apellido
+  prenom: Nombre
+  beginAt: Fecha de inicio de adhesión
+  leaveAt: Fecha de finalización
+  beginAt-help: Cuándo el propietario comenzó a habitar
+  leaveAt-help: Cuándo el propietario dejó la residencia
+  isCurrentOwner: ¿Es el propietario actual?
+  appartements: Apartamentos
+  appartements-add: + otro apartamento
+
+cotisation:
+  nav: Cuotas
+  new: Registrar un pago
+  list: Lista de cuotas
+  montant: Monto del pago
+  moyenPaiement: Método de pago
+  paidAt: Fecha de pago
+  proprietaire: Propietario
+  tarif: Períodos involucrados
+  isPartialPayment: ¿Es un pago parcial aceptado?
+  partialReason: Razón del pago parcial
+  isPartialPayment-help: Por ejemplo, el propietario paga la mitad de la cuota porque llegó a mitad de año.
+  partialReason-placeholder: Indica la razón del pago parcial...
+  exempt: Exento
+  overdue: No pagado
+  incomplete: Incompleto
+  paid: Pagado
+  total: Total de cuotas para el período
+  filter-year: Cuotas para
+  filter-batiment: Edificio
+  filter-batiment-all: Todos
+  empty-tarif: No se ha definido una tarifa anual en las configuraciones. Configure una tarifa anual para permitir la visualización de la tabla de cuotas.
+  preuves: Comprobantes de la cuota
+  before-doha-period-title: Cuotas antes de 2022
+  before-doha-period-body-1: Antes de 2022, varios apartamentos de la residencia aún no habían sido vendidos. La empresa Doha, encargada de su comercialización, asumió las cuotas de estos apartamentos para garantizar el equilibrio financiero.
+  before-doha-period-body-2: En 2024, Doha regularizó estas cuotas por un monto total de 45,000 MAD, cubriendo el período hasta 2022. Desde entonces, las cuotas son gestionadas directamente entre los copropietarios.
+
+tarif:
+  new: Nueva cuota anual
+  montant: Tarifa de cuota anual
+  debutPeriode: Inicio del período de cuota
+  finPeriode: Fin del período de cuota
+  debutPeriode-help: Inicio del período = Fin de la cuota anterior + 1 día
+  finPeriode-help: Fin del período = Inicio del período + 12 meses
+
+moyenPaiement:
+  cheque: Cheque
+  espece: Efectivo
+  virement: Transferencia
+  autre: Otro
+
+depense:
+  nav: Gastos
+  new: Agregar un gasto
+  paidAt: Fecha de pago
+  montant: Monto del gasto
+  description: Describir lo que se ha gastado
+  description-placeholder: Opcional
+  type: Tipo de gasto
+  list: Lista de gastos
+  filter-year: Gastos para
+  filter-year-all: Todos los períodos
+  total: Total de gastos para el período
+  preuves: Comprobantes del gasto
+
+type-depense:
+  nav: Tipos de gastos
+  new: Agregar un tipo de gasto
+  edit: Editar un tipo de gasto
+  list: Lista de tipos de gastos
+  montant: Monto aproximado
+  montant-help: Un monto aproximado para calcular un promedio de gastos anual
+  label: Nombre de la categoría
+  label-help: 'Por ejemplo: Salario jardinero, Electricidad, Gastos anuales...'
+  frequence: Frecuencia de pago
+  frequence-help: ¿Es un pago que se repite mensualmente, anualmente o de forma ocasional?
+  mensuelle: Mensual
+  annuelle: Anual
+  occasionnelle: Ocasional
+
+upload:
+  mimeTypesMessage: 'Archivos aceptados: PDF, imágenes PNG, JPEG...'
+  help: Solo archivos PDF e imágenes PNG, JPG, JPEG.
+
+batiment:
+  nav: Edificios
+  nom: N° Edificio
+  new: Agregar un edificio
+  list: Lista de edificios
+  nom-help: 'Por ejemplo: A, B, C, D...'
+
+appartement:
+  nav: Apartamentos
+  nom: N° Apartamento
+  new: Agregar un apartamento
+  list: Lista de apartamentos
+  count: '%count% apartamentos'
+  empty: Ninguna propiedad
+
+admin:
+  list: Administradores
+  new: Agregar un administrador
+  edit: Editar la contraseña
+  username: Usuario
+  passwword: Contraseña
+  login: Iniciar sesión
+  logout: Cerrar sesión
+
+bank:
+  rib: RIB
+  agence: Agencia
+  account: Número de cuenta
+  label: Nombre de la cuenta
