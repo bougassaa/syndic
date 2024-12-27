@@ -35,7 +35,11 @@
                         {{ item.appartement.absoluteName}}
                     </td>
                     <td {% if item.status == 'exempt' %}class="text-muted"{% endif %}>
-                        {% if item.proprietaire is not null %}
+                        {% if item.cotisations is not empty %}
+                            {% for cotisation in item.cotisations %}
+                                <div>{{ cotisation.proprietaire.absoluteName }}</div>
+                            {% endfor %}
+                        {% elseif item.proprietaire is not null  %}
                             {{ item.proprietaire.absoluteName }}
                         {% else %}
                             -

@@ -47,6 +47,7 @@ class CotisationFormatter
         return $this->proprietaire;
     }
 
+    /** @return Cotisation[] */
     public function getCotisations(): array
     {
         return $this->cotisations;

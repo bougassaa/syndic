@@ -5,6 +5,7 @@ namespace App\Service;
 use App\DTO\CotisationFormatter;
 use App\Entity\Tarif;
 use App\Repository\BatimentRepository;
+use App\Repository\ProprietaireRepository;
 
 class CotisationsDisplay
 {
@@ -13,6 +14,7 @@ class CotisationsDisplay
 
     public function __construct(
         private BatimentRepository $batimentRepository,
+        private ProprietaireRepository $proprietaireRepository,
         private SyndicSessionResolver $syndicSessionResolver
     )
     {
@@ -50,7 +52,13 @@ class CotisationsDisplay
                     }
 
                     if (empty($formatter->proprietaire)) {
-                        $formatter->proprietaire = $appartement->getLastProprietaire();
+                        $proprietaire = $this->proprietaireRepository->getProprietaireInTarif($tarif, $appartement);
+
+                        if (!$proprietaire) {
+                            $proprietaire = $appartement->getLastProprietaire();
+                        }
+
+                        $formatter->proprietaire = $proprietaire;
                     }
 
                     // add to results
