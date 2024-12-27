@@ -24,8 +24,12 @@ class LocaleSubscriber implements EventSubscriberInterface
         $locale = $request->cookies->get('_locale', $locale);
 
         $this->localeSwitcher->setLocale($locale);
-        // uniquement pour l'extension intl
-        locale_set_default('fr');
+        try {
+            // uniquement pour l'extension intl
+            \Locale::setDefault('fr');
+        } finally {
+            locale_set_default('fr');
+        }
     }
 
     public static function getSubscribedEvents(): array
