@@ -42,9 +42,9 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav gap-3 align-items-center">
-                        <li class="nav-item">
-                            {{ _self.selectLang("d-none d-md-block") }}
+                    <ul class="navbar-nav gap-3 align-items-md-center">
+                        <li class="nav-item d-none d-md-inline-block">
+                            {{ _self.selectLang("") }}
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item dropdown">
