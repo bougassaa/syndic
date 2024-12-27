@@ -13,11 +13,13 @@ input[readonly] {
 }
 
 .text-underline-success {
-    text-decoration: underline rgba(66, 145, 58, 0.46);
+    text-decoration: underline;
+    text-decoration-color: rgba(66, 145, 58, 0.46);
 }
 
 .text-underline-danger {
-    text-decoration: underline rgba(234, 69, 87, 0.49);
+    text-decoration: underline;
+    text-decoration-color: rgba(234, 69, 87, 0.49);
 }
 
 .form-switch {
