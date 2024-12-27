@@ -28,6 +28,7 @@ class Cotisation
     private ?Appartement $appartement = null;
 
     #[ORM\ManyToOne(inversedBy: 'cotisations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Proprietaire $proprietaire = null;
 
     #[ORM\Column(length: 30)]

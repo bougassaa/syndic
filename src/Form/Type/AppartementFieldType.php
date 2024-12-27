@@ -27,9 +27,7 @@ class AppartementFieldType extends AbstractType
             'class' => Appartement::class,
             'placeholder' => $this->translator->trans('select-choose'),
             'choice_label' => function (Appartement $appartement) {
-                return $appartement->getAbsoluteName(false) .
-                    ($appartement->getLastProprietaire() instanceof Proprietaire ?
-                        " ({$appartement->getLastProprietaire()->getAbsoluteName()})" : "");
+                return $appartement->getAbsoluteName(false);
             },
             'group_by' => function (Appartement $appartement) {
                 return $appartement->getBatiment()->getNom();

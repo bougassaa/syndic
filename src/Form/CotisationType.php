@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cotisation;
+use App\Entity\Proprietaire;
 use App\Entity\Tarif;
 use App\Form\Type\AppartementFieldType;
 use App\Form\Type\PreuvesType;
@@ -70,7 +71,14 @@ class CotisationType extends AbstractType
                     Cotisation::MOYENS_PAIEMENTS
                 ),
             ])
-            ->add('appartement', AppartementFieldType::class)
+            ->add('appartement', AppartementFieldType::class, [
+                'attr' => ['class' => 'cotisationAppartement'],
+            ])
+            ->add('proprietaire', EntityType::class, [
+                'class' => Proprietaire::class,
+                'placeholder' => $this->translator->trans('select-choose'),
+                'choice_label' => fn (Proprietaire $p) => $p->getAbsoluteName()
+            ])
             ->add('preuves', PreuvesType::class, [
                 'label' => $this->translator->trans('cotisation.preuves'),
             ])

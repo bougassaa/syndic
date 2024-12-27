@@ -7,6 +7,7 @@ use App\Entity\Cotisation;
 use App\Entity\Syndic;
 use App\Entity\Tarif;
 use App\Form\CotisationType;
+use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;
 use App\Repository\TarifRepository;
 use App\Service\CotisationsDisplay;
@@ -30,6 +31,7 @@ class CotisationController extends AbstractController
     public function __construct(
         private TarifRepository $tarifRepository,
         private BatimentRepository $batimentRepository,
+        private AppartementRepository $appartementRepository,
         private SyndicSessionResolver $syndicSessionResolver
     )
     {
@@ -78,10 +80,6 @@ class CotisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($proprietaire = $cotisation->getAppartement()?->getLastProprietaire()) {
-                $cotisation->setProprietaire($proprietaire);
-            }
-
             /** @var UploadedFile[] $preuves */
             $preuves = $form->get('preuves')->getData();
 
@@ -101,7 +99,8 @@ class CotisationController extends AbstractController
 
         return $this->render('cotisation/new.html.twig', [
             'form' => $form,
-            'tarifsMapping' => $this->getTarifsMapping()
+            'tarifsMapping' => $this->getTarifsMapping(),
+            'appartementsMapping' => $this->getAppartementsMapping()
         ]);
     }
 
@@ -129,6 +128,29 @@ class CotisationController extends AbstractController
 
         foreach ($tarifs as $tarif) {
             $mapping[$tarif->getId()] = $tarif->getTarif();
+        }
+
+        return $mapping;
+    }
+
+    private function getAppartementsMapping(): array
+    {
+        $mapping = [];
+        $appartements = $this->appartementRepository->getSyndicAppartements($this->syndic);
+
+        foreach ($appartements as $appartement) {
+            $proprietaires = [];
+            foreach ($appartement->getPossessions() as $po) {
+                if ($po->getProprietaire()) {
+                    $proprietaire = $po->getProprietaire();
+                    $proprietaires[$proprietaire->getId()] = [
+                        'value' => $proprietaire->getId(),
+                        'text' => $proprietaire->getAbsoluteName()
+                    ];
+                }
+            }
+
+            $mapping[$appartement->getId()] = array_values($proprietaires);
         }
 
         return $mapping;

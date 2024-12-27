@@ -11,6 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 
+    document.querySelectorAll('select.cotisationAppartement').forEach(select => {
+        const proprietaireSelect = document.querySelector('#cotisation_proprietaire');
+        const appartementsMapping = jsonParse(document.querySelector('#appartementsMapping').value);
+        select.addEventListener('change', () => {
+            const appartementKey = select.value;
+            const proprietaires = appartementsMapping[appartementKey];
+
+            proprietaireSelect.tomselect.clear();
+            proprietaireSelect.tomselect.clearOptions();
+            proprietaireSelect.tomselect.addOption(proprietaires);
+        })
+    });
+
     document.querySelectorAll('select.cotisationTarif').forEach(select => {
         const montantInput = document.querySelector('#cotisation_montant');
         const tarifsMapping = jsonParse(document.querySelector('#tarifsMapping').value);
