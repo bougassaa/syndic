@@ -43,7 +43,7 @@
                             </span>
                             {{ item.paidAt|date }}
                         </td>
-                        <td>{{ item.montant|format_currency('MAD') }}</td>
+                        <td class="text-start" dir="ltr">{{ item.montant|format_currency('MAD') }}</td>
                         <td>{{ item.type.label }}</td>
                         <td style="max-width: 300px;" class="text-truncate">{{ item.description }}</td>
                     </tr>
@@ -54,7 +54,7 @@
                 <th colspan="7">
                     {{ 'depense.total'|trans }}
                     <i class="fa-solid fa-arrow-right-long mx-1"></i>
-                    <span class="border-bottom border-dark border-2">
+                    <span class="border-bottom border-dark border-2 text-start" dir="ltr">
                         {{ totalDepenses|format_currency('MAD') }}
                     </span>
                 </th>

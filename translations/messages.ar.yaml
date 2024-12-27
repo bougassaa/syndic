@@ -15,25 +15,25 @@ for: 'لـ %for%'
 before-2022: قبل 2022
 
 home:
-  cotisations: عرض جدول الاشتراكات
+  cotisations: عرض جدول المساهمات
   depenses: عرض النفقات
   rib: عرض رقم الحساب البنكي
-  cotisations-paid: الاشتراكات المدفوعة
-  cotisations-tooltip: مجموع الاشتراكات السنوية يعادل عدد الملاك مضروبًا في التعريفة السنوية، دون احتساب المبالغ الجزئية المقبولة.
+  cotisations-paid: المساهمات المدفوعة
+  cotisations-tooltip: مجموع المساهمات السنوية يعادل عدد الملاك مضروبًا في المعدل السنوي، دون احتساب المبالغ الجزئية المقبولة.
   depenses-paid: الأموال المصروفة
-  cotisations-statut: حالة الاشتراكات
+  cotisations-statut: حالة المساهمات
   cotisations-statut-empty: لا توجد حالة في الوقت الحالي
-  cotisations-statut-all-paid: تم دفع جميع الاشتراكات
-  cotisations-statut-paid: '%no% اشتراك مدفوع'
-  cotisations-statut-pending: '%no% اشتراك غير مدفوع'
+  cotisations-statut-all-paid: تم دفع جميع المساهمات
+  cotisations-statut-paid: '%no% مساهمة مدفوعة'
+  cotisations-statut-pending: '%no% مساهمة غير مدفوعة'
 
 proprietaire:
   nav: الملاك
   new: إضافة مالك
   edit: تعديل مالك
   list: قائمة الملاك
-  nom: اسم العائلة
-  prenom: الاسم الأول
+  nom: الإسم العائلي
+  prenom: الإسم الشخصي
   beginAt: تاريخ بدء العضوية
   leaveAt: تاريخ الانسحاب
   beginAt-help: عندما بدأ المالك في السكن
@@ -43,9 +43,9 @@ proprietaire:
   appartements-add: + شقة إضافية
 
 cotisation:
-  nav: الاشتراكات
+  nav: المساهمات
   new: تسجيل دفعة
-  list: قائمة الاشتراكات
+  list: قائمة المساهمات
   montant: مبلغ الدفع
   moyenPaiement: وسيلة الدفع
   paidAt: تاريخ الدفع
@@ -59,15 +59,15 @@ cotisation:
   overdue: غير مدفوع
   incomplete: غير مكتمل
   paid: مدفوع
-  total: إجمالي الاشتراكات للفترة
-  filter-year: الاشتراكات للسنة
+  total: إجمالي المساهمات في الفترة
+  filter-year: المساهمات لسنة
   filter-batiment: المبنى
   filter-batiment-all: الكل
-  empty-tarif: لم يتم تحديد تعريفة سنوية في الإعدادات. يرجى إعداد تعريفة سنوية لعرض جدول الاشتراكات.
+  empty-tarif: لم يتم تحديد تعريفة سنوية في الإعدادات. يرجى إعداد تعريفة سنوية لعرض جدول المساهمات.
   preuves: مبررات الاشتراك
-  before-doha-period-title: اشتراكات قبل 2022
-  before-doha-period-body-1: قبل 2022، لم يتم بيع العديد من الشقق في الإقامة بعد. تولت شركة الدوحة مسؤولية دفع اشتراكات هذه الوحدات لضمان التوازن المالي.
-  before-doha-period-body-2: في عام 2024، قامت الدوحة بتسوية هذه الاشتراكات بمبلغ إجمالي قدره 45,000 درهم مغربي، يغطي الفترة حتى عام 2022. منذ ذلك الحين، تتم إدارة الاشتراكات مباشرة بين الملاك المشتركين.
+  before-doha-period-title: المساهمات قبل 2022
+  before-doha-period-body-1: قبل 2022، لم يتم بيع العديد من الشقق في الإقامة بعد. تولت شركة الضحى مسؤولية دفع المساهمات هذه الوحدات لضمان التوازن المالي.
+  before-doha-period-body-2: في عام 2024، قامت الضحى بتسوية هذه المساهمات بمبلغ إجمالي قدره 45,000 درهم مغربي، يغطي الفترة حتى عام 2022. منذ ذلك الحين، تتم إدارة المساهمات مباشرة بين الملاك المشتركين.
 
 tarif:
   new: اشتراك سنوي جديد
@@ -92,9 +92,9 @@ depense:
   description-placeholder: اختياري
   type: نوع النفقة
   list: قائمة النفقات
-  filter-year: النفقات للسنة
+  filter-year: النفقات لسنة
   filter-year-all: كل الفترات
-  total: إجمالي النفقات للفترة
+  total: إجمالي النفقات في الفترة
   preuves: مبررات النفقة
 
 type-depense:

@@ -75,6 +75,7 @@ class CotisationType extends AbstractType
                 'attr' => ['class' => 'cotisationAppartement'],
             ])
             ->add('proprietaire', EntityType::class, [
+                'label' => $this->translator->trans('cotisation.proprietaire'),
                 'class' => Proprietaire::class,
                 'placeholder' => $this->translator->trans('select-choose'),
                 'choice_label' => fn (Proprietaire $p) => $p->getAbsoluteName()
