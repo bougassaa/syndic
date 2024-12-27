@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +24,15 @@ class LangController extends AbstractController
     public function index(Request $request, #[MapQueryParameter] string $lang): Response
     {
         $this->session->set('_locale', $lang);
-        return $this->redirect(
+
+        $response = $this->redirect(
             $request->headers->get('referer') ?? $this->generateUrl('app_home')
         );
+
+        $response->headers->setCookie(
+            Cookie::create('_locale', $lang, strtotime('+1 year'))
+        );
+
+        return $response;
     }
 }

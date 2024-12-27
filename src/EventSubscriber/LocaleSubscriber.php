@@ -17,12 +17,14 @@ class LocaleSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-
         // Lire la langue depuis la session
         $locale = $request->getSession()
             ->get('_locale', 'fr');
+        // voir si un cookie existe
+        $locale = $request->cookies->get('_locale', $locale);
 
         $this->localeSwitcher->setLocale($locale);
+        // uniquement pour l'extension intl
         locale_set_default('fr');
     }
 
