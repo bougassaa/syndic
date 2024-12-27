@@ -24,8 +24,8 @@ home:
   cotisations-statut: حالة الاشتراكات
   cotisations-statut-empty: لا توجد حالة في الوقت الحالي
   cotisations-statut-all-paid: تم دفع جميع الاشتراكات
-  cotisations-statut-paid: '%no% اشتراكات مدفوعة'
-  cotisations-statut-pending: '%no% اشتراكات غير مدفوعة'
+  cotisations-statut-paid: '%no% اشتراك مدفوع'
+  cotisations-statut-pending: '%no% اشتراك غير مدفوع'
 
 proprietaire:
   nav: الملاك
