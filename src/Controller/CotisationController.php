@@ -104,6 +104,16 @@ class CotisationController extends AbstractController
         ]);
     }
 
+    #[Route('/cotisation/delete/{cotisation}', name: 'app_cotisation_delete')]
+    public function delete(Cotisation $cotisation, EntityManagerInterface $manager, Request $request): Response
+    {
+        $manager->remove($cotisation);
+        $manager->flush();
+        return $this->redirect(
+            $request->headers->get('referer') ?? $this->generateUrl('app_cotisation_list')
+        );
+    }
+
     #[Route('/cotisation/more-infos/{tarif}/{appartement}', name: 'app_cotisation_more_infos')]
     public function moreInfos(Tarif $tarif, Appartement $appartement): Response
     {
@@ -154,5 +164,33 @@ class CotisationController extends AbstractController
         }
 
         return $mapping;
+    }
+
+    #[Route('/cotisation/modal/edit/{tarif}/{appartement}', name: 'app_cotisation_modal_edit')]
+    public function modalEdit(Tarif $tarif, Appartement $appartement): Response
+    {
+        return $this->render('cotisation/modal-edit.html.twig', [
+            'cotisations' => $this->getCotisationsForModal($tarif, $appartement),
+        ]);
+    }
+
+    #[Route('/cotisation/modal/delete/{tarif}/{appartement}', name: 'app_cotisation_modal_delete')]
+    public function modalDelete(Tarif $tarif, Appartement $appartement): Response
+    {
+        return $this->render('cotisation/modal-delete.html.twig', [
+            'cotisations' => $this->getCotisationsForModal($tarif, $appartement),
+        ]);
+    }
+
+    /** @return Cotisation[] */
+    private function getCotisationsForModal(Tarif $tarif, Appartement $appartement): array
+    {
+        $cotisations = [];
+        foreach ($tarif->getCotisations() as $cotisation) {
+            if ($cotisation->getAppartement() === $appartement) {
+                $cotisations[] = $cotisation;
+            }
+        }
+        return $cotisations;
     }
 }

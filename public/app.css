@@ -65,9 +65,14 @@ tr[data-url] {
     cursor: pointer;
 }
 .row-trigger {
-    width: 22px;
+    width: 32px;
     display: inline-block;
-    text-align: center;
+}
+
+.table tbody {
+    td, th {
+        vertical-align: middle;
+    }
 }
 
 @media (min-width: 768px) {

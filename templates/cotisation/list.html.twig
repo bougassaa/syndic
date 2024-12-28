@@ -17,19 +17,22 @@
                     <th>{{ 'cotisation.montant'|trans }}</th>
                     <th>{{ 'cotisation.moyenPaiement'|trans }}</th>
                     <th>{{ 'montant-a-payer'|trans }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in items %}
                 <tr class="{% if item.status == 'overdue' %}table-danger{% endif %}"
-                    {% if item.preuves %}data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"{% endif %}
+                    {% if item.preuves %}
+                        data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                    {% endif %}
                 >
                     <td class="text-nowrap">
                         <span class="row-trigger">
                             {% if item.preuves %}
-                                <a href="#" class="text-decoration-none">
-                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
-                                </a>
+                                <button class="btn-sm btn btn-light">
+                                    <i class="fa-solid fa-folder-open"></i>
+                                </button>
                             {% endif%}
                         </span>
                         {{ item.appartement.absoluteName}}
@@ -109,12 +112,37 @@
                     <td class="text-start" dir="ltr">
                         {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
+                    <td class="text-end">
+                        {% if item.cotisations is not empty %}
+                            <div class="dropdown">
+                                <button class="btn-sm btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item"
+                                                data-url="{{ path('app_cotisation_modal_edit', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                                        >
+                                            {{ 'cotisation.edit'|trans }}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item"
+                                                data-url="{{ path('app_cotisation_modal_delete', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                                        >
+                                            {{ 'cotisation.delete'|trans }}
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
             <tfoot class="table-info">
                 <tr>
-                    <th colspan="7">
+                    <th colspan="8">
                         {{ 'cotisation.total'|trans }}
                         <i class="fa-solid fa-arrow-right-long mx-1"></i>
                         <span class="border-bottom border-dark border-2 text-start" dir="ltr">

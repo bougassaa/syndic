@@ -113,9 +113,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // used for all [data-url]
-    document.querySelectorAll('[data-url]').forEach(row => {
-        row.addEventListener('click', async () => {
-            const response = await fetch(row.dataset.url);
+    document.querySelectorAll('[data-url]').forEach(el => {
+        el.addEventListener('click', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const targetUrl = event.target && event.target.dataset.url;
+
+            if (!targetUrl && event.target.closest('.dropdown') instanceof HTMLElement) {
+                return;
+            }
+
+            const response = await fetch(targetUrl || el.dataset.url);
             const data = await response.text();
             const modalElement = createElementFromString(data);
             document.body.appendChild(modalElement);
