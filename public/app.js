@@ -228,6 +228,21 @@ function initOwnerSwitch(parent = document) {
             leaveAtVisibility(input);
         })
     });
+
+    const existingPreuvesInput = document.querySelector('#cotisation_existingPreuves');
+
+    document.querySelectorAll('.remove-preuve').forEach(button => {
+        button.addEventListener('click', () => {
+            const image = button.getAttribute('data-image');
+            const currentPreuves = jsonParse(existingPreuvesInput.value);
+            const updatedPreuves = currentPreuves.filter(preuve => preuve !== image);
+
+            existingPreuvesInput.value = JSON.stringify(updatedPreuves);
+
+            // Supprimer l'aperçu visuellement
+            button.closest('.preuve-preview').remove();
+        });
+    });
 }
 
 function jsonParse(value) {

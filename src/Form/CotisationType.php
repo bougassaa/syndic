@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -82,10 +83,18 @@ class CotisationType extends AbstractType
             ])
             ->add('preuves', PreuvesType::class, [
                 'label' => $this->translator->trans('cotisation.preuves'),
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => $this->translator->trans('save')
-            ])
+            ]);
+
+        if (!empty($options['existing_preuves'])) {
+            $builder->add('existingPreuves', HiddenType::class, [
+                'mapped' => false,
+                'data' => json_encode($options['existing_preuves']),
+            ]);
+        }
+
+        $builder->add('save', SubmitType::class, [
+            'label' => $this->translator->trans('save')
+        ])
         ;
     }
 
@@ -93,6 +102,7 @@ class CotisationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cotisation::class,
+            'existing_preuves' => []
         ]);
     }
 }

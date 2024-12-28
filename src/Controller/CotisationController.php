@@ -14,6 +14,7 @@ use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,16 +81,7 @@ class CotisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile[] $preuves */
-            $preuves = $form->get('preuves')->getData();
-
-            if (!empty($preuves)) {
-                foreach ($preuves as $file) {
-                    $filename = uniqid() . '.' . $file->guessExtension();
-                    $file->move($this->getParameter('cotisations_preuves'), $filename);
-                    $cotisation->addPreuve($filename);
-                }
-            }
+            $this->handlePreuves($form, $cotisation);
 
             $manager->persist($cotisation);
             $manager->flush();
@@ -104,6 +96,52 @@ class CotisationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/cotisation/edit/{cotisation}', name: 'app_cotisation_edit')]
+    public function edit(Cotisation $cotisation, Request $request, EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(CotisationType::class, $cotisation, [
+            'existing_preuves' => $cotisation->getPreuves(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->handlePreuves($form, $cotisation);
+
+            $manager->persist($cotisation);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_cotisation_list');
+        }
+
+        return $this->render('cotisation/edit.html.twig', [
+            'form' => $form,
+            'tarifsMapping' => $this->getTarifsMapping(),
+            'appartementsMapping' => $this->getAppartementsMapping()
+        ]);
+    }
+
+    private function handlePreuves(FormInterface $form, Cotisation $cotisation)
+    {
+        if ($form->has('existingPreuves')) {
+            $existingPreuves = $form->get('existingPreuves')->getData();
+            $existingPreuves = json_decode($existingPreuves, true);
+            $cotisation->setPreuves($existingPreuves);
+        }
+
+        /** @var UploadedFile[] $preuves */
+        $preuves = $form->get('preuves')->getData();
+
+        if (!empty($preuves)) {
+            foreach ($preuves as $file) {
+                $filename = uniqid() . '.' . $file->guessExtension();
+                $file->move($this->getParameter('cotisations_preuves'), $filename);
+                $cotisation->addPreuve($filename);
+            }
+        }
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/cotisation/delete/{cotisation}', name: 'app_cotisation_delete')]
     public function delete(Cotisation $cotisation, EntityManagerInterface $manager, Request $request): Response
     {
@@ -166,6 +204,7 @@ class CotisationController extends AbstractController
         return $mapping;
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/cotisation/modal/edit/{tarif}/{appartement}', name: 'app_cotisation_modal_edit')]
     public function modalEdit(Tarif $tarif, Appartement $appartement): Response
     {
@@ -174,6 +213,7 @@ class CotisationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/cotisation/modal/delete/{tarif}/{appartement}', name: 'app_cotisation_modal_delete')]
     public function modalDelete(Tarif $tarif, Appartement $appartement): Response
     {

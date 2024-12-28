@@ -113,7 +113,7 @@
                         {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
                     <td class="text-end">
-                        {% if item.cotisations is not empty %}
+                        {% if item.cotisations is not empty and is_granted('ROLE_ADMIN') %}
                             <div class="dropdown">
                                 <button class="btn-sm btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis"></i>

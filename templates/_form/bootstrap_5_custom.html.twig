@@ -7,3 +7,25 @@
         </div>
     </div>
 {% endblock %}
+
+{% block _cotisation_existingPreuves_row %}
+    {{ form_row(form) }}
+    {% set preuves = form.vars.value|json_decode %}
+    <div>
+        <a class="d-inline-block mb-3" data-bs-toggle="collapse" href="#preuves-container" role="button" aria-expanded="false" aria-controls="preuves-container">
+            {{ 'cotisation.existing-preuves'|trans }}
+        </a>
+        <div class="preuves-container collapse" id="preuves-container">
+            {% for image in preuves %}
+                <div class="preuve-preview">
+                    <img src="{{ path('app_serve_image', {'filename': image, 'folder': 'cotisations'}) }}" alt="preuve">
+                    <button type="button"
+                            class="remove-preuve btn btn-sm btn-outline-danger"
+                            data-image="{{ image }}">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

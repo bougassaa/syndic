@@ -8,7 +8,7 @@
             <div class="modal-body">
                 {% for cotisation in cotisations %}
                     <div>
-                        <a href="#">
+                        <a href="{{ path('app_cotisation_edit', {'cotisation': cotisation.id}) }}">
                             {{ 'cotisation.edit-of'|trans({'%date%': cotisation.paidAt|date, '%montant%': cotisation.montant|format_currency('MAD')}) }}
                         </a>
                     </div>
