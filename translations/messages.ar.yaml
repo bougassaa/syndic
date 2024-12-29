@@ -73,6 +73,7 @@ cotisation:
   edit: تعديل مساهمة
   delete: حذف مساهمة
   existing-preuves: حذف ملف مضاف سابقاً
+  phrase-payment: 'في %paidAt%، قام %proprietaire% بدفع %montant% عبر %moyenPaiement%.'
 
 tarif:
   new: اشتراك سنوي جديد

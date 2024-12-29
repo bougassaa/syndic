@@ -23,3 +23,7 @@
         }) }}
     {% endif %}
 {% endmacro %}
+
+{% macro totalArrow() %}
+    <i class="fa-solid {% if app.locale == 'ar' %}fa-arrow-left-long{% else %}fa-arrow-right-long{% endif %} mx-1"></i>
+{% endmacro %}

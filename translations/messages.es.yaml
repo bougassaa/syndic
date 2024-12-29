@@ -73,6 +73,7 @@ cotisation:
   edit: Editar una contribución
   delete: Eliminar una contribución
   existing-preuves: Eliminar un archivo previamente añadido
+  phrase-payment: 'El %paidAt%, %proprietaire% pagó %montant% mediante %moyenPaiement%.'
 
 tarif:
   new: Nueva cuota anual

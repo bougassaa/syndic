@@ -1,4 +1,4 @@
-{% import 'cotisation/_macros.html.twig' as macros %}
+{% import '_components/_macros.html.twig' as macros %}
 
 <div class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-scrollable">
@@ -6,7 +6,25 @@
             <div class="modal-body px-1 px-sm-3 px-md-4 px-lg-5">
                 <div class="card">
                     <div class="card-body">
-                        {{ macros.cotisationStatus(cotisationsFormatter) }}
+                        <div>
+                            <b>{{ 'appartement.nom'|trans }}:</b> {{ cotisationsFormatter.appartement.absoluteName}}
+                        </div>
+                        <div>
+                            <b>{{ 'status'|trans }}:</b> {{ macros.cotisationStatus(cotisationsFormatter) }}
+                        </div>
+                        <div>
+                            <b>{{ 'montant-a-payer'|trans }}:</b> {{ cotisationsFormatter.tarif.tarif|format_currency('MAD') }}
+                        </div>
+                        {% for cotisation in cotisationsFormatter.cotisations %}
+                            <div>
+                                {{ 'cotisation.phrase-payment'|trans({
+                                    '%paidAt%': cotisation.paidAt|date,
+                                    '%proprietaire%': cotisation.proprietaire.absoluteName,
+                                    '%montant%': cotisation.montant|format_currency('MAD'),
+                                    '%moyenPaiement%': ('moyenPaiement.' ~ cotisation.moyenPaiement)|trans|lower
+                                }) }}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="d-flex flex-column gap-2">

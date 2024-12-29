@@ -1,3 +1,4 @@
+{% import '_components/_macros.html.twig' as macros %}
 {% extends 'base.html.twig' %}
 
 {% block title %}
@@ -53,7 +54,7 @@
             <tr>
                 <th colspan="7">
                     {{ 'depense.total'|trans }}
-                    <i class="fa-solid fa-arrow-right-long mx-1"></i>
+                    {{ macros.totalArrow() }}
                     <span class="border-bottom border-dark border-2 text-start" dir="ltr">
                         {{ totalDepenses|format_currency('MAD') }}
                     </span>

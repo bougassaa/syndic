@@ -73,6 +73,7 @@ cotisation:
   edit: Modifier une cotisation
   delete: Supprimer une cotisation
   existing-preuves: Supprimer un fichier précèdemment ajouté
+  phrase-payment: 'Le %paidAt% %proprietaire% a payé %montant% par %moyenPaiement%.'
 
 tarif:
   new: Nouvelle cotisation annuelle
