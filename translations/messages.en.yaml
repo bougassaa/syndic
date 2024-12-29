@@ -1,0 +1,177 @@
+syndic: Syndic
+parametres: Settings
+save: Save
+edit: Edit
+status: Status
+copy: Copy
+close: Close
+select-choose: Select a value
+optional: Optional
+montant: Amount
+description: Description
+montant-a-payer: Amount to pay
+from: 'From %from%'
+for: 'For %for%'
+before-2022: Before 2022
+
+home:
+  cotisations: View the contributions table
+  depenses: See what has been spent
+  rib: Display the RIB
+  cotisations-paid: Contributions paid
+  cotisations-tooltip: The sum of annual contributions corresponds to the number of owners multiplied by the annual rate, excluding partial amounts accepted.
+  depenses-paid: Money spent
+  cotisations-statut: Contributions status
+  cotisations-statut-empty: No status for now
+  cotisations-statut-all-paid: All contributions have been paid
+  cotisations-statut-paid: '%no% contributions have been paid'
+  cotisations-statut-pending: '%no% contributions are not paid'
+
+proprietaire:
+  nav: Owners
+  new: Add an owner
+  edit: Edit an owner
+  list: List of owners
+  nom: Last name
+  prenom: First name
+  beginAt: Membership start date
+  leaveAt: End date
+  beginAt-help: When the owner started living
+  leaveAt-help: When the owner left the residence
+  isCurrentOwner: Currently the owner?
+  appartements: Apartments
+  appartements-add: + another apartment
+
+cotisation:
+  nav: Contributions
+  new: Record a payment
+  list: List of contributions
+  montant: Payment amount
+  moyenPaiement: Payment method
+  paidAt: Payment date
+  proprietaire: Owner
+  tarif: Relevant periods
+  isPartialPayment: Is a partial payment accepted?
+  partialReason: Reason for partial payment
+  isPartialPayment-help: For example, the owner pays half of the contribution because they arrived in the middle of the year.
+  partialReason-placeholder: Specify the reason for partial payment...
+  exempt: Exempt
+  overdue: Unpaid
+  incomplete: Incomplete
+  paid: Paid
+  total: Total contributions for the period
+  filter-year: Contributions for
+  filter-batiment: Building
+  filter-batiment-all: All
+  empty-tarif: No annual rate has been defined in the settings. Please set an annual rate to display the contributions table.
+  preuves: Contribution supporting documents
+  before-doha-period-title: Contributions before 2022
+  before-doha-period-body-1: Before 2022, several apartments in the residence had not yet been sold. The company Doha, responsible for their marketing, covered the contributions for these units to ensure financial balance.
+  before-doha-period-body-2: In 2024, Doha regularized these contributions with a total amount of 45,000 MAD, covering the period up to 2022. Since then, contributions have been managed directly among the co-owners.
+  edit-of: 'Edit the contribution of %date% of %montant%'
+  delete-of: 'Delete the contribution of %date% of %montant%'
+  edit: Edit a contribution
+  delete: Delete a contribution
+  existing-preuves: Delete a previously added file
+  phrase-payment: 'On %paidAt% %proprietaire% paid %montant% by %moyenPaiement%.'
+
+tarif:
+  new: New annual contribution
+  montant: Annual contribution rate
+  debutPeriode: Contribution period start
+  finPeriode: Contribution period end
+  debutPeriode-help: Start of period = End of previous contribution + 1 day
+  finPeriode-help: End of period = Start of period + 12 months
+
+moyenPaiement:
+  cheque: Check
+  espece: Cash
+  virement: Bank transfer
+  autre: Other
+
+depense:
+  nav: Expenses
+  new: Add an expense
+  paidAt: Payment date
+  montant: Expense amount
+  description: Describe the expense
+  description-placeholder: Optional
+  type: Expense type
+  list: List of expenses
+  filter-year: Expenses for
+  filter-year-all: All periods
+  filter-month: Month
+  filter-month-all: All
+  total: Total expenses for the period
+  preuves: Expense supporting documents
+
+type-depense:
+  nav: Expense types
+  new: Add an expense type
+  edit: Edit an expense type
+  list: List of expense types
+  montant: Approximate amount
+  montant-help: An approximate amount to calculate an annual average expense
+  label: Category name
+  label-help: 'For example: Gardener salary, Electricity, Annual fees...'
+  frequence: Payment frequency
+  frequence-help: Is this a payment repeated monthly, annually, or occasionally?
+  mensuelle: Monthly
+  annuelle: Annually
+  occasionnelle: Occasionally
+
+upload:
+  mimeTypesMessage: 'Accepted files: PDF, PNG, JPEG images...'
+  help: Only PDF and PNG, JPG, JPEG images.
+
+batiment:
+  nav: Buildings
+  nom: Building No.
+  new: Add a building
+  list: List of buildings
+  nom-help: 'For example: A, B, C, D...'
+
+appartement:
+  nav: Apartments
+  nom: Apartment No.
+  new: Add an apartment
+  list: List of apartments
+  count: '%count% apartments'
+  empty: No ownership
+
+admin:
+  list: Administrators
+  new: Add an administrator
+  edit: Edit the password
+  username: Username
+  passwword: Password
+  login: Log in
+  logout: Log out
+
+bank:
+  rib: RIB
+  agence: Agency
+  account: Account number
+  label: Account name
+
+garage:
+  nav: Garages
+  nom: Spot No.
+  new: Add a garage
+  list: List of garages
+  proprietaire: Owner
+  dateAchat: Purchase date
+
+month:
+  01: January
+  02: February
+  03: March
+  04: April
+  05: May
+  06: June
+  07: July
+  08: August
+  09: September
+  10: October
+  11: November
+  12: December
