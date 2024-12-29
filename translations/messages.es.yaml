@@ -2,6 +2,7 @@ syndic: Administrador
 parametres: Configuraciones
 save: Guardar
 edit: Editar
+delete: Eliminar
 status: Estado
 copy: Copiar
 close: Cerrar
@@ -92,6 +93,7 @@ moyenPaiement:
 depense:
   nav: Gastos
   new: Agregar un gasto
+  edit: Editar un gasto
   paidAt: Fecha de pago
   montant: Monto del gasto
   description: Describir lo que se ha gastado

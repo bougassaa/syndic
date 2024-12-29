@@ -2,6 +2,7 @@ syndic: Syndic
 parametres: Settings
 save: Save
 edit: Edit
+delete: Delete
 status: Status
 copy: Copy
 close: Close
@@ -92,6 +93,7 @@ moyenPaiement:
 depense:
   nav: Expenses
   new: Add an expense
+  edit: Edit an expense
   paidAt: Payment date
   montant: Expense amount
   description: Describe the expense

@@ -37,6 +37,7 @@
                     <th>{{ 'montant'|trans }}</th>
                     <th>{{ 'depense.type'|trans }}</th>
                     <th>{{ 'description'|trans }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,9 +46,9 @@
                         <td>
                             <span class="row-trigger">
                                 {% if item.preuves is not empty %}
-                                    <a href="#" class="text-decoration-none">
-                                        <i class="fa-solid fa-magnifying-glass-plus"></i>
-                                    </a>
+                                    <button class="btn-sm btn btn-light">
+                                        <i class="fa-solid fa-folder-open"></i>
+                                    </button>
                                 {% endif%}
                             </span>
                             {{ item.paidAt|date }}
@@ -55,12 +56,33 @@
                         <td class="text-start" dir="ltr">{{ item.montant|format_currency('MAD') }}</td>
                         <td>{{ item.type.label }}</td>
                         <td style="max-width: 300px;" class="text-truncate">{{ item.description }}</td>
+                        <td class="text-end">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="dropdown">
+                                    <button class="btn-sm btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_depense_edit', {'depense': item.id}) }}">
+                                                {{ 'edit'|trans }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_depense_delete', {'depense': item.id}) }}">
+                                                {{ 'delete'|trans }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot class="table-info">
             <tr>
-                <th colspan="7">
+                <th colspan="8">
                     {{ 'depense.total'|trans }}
                     {{ macros.totalArrow() }}
                     <span class="border-bottom border-dark border-2 text-start" dir="ltr">

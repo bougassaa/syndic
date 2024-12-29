@@ -115,13 +115,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // used for all [data-url]
     document.querySelectorAll('[data-url]').forEach(el => {
         el.addEventListener('click', async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
             const targetUrl = event.target && event.target.dataset.url;
 
             if (!targetUrl && event.target.closest('.dropdown') instanceof HTMLElement) {
                 return;
             }
+
+            if (!targetUrl && event.target.tagName === 'A') {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
 
             const response = await fetch(targetUrl || el.dataset.url);
             const data = await response.text();
@@ -236,7 +241,7 @@ function initOwnerSwitch(parent = document) {
         })
     });
 
-    const existingPreuvesInput = document.querySelector('#cotisation_existingPreuves');
+    const existingPreuvesInput = document.querySelector('.existingPreuves');
 
     document.querySelectorAll('.remove-preuve').forEach(button => {
         button.addEventListener('click', () => {

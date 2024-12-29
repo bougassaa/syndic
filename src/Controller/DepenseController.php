@@ -11,7 +11,6 @@ use App\Repository\TypeDepenseRepository;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -22,10 +21,14 @@ class DepenseController extends AbstractController
 {
 
     use TarifFilterSelection;
+    use SavePreuves;
 
     private Syndic $syndic;
 
-    public function __construct(private SyndicSessionResolver $syndicSessionResolver, private TarifRepository $tarifRepository)
+    public function __construct(private SyndicSessionResolver $syndicSessionResolver,
+                                private TarifRepository $tarifRepository,
+                                private TypeDepenseRepository $typeDepenseRepository,
+    )
     {
         $this->syndic = $this->syndicSessionResolver->getSelectedSyndic();
     }
@@ -54,7 +57,7 @@ class DepenseController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/depense/new', name: 'app_depense_new')]
-    public function new(Request $request, EntityManagerInterface $manager, TypeDepenseRepository $typeDepenseRepository): Response
+    public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $depense = new Depense();
         $depense->setPaidAt(new \DateTime());
@@ -63,16 +66,7 @@ class DepenseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile[] $preuves */
-            $preuves = $form->get('preuves')->getData();
-
-            if (!empty($preuves)) {
-                foreach ($preuves as $file) {
-                    $filename = uniqid() . '.' . $file->guessExtension();
-                    $file->move($this->getParameter('depenses_preuves'), $filename);
-                    $depense->addPreuve($filename);
-                }
-            }
+            $this->handlePreuves($form, $depense, 'depenses');
 
             $depense->setSyndic($this->syndic);
             $manager->persist($depense);
@@ -81,16 +75,45 @@ class DepenseController extends AbstractController
             return $this->redirectToRoute('app_depense_list');
         }
 
-        $types = [];
-        foreach ($typeDepenseRepository->findBy(['syndic' => $this->syndic]) as $item) {
-            $types[$item->getId()] = $item->getMontant();
+        return $this->render('depense/save.html.twig', [
+            'form' => $form,
+            'types' => $this->getTypesDepenses(),
+            'mode' => 'new'
+        ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/depense/edit/{depense}', name: 'app_depense_edit')]
+    public function edit(Depense $depense, Request $request, EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(DepenseType::class, $depense, [
+            'existing_preuves' => $depense->getPreuves(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->handlePreuves($form, $depense, 'depenses');
+
+            $manager->persist($depense);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_depense_list');
         }
 
         return $this->render('depense/save.html.twig', [
             'form' => $form,
-            'types' => $types,
-            'mode' => 'new'
+            'types' => $this->getTypesDepenses(),
+            'mode' => 'edit'
         ]);
+    }
+
+    private function getTypesDepenses(): array
+    {
+        $types = [];
+        foreach ($this->typeDepenseRepository->findBy(['syndic' => $this->syndic]) as $item) {
+            $types[$item->getId()] = $item->getMontant();
+        }
+        return $types;
     }
 
     #[Route('/depense/more-infos/{depense}', name: 'app_depense_more_infos')]
@@ -100,5 +123,16 @@ class DepenseController extends AbstractController
             'preuves' => $depense->getPreuves(),
             'pathFolder' => 'depenses'
         ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/depense/delete/{depense}', name: 'app_depense_delete')]
+    public function delete(Depense $depense, EntityManagerInterface $manager, Request $request): Response
+    {
+        $manager->remove($depense);
+        $manager->flush();
+        return $this->redirect(
+            $request->headers->get('referer') ?? $this->generateUrl('app_depense_list')
+        );
     }
 }

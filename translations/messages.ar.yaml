@@ -2,6 +2,7 @@ syndic: السنديك
 parametres: الإعدادات
 save: حفظ
 edit: تعديل
+delete: حذف
 status: الحالة
 copy: نسخ
 close: إغلاق
@@ -92,6 +93,7 @@ moyenPaiement:
 depense:
   nav: النفقات
   new: إضافة نفقة
+  edit: تعديل مصاريف
   paidAt: تاريخ الدفع
   montant: مبلغ النفقة
   description: وصف ما تم إنفاقه

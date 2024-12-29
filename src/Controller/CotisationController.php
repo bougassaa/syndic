@@ -15,8 +15,6 @@ use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -27,6 +25,7 @@ class CotisationController extends AbstractController
 {
 
     use TarifFilterSelection;
+    use SavePreuves;
 
     private Syndic $syndic;
 
@@ -82,7 +81,7 @@ class CotisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handlePreuves($form, $cotisation);
+            $this->handlePreuves($form, $cotisation, 'cotisations');
 
             $manager->persist($cotisation);
             $manager->flush();
@@ -108,7 +107,7 @@ class CotisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handlePreuves($form, $cotisation);
+            $this->handlePreuves($form, $cotisation, 'cotisations');
 
             $manager->persist($cotisation);
             $manager->flush();
@@ -122,26 +121,6 @@ class CotisationController extends AbstractController
             'appartementsMapping' => $this->getAppartementsMapping(),
             'mode' => 'edit'
         ]);
-    }
-
-    private function handlePreuves(FormInterface $form, Cotisation $cotisation)
-    {
-        if ($form->has('existingPreuves')) {
-            $existingPreuves = $form->get('existingPreuves')->getData();
-            $existingPreuves = json_decode($existingPreuves, true);
-            $cotisation->setPreuves($existingPreuves);
-        }
-
-        /** @var UploadedFile[] $preuves */
-        $preuves = $form->get('preuves')->getData();
-
-        if (!empty($preuves)) {
-            foreach ($preuves as $file) {
-                $filename = uniqid() . '.' . $file->guessExtension();
-                $file->move($this->getParameter('cotisations_preuves'), $filename);
-                $cotisation->addPreuve($filename);
-            }
-        }
     }
 
     #[IsGranted('ROLE_ADMIN')]

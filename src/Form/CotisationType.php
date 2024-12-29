@@ -89,6 +89,7 @@ class CotisationType extends AbstractType
             $builder->add('existingPreuves', HiddenType::class, [
                 'mapped' => false,
                 'data' => json_encode($options['existing_preuves']),
+                'attr' => ['class' => 'existingPreuves'],
             ]);
         }
 

@@ -2,6 +2,7 @@ syndic: Syndic
 parametres: Paramètres
 save: Sauvegarder
 edit: Modifier
+delete: Supprimer
 status: Statut
 copy: Copier
 close: Fermer
@@ -92,6 +93,7 @@ moyenPaiement:
 depense:
   nav: Dépenses
   new: Ajouter une dépense
+  edit: Modifier une dépense
   paidAt: Date de règlement
   montant: Montant de la dépense
   description: Décrire ce qui a été dépensé

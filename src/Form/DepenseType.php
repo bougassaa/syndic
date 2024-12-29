@@ -7,6 +7,7 @@ use App\Entity\TypeDepense;
 use App\Form\Type\PreuvesType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -53,8 +54,17 @@ class DepenseType extends AbstractType
             ])
             ->add('preuves', PreuvesType::class, [
                 'label' => $this->translator->trans('depense.preuves')
-            ])
-            ->add('save', SubmitType::class, [
+            ]);
+
+        if (!empty($options['existing_preuves'])) {
+            $builder->add('existingPreuves', HiddenType::class, [
+                'mapped' => false,
+                'data' => json_encode($options['existing_preuves']),
+                'attr' => ['class' => 'existingPreuves'],
+            ]);
+        }
+
+        $builder->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
             ])
         ;
@@ -64,6 +74,7 @@ class DepenseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Depense::class,
+            'existing_preuves' => []
         ]);
     }
 }
