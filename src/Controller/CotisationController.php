@@ -9,6 +9,7 @@ use App\Entity\Tarif;
 use App\Form\CotisationType;
 use App\Repository\AppartementRepository;
 use App\Repository\BatimentRepository;
+use App\Repository\ProprietaireRepository;
 use App\Repository\TarifRepository;
 use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
@@ -153,19 +154,12 @@ class CotisationController extends AbstractController
     }
 
     #[Route('/cotisation/more-infos/{tarif}/{appartement}', name: 'app_cotisation_more_infos')]
-    public function moreInfos(Tarif $tarif, Appartement $appartement): Response
+    public function moreInfos(Tarif $tarif, Appartement $appartement, ProprietaireRepository $proprietaireRepository): Response
     {
-        $preuves = [];
+        $cotisationDisplay = new CotisationsDisplay($proprietaireRepository);
 
-        foreach ($tarif->getCotisations() as $cotisation) {
-            if ($cotisation->getAppartement() === $appartement) {
-                $preuves = array_merge($preuves, $cotisation->getPreuves());
-            }
-        }
-
-        return $this->render('_components/preuves-modal.html.twig', [
-            'preuves' => $preuves,
-            'pathFolder' => 'cotisations'
+        return $this->render('cotisation/show-infos-modal.html.twig', [
+            'cotisationsFormatter' => $cotisationDisplay->createResultFormatter($appartement, $tarif),
         ]);
     }
 

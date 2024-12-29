@@ -1,0 +1,27 @@
+{% import 'cotisation/_macros.html.twig' as macros %}
+
+<div class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body px-1 px-sm-3 px-md-4 px-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        {{ macros.cotisationStatus(cotisationsFormatter) }}
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    {% for cotisation in cotisationsFormatter.cotisations %}
+                        {% for image in cotisation.preuves %}
+                            <img class="img-fluid" src="{{ path('app_serve_image', {'filename': image, 'folder': 'cotisations'}) }}" alt="{{ image }}">
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {{ 'close'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

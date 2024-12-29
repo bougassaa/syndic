@@ -1,0 +1,25 @@
+{% macro cotisationStatus(item) %}
+    {% if item.status == 'paid' %}
+        {% set isPartial = (item.partialPayment and item.partialReason is not empty) %}
+        {{ include('_components/badge.html.twig', {
+            type: 'success',
+            tooltip: isPartial ? item.partialReason : null,
+            icon:  isPartial ? 'fa-regular fa-circle-question' : null,
+            content: 'cotisation.paid'|trans
+        }) }}
+    {% elseif item.status == 'incomplete' %}
+        {{ include('_components/badge.html.twig', {
+            type: 'warning',
+            content: 'cotisation.incomplete'|trans
+        }) }}
+    {% elseif item.status == 'overdue' %}
+        {{ include('_components/badge.html.twig', {
+            type: 'danger',
+            content: 'cotisation.overdue'|trans
+        }) }}
+    {% elseif item.status == 'exempt' %}
+        {{ include('_components/badge.html.twig', {
+            content: 'cotisation.exempt'|trans
+        }) }}
+    {% endif %}
+{% endmacro %}

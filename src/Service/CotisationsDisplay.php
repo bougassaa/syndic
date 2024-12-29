@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\CotisationFormatter;
+use App\Entity\Appartement;
 use App\Entity\Tarif;
 use App\Repository\BatimentRepository;
 use App\Repository\ProprietaireRepository;
@@ -13,9 +14,9 @@ class CotisationsDisplay
     private ?float $totalCotisations = null;
 
     public function __construct(
-        private BatimentRepository $batimentRepository,
         private ProprietaireRepository $proprietaireRepository,
-        private SyndicSessionResolver $syndicSessionResolver
+        private ?BatimentRepository    $batimentRepository = null,
+        private ?SyndicSessionResolver $syndicSessionResolver = null
     )
     {
     }
@@ -36,33 +37,8 @@ class CotisationsDisplay
                 // get appartements of current batiment
                 $appartements = $batiment->getAppartements();
                 foreach ($appartements as $appartement) {
-                    // create result formatter
-                    $formatter = new CotisationFormatter();
-                    $formatter->appartement = $appartement;
-                    $formatter->tarif = $tarif;
-                    // get cotisations of current appartement
-                    $cotisations = $appartement->getCotisations();
-                    foreach ($cotisations as $cotisation) {
-                        // compare if concerning year
-                        if ($cotisation->getTarif() === $tarif) {
-                            $formatter->cotisations[] = $cotisation;
-                            $formatter->proprietaire = $cotisation->getProprietaire();
-                            $this->totalCotisations += $cotisation->getMontant();
-                        }
-                    }
-
-                    if (empty($formatter->proprietaire)) {
-                        $proprietaire = $this->proprietaireRepository->getProprietaireInTarif($tarif, $appartement);
-
-                        if (!$proprietaire) {
-                            $proprietaire = $appartement->getLastProprietaire();
-                        }
-
-                        $formatter->proprietaire = $proprietaire;
-                    }
-
                     // add to results
-                    $cotisationsDisplay[] = $formatter;
+                    $cotisationsDisplay[] = $this->createResultFormatter($appartement, $tarif);
                 }
             }
         }
@@ -75,6 +51,34 @@ class CotisationsDisplay
             throw new \Exception('call getCotisations first');
         }
         return $this->totalCotisations;
+    }
+
+    public function createResultFormatter(Appartement $appartement, Tarif $tarif): CotisationFormatter
+    {
+        $formatter = new CotisationFormatter();
+        $formatter->appartement = $appartement;
+        $formatter->tarif = $tarif;
+        // get cotisations of current appartement
+        $cotisations = $appartement->getCotisations();
+        foreach ($cotisations as $cotisation) {
+            // compare if concerning year
+            if ($cotisation->getTarif() === $tarif) {
+                $formatter->cotisations[] = $cotisation;
+                $formatter->proprietaire = $cotisation->getProprietaire();
+                $this->totalCotisations += $cotisation->getMontant();
+            }
+        }
+
+        if (empty($formatter->proprietaire)) {
+            $proprietaire = $this->proprietaireRepository->getProprietaireInTarif($tarif, $appartement);
+
+            if (!$proprietaire) {
+                $proprietaire = $appartement->getLastProprietaire();
+            }
+
+            $formatter->proprietaire = $proprietaire;
+        }
+        return $formatter;
     }
 
 }
