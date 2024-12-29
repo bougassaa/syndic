@@ -6,7 +6,7 @@
 
 {% block body %}
     {% include 'cotisation/list-header.html.twig' %}
-    <div class="table-responsive">
+    <div class="table-responsive d-none d-md-block">
         <table class="table table-sm table-striped table-hover">
             <thead>
                 <tr>
@@ -37,7 +37,7 @@
                         </span>
                         {{ item.appartement.absoluteName}}
                     </td>
-                    <td {% if item.status == 'exempt' %}class="text-muted"{% endif %}>
+                    <td>
                         {% if item.cotisations is not empty %}
                             {% for cotisation in item.cotisations %}
                                 <div>{{ cotisation.proprietaire.absoluteName }}</div>
@@ -48,31 +48,7 @@
                             -
                         {% endif %}
                     </td>
-                    <td>
-                        {% if item.status == 'paid' %}
-                            {% set isPartial = (item.partialPayment and item.partialReason is not empty) %}
-                            {{ include('_components/badge.html.twig', {
-                                type: 'success',
-                                tooltip: isPartial ? item.partialReason : null,
-                                icon:  isPartial ? 'fa-regular fa-circle-question' : null,
-                                content: 'cotisation.paid'|trans
-                            }) }}
-                        {% elseif item.status == 'incomplete' %}
-                            {{ include('_components/badge.html.twig', {
-                                type: 'warning',
-                                content: 'cotisation.incomplete'|trans
-                            }) }}
-                        {% elseif item.status == 'overdue' %}
-                            {{ include('_components/badge.html.twig', {
-                                type: 'danger',
-                                content: 'cotisation.overdue'|trans
-                            }) }}
-                        {% elseif item.status == 'exempt' %}
-                            {{ include('_components/badge.html.twig', {
-                                content: 'cotisation.exempt'|trans
-                            }) }}
-                        {% endif %}
-                    </td>
+                    <td>{{ _self.cotisationStatus(item) }}</td>
                     <td>
                         {% if item.cotisations is not empty %}
                             {% for cotisation in item.cotisations %}
@@ -112,31 +88,7 @@
                     <td class="text-start" dir="ltr">
                         {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
-                    <td class="text-end">
-                        {% if item.cotisations is not empty and is_granted('ROLE_ADMIN') %}
-                            <div class="dropdown">
-                                <button class="btn-sm btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <button class="dropdown-item"
-                                                data-url="{{ path('app_cotisation_modal_edit', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
-                                        >
-                                            {{ 'cotisation.edit'|trans }}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item"
-                                                data-url="{{ path('app_cotisation_modal_delete', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
-                                        >
-                                            {{ 'cotisation.delete'|trans }}
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </td>
+                    <td class="text-end">{{ _self.cotisationSetting(item) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -153,5 +105,81 @@
             </tfoot>
         </table>
     </div>
+    <ul class="list-group list-group-flush d-md-none">
+        {% for item in items %}
+            <a href="#" class="list-group-item list-group-item-action {% if item.status == 'overdue' %}list-group-item-danger{% endif %}"
+                 data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+            >
+                <div class="d-flex">
+                    <div class="d-flex flex-column flex-fill">
+                        <div>
+                            <b>{{ 'appartement.nom'|trans }}:</b> {{ item.appartement.absoluteName}}
+                        </div>
+                        <div>
+                            <b>{{ 'cotisation.proprietaire'|trans }}:</b> {{ item.proprietaire.absoluteName}}
+                        </div>
+                        <div>
+                            <b>{{ 'status'|trans }}:</b>
+                            {{ _self.cotisationStatus(item) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ _self.cotisationSetting(item) }}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
+{% macro cotisationStatus(item) %}
+    {% if item.status == 'paid' %}
+        {% set isPartial = (item.partialPayment and item.partialReason is not empty) %}
+        {{ include('_components/badge.html.twig', {
+            type: 'success',
+            tooltip: isPartial ? item.partialReason : null,
+            icon:  isPartial ? 'fa-regular fa-circle-question' : null,
+            content: 'cotisation.paid'|trans
+        }) }}
+    {% elseif item.status == 'incomplete' %}
+        {{ include('_components/badge.html.twig', {
+            type: 'warning',
+            content: 'cotisation.incomplete'|trans
+        }) }}
+    {% elseif item.status == 'overdue' %}
+        {{ include('_components/badge.html.twig', {
+            type: 'danger',
+            content: 'cotisation.overdue'|trans
+        }) }}
+    {% elseif item.status == 'exempt' %}
+        {{ include('_components/badge.html.twig', {
+            content: 'cotisation.exempt'|trans
+        }) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro cotisationSetting(item) %}
+    {% if item.cotisations is not empty and is_granted('ROLE_ADMIN') %}
+        <div class="dropdown">
+            <button class="btn-sm btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <button class="dropdown-item"
+                            data-url="{{ path('app_cotisation_modal_edit', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                    >
+                        {{ 'cotisation.edit'|trans }}
+                    </button>
+                </li>
+                <li>
+                    <button class="dropdown-item"
+                            data-url="{{ path('app_cotisation_modal_delete', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
+                    >
+                        {{ 'cotisation.delete'|trans }}
+                    </button>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
