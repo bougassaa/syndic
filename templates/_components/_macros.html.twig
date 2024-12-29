@@ -27,3 +27,27 @@
 {% macro totalArrow() %}
     <i class="fa-solid {% if app.locale == 'ar' %}fa-arrow-left-long{% else %}fa-arrow-right-long{% endif %} mx-1"></i>
 {% endmacro %}
+
+{% macro filterMonth(label, startPeriode, endPeriode) %}
+<select class="form-select-sm no-search filter-month"
+        name="filterMonth"
+        data-select-no-search="true"
+        data-select-allow-empty="true"
+        data-select-label="{{ label }} :&nbsp;"
+>
+    <option value="" selected>
+        {{ 'depense.filter-month-all'|trans }}
+    </option>
+    {% set currentDate = date(startPeriode|date('Y-m-d')) %}
+    {% set endDate = date(endPeriode|date('Y-m-d')) %}
+
+    {% for date in range(0, endDate|date('U') - currentDate|date('U'), 86400 * 31) %}
+        {% if currentDate <= endDate %}
+            {% set currentMonth = currentDate|date('m') %}
+            {% set currentYear = currentDate|date('Y') %}
+            <option value="{{ currentMonth }}/{{ currentYear }}">{{ ('month.'~currentMonth)|trans }} {{ currentYear }}</option>
+            {% set currentDate = date(currentDate|date_modify('+1 month')|date('Y-m-d')) %}
+        {% endif %}
+    {% endfor %}
+    </select>
+{% endmacro %}

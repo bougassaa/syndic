@@ -19,6 +19,9 @@
               class="list-filter-form d-flex flex-wrap gap-2 align-items-center"
         >
             {% include '_components/filter-periode.html.twig' with {'label': 'depense.filter-year'} %}
+            {% if tarifSelected is not null and tarifSelected.beforeDohaPeriode == false %}
+                {{ macros.filterMonth('depense.filter-month'|trans, tarifSelected.debutPeriode, tarifSelected.finPeriode) }}
+            {% endif %}
         </form>
     </div>
     <div class="table-responsive">

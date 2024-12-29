@@ -108,3 +108,7 @@ tr[data-url] {
         }
     }
 }
+
+.filter-month.ts-wrapper  {
+    min-width: 140px;
+}
