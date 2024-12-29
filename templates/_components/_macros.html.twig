@@ -45,7 +45,7 @@
         {% if currentDate <= endDate %}
             {% set currentMonth = currentDate|date('m') %}
             {% set currentYear = currentDate|date('Y') %}
-            <option value="{{ currentMonth }}/{{ currentYear }}">{{ ('month.'~currentMonth)|trans }} {{ currentYear }}</option>
+            <option value="{{ currentYear }}-{{ currentMonth }}">{{ ('month.'~currentMonth)|trans }} {{ currentYear }}</option>
             {% set currentDate = date(currentDate|date_modify('+1 month')|date('Y-m-d')) %}
         {% endif %}
     {% endfor %}

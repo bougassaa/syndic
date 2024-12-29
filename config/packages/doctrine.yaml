@@ -29,6 +29,7 @@ doctrine:
         dql:
             datetime_functions:
                 year: DoctrineExtensions\Query\Mysql\Year
+                date_format: DoctrineExtensions\Query\Mysql\DateFormat
             string_functions:
                 json_contains: DoctrineExtensions\Query\Mysql\JsonContains
 

@@ -31,7 +31,7 @@ class DepenseController extends AbstractController
     }
 
     #[Route('/depense', name: 'app_depense_list')]
-    public function list(DepenseRepository $repository, #[MapQueryParameter] ?int $filterPeriode): Response
+    public function list(DepenseRepository $repository, #[MapQueryParameter] ?int $filterPeriode, #[MapQueryParameter] ?string $filterMonth): Response
     {
         $tarifSelected = $this->getSelectedTarif($filterPeriode);
         if (!$tarifSelected) {
@@ -39,13 +39,14 @@ class DepenseController extends AbstractController
             return $this->render('cotisation/empty-tarif.html.twig');
         }
 
-        $depenses = $repository->getDepensesPerPeriode($tarifSelected, $this->syndic);
-        $totalDepenses = $repository->getTotalDepensesPerPeriode($tarifSelected, $this->syndic);
+        $depenses = $repository->getDepensesPerPeriode($tarifSelected, $this->syndic, $filterMonth);
+        $totalDepenses = $repository->getTotalDepensesPerPeriode($tarifSelected, $this->syndic, $filterMonth);
 
         return $this->render('depense/list.html.twig', [
             'depenses' => $depenses,
             'totalDepenses' => $totalDepenses,
             'tarifSelected' => $tarifSelected,
+            'monthSelected' => $filterMonth,
             'tarifs' => $this->tarifRepository->getSyndicTarifs($this->syndic),
             'syndic' => $this->syndic,
         ]);

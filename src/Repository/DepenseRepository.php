@@ -19,11 +19,14 @@ class DepenseRepository extends ServiceEntityRepository
     }
 
     /** @return Depense[] */
-    public function getDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic): array
+    public function getDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic, ?string $filterMonth = null): array
     {
         $qb = $this->createQueryBuilder('d');
 
-        if ($tarifPeriode) {
+        if ($filterMonth) {
+            $qb->where("DATE_FORMAT(d.paidAt, '%Y-%m') = :month")
+                ->setParameter('month', $filterMonth);
+        } elseif ($tarifPeriode) {
             $qb->where('d.paidAt BETWEEN :start AND :end')
                 ->setParameter('start', $tarifPeriode->getDebutPeriode())
                 ->setParameter('end', $tarifPeriode->getFinPeriode());
@@ -37,9 +40,9 @@ class DepenseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getTotalDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic): float
+    public function getTotalDepensesPerPeriode(?Tarif $tarifPeriode, Syndic $syndic, ?string $filterMonth = null): float
     {
-        $depenses = $this->getDepensesPerPeriode($tarifPeriode, $syndic);
+        $depenses = $this->getDepensesPerPeriode($tarifPeriode, $syndic, $filterMonth);
         return array_reduce($depenses, function ($carry, Depense $depense) {
             return $carry + (float) $depense->getMontant();
         }, 0);
