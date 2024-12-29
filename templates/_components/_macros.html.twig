@@ -28,7 +28,7 @@
     <i class="fa-solid {% if app.locale == 'ar' %}fa-arrow-left-long{% else %}fa-arrow-right-long{% endif %} mx-1"></i>
 {% endmacro %}
 
-{% macro filterMonth(label, startPeriode, endPeriode) %}
+{% macro filterMonth(label, startPeriode, endPeriode, monthSelected) %}
 <select class="form-select-sm no-search filter-month"
         name="filterMonth"
         data-select-no-search="true"
@@ -45,7 +45,10 @@
         {% if currentDate <= endDate %}
             {% set currentMonth = currentDate|date('m') %}
             {% set currentYear = currentDate|date('Y') %}
-            <option value="{{ currentYear }}-{{ currentMonth }}">{{ ('month.'~currentMonth)|trans }} {{ currentYear }}</option>
+            {% set currentValue = currentDate|date('Y-m') %}
+            <option value="{{ currentValue }}" {% if monthSelected == currentValue %}selected{% endif %}>
+                {{ ('month.'~currentMonth)|trans }} {{ currentYear }}
+            </option>
             {% set currentDate = date(currentDate|date_modify('+1 month')|date('Y-m-d')) %}
         {% endif %}
     {% endfor %}
