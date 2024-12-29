@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'cotisation.edit'|trans }}
+    {{ ('cotisation.'~mode)|trans }}
 {% endblock %}
 
 {% block body %}
-    <h2>{{ 'cotisation.edit'|trans }}</h2>
+    <h2>{{ ('cotisation.'~mode)|trans }}</h2>
     {{ form(form) }}
     <input type="hidden" value="{{ tarifsMapping | json_encode }}" id="tarifsMapping">
     <input type="hidden" value="{{ appartementsMapping | json_encode }}" id="appartementsMapping">

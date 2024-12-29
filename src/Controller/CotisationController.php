@@ -90,10 +90,11 @@ class CotisationController extends AbstractController
             return $this->redirectToRoute('app_cotisation_list');
         }
 
-        return $this->render('cotisation/new.html.twig', [
+        return $this->render('cotisation/save.html.twig', [
             'form' => $form,
             'tarifsMapping' => $this->getTarifsMapping(),
-            'appartementsMapping' => $this->getAppartementsMapping()
+            'appartementsMapping' => $this->getAppartementsMapping(),
+            'mode' => 'new'
         ]);
     }
 
@@ -115,10 +116,11 @@ class CotisationController extends AbstractController
             return $this->redirectToRoute('app_cotisation_list');
         }
 
-        return $this->render('cotisation/edit.html.twig', [
+        return $this->render('cotisation/save.html.twig', [
             'form' => $form,
             'tarifsMapping' => $this->getTarifsMapping(),
-            'appartementsMapping' => $this->getAppartementsMapping()
+            'appartementsMapping' => $this->getAppartementsMapping(),
+            'mode' => 'edit'
         ]);
     }
 

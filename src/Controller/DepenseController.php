@@ -86,9 +86,10 @@ class DepenseController extends AbstractController
             $types[$item->getId()] = $item->getMontant();
         }
 
-        return $this->render('depense/new.html.twig', [
+        return $this->render('depense/save.html.twig', [
             'form' => $form,
-            'types' => $types
+            'types' => $types,
+            'mode' => 'new'
         ]);
     }
 
