@@ -192,12 +192,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             // Wait for all Promises to resolve
             const processedFiles = await Promise.all(filePromises);
+            const uploadedFiles = processedFiles.flat();
             // Add all processed files to dataTransfer
-            processedFiles.flat().forEach(file => {
+            uploadedFiles.forEach(file => {
                 dataTransfer.items.add(file)
             });
             // Update the input's files property
             input.files = dataTransfer.files;
+
+            const preuveMore = document.querySelector('#preuve-preview-upload');
+            if (preuveMore) {
+                preuveMore.classList.remove('d-none');
+                preuveMore.textContent = "+" + uploadedFiles.length;
+            }
 
             loading(sumbitButton, false);
         });

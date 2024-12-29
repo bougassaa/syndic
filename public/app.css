@@ -27,15 +27,18 @@ input[readonly] {
     align-items: flex-end;
     gap: 8px;
     user-select: none;
-    .form-check-input {
-        clear: left;
-        height: 1.5rem;
-        width: calc(2rem + 0.75rem);
-        border-radius: 3rem;
-    }
-    label, input {
-        cursor: pointer;
-    }
+}
+
+.form-switch .form-check-input {
+    clear: left;
+    height: 1.5rem;
+    width: calc(2rem + 0.75rem);
+    border-radius: 3rem;
+}
+
+.form-switch label,
+.form-switch input {
+    cursor: pointer;
 }
 
 .form-select-sm:not(.rtl) .ts-control {
@@ -64,15 +67,15 @@ tr.table-danger td {
 tr[data-url] {
     cursor: pointer;
 }
+
 .row-trigger {
     width: 32px;
     display: inline-block;
 }
 
-.table tbody {
-    td, th {
-        vertical-align: middle;
-    }
+.table tbody td,
+.table tbody th {
+    vertical-align: middle;
 }
 
 @media (min-width: 768px) {
@@ -86,29 +89,37 @@ tr[data-url] {
     gap: 8px;
     overflow-x: auto;
     margin-bottom: 1rem;
-
-    .preuve-preview {
-        width: 100px;
-        height: 100px;
-        position: relative;
-        border: solid 1px #232323;
-        overflow: hidden;
-        border-radius: 8px;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        button.remove-preuve {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-        }
-    }
 }
 
-.filter-month.ts-wrapper  {
+.preuves-container .preuve-preview {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border: solid 1px #232323;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.preuves-container .preuve-preview#preuve-preview-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    font-size: 1.5rem;
+}
+
+.preuves-container .preuve-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preuves-container .preuve-preview button.remove-preuve {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+.filter-month.ts-wrapper {
     min-width: 140px;
 }
