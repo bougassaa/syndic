@@ -34,7 +34,7 @@
                             {{ 'home.cotisations-paid'|trans }}
                         </h6>
                         <div class="my-2 text-start" dir="ltr">
-                            <span class="fs-3 text-underline-success">
+                            <span class="fs-3 text-underline-success link-offset-1">
                                 {{ totalCotisations|format_currency('MAD') }}
                             </span>
                             <span class="fs-6 text-nowrap">
@@ -56,7 +56,7 @@
                         <h6 class="card-subtitle text-body-secondary">
                             {{ 'home.depenses-paid'|trans }}
                         </h6>
-                        <div class="my-2 fs-3 text-underline-danger text-start" dir="ltr">
+                        <div class="my-2 fs-3 text-underline-danger link-offset-1 text-start" dir="ltr">
                             {{ totalDepenses|format_currency('MAD') }}
                         </div>
                         {% if currentTarif is not null %}
