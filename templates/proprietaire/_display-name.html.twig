@@ -1,5 +1,7 @@
 {% if is_granted('ROLE_ADMIN') and proprietaire.isSystem == false  %}
-    <span class="link-primary link-opacity-75-hover cursor-pointer"  data-url="">
+    <span class="link-primary link-opacity-75-hover cursor-pointer"
+          data-url="{{ path('app_proprietaire_detail', {'proprietaire': proprietaire.id}) }}"
+    >
         {{ proprietaire.absoluteName }}
     </span>
 {% else%}

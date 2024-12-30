@@ -42,6 +42,7 @@ proprietaire:
   isCurrentOwner: Est actuellement le propriétaire ?
   appartements: Appartements
   appartements-add: + autre appartement
+  detail: Détail sur le propriétaire
 
 cotisation:
   nav: Cotisations

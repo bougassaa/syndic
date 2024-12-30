@@ -42,6 +42,7 @@ proprietaire:
   isCurrentOwner: هل هو المالك الحالي؟
   appartements: الشقق
   appartements-add: + شقة إضافية
+  detail: تفاصيل عن المالك
 
 cotisation:
   nav: المساهمات

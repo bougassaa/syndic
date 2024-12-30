@@ -79,7 +79,7 @@ class Proprietaire
     }
 
     /**
-     * @return Collection<int, Possession>
+     * @return Collection<int, Possession>|Possession[]
      */
     public function getPossessions(): Collection
     {
@@ -163,7 +163,7 @@ class Proprietaire
     }
 
     /**
-     * @return Collection<int, Garage>
+     * @return Collection<int, Garage>|Garage[]
      */
     public function getGarages(): Collection
     {

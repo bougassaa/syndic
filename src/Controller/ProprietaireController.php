@@ -33,6 +33,14 @@ class ProprietaireController extends AbstractController
         ]);
     }
 
+    #[Route('/proprietaire/detail/{proprietaire}', name: 'app_proprietaire_detail')]
+    public function detail(Proprietaire $proprietaire): Response
+    {
+        return $this->render('proprietaire/modal-detail.html.twig', [
+            'proprietaire' => $proprietaire,
+        ]);
+    }
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/proprietaire/new', name: 'app_proprietaire_new')]
     public function new(Request $request, EntityManagerInterface $manager): Response

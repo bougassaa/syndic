@@ -25,7 +25,7 @@
                 <tr>
                     <th>{{ garage.nom }}</th>
                     <td>
-                        {{ garage.proprietaire.absoluteName }}
+                        {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': garage.proprietaire} %}
 
                         {% if garage.proprietaire.system == false %}
                             {% for possession in garage.proprietaire.possessions %}
