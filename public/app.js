@@ -64,7 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('.list-filter-form, .change-lang').forEach(form => {
-        form.addEventListener('input', function () {
+        form.addEventListener('input', function (event) {
+            if (event.target.name === 'filterPeriode') {
+                const monthInput = document.querySelector('[name="filterMonth"]');
+                if (monthInput instanceof HTMLSelectElement) {
+                    monthInput.value = "";
+                }
+            }
             form.submit();
         });
     });
