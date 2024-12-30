@@ -41,10 +41,12 @@
                     <td>
                         {% if item.cotisations is not empty %}
                             {% for cotisation in item.cotisations %}
-                                <div>{{ cotisation.proprietaire.absoluteName }}</div>
+                                <div>
+                                    {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': cotisation.proprietaire} %}
+                                </div>
                             {% endfor %}
                         {% elseif item.proprietaire is not null  %}
-                            {{ item.proprietaire.absoluteName }}
+                            {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': item.proprietaire} %}
                         {% else %}
                             -
                         {% endif %}
@@ -121,7 +123,8 @@
                             <i class="fa-solid fa-location-dot"></i> {{ item.appartement.absoluteName}}
                         </span>
                         <span class="d-inline-flex align-items-center gap-1">
-                            <i class="fa-solid fa-user"></i> {{ item.proprietaire.absoluteName}}
+                            <i class="fa-solid fa-user"></i>
+                            {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': item.proprietaire} %}
                         </span>
                         <span class="d-inline-flex align-items-center gap-1">
                             <i class="fa-solid fa-money-check-dollar"></i> {{ macros.cotisationStatus(item) }}

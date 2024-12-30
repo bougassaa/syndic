@@ -6,6 +6,10 @@
     font-size: 0.8rem;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 input[readonly] {
     pointer-events: none;
     background: #0000000a;

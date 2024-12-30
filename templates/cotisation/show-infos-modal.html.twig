@@ -11,7 +11,8 @@
                         </div>
                         {% if cotisationsFormatter.proprietaire is not null %}
                             <div>
-                                <b>{{ 'cotisation.proprietaire'|trans }}:</b> {{ cotisationsFormatter.proprietaire.absoluteName}}
+                                <b>{{ 'cotisation.proprietaire'|trans }}:</b>
+                                {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': cotisationsFormatter.proprietaire} %}
                             </div>
                         {% endif %}
                         <div>
