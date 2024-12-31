@@ -6,6 +6,7 @@ use App\Entity\Proprietaire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -28,6 +29,16 @@ class ProprietaireType extends AbstractType
             ])
             ->add('prenom', null, [
                 'label' => $this->translator->trans('proprietaire.prenom'),
+            ])
+            ->add('phone', TelType::class, [
+                'required' => false,
+                'label' => $this->translator->trans('proprietaire.phone'),
+                'row_attr' => ['class' => 'text-uppercase'],
+            ])
+            ->add('city', null, [
+                'required' => false,
+                'label' => $this->translator->trans('proprietaire.city'),
+                'help' => $this->translator->trans('proprietaire.city-help'),
             ])
             ->add('possessions', CollectionType::class, [
                 'label' => $this->translator->trans('proprietaire.appartements'),

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initOwnerSwitch();
     initSelect();
     initDatepicker();
+    initPhoneInput();
     new ClipboardJS('.clipboard');
 
     document.querySelectorAll('input.text-uppercase').forEach(input => {
@@ -343,5 +344,52 @@ function loading(element, load) {
     } else {
         element.removeAttribute('disabled');
         element.querySelectorAll('.spinner-border').forEach(el => el.remove());
+    }
+}
+
+function initPhoneInput() {
+    const input = document.querySelector('[type="tel"]');
+    if (input instanceof HTMLInputElement) {
+        const countries = ['ma', 'fr', 'es', 'be', 'gb', 'it', 'de', 'ch', 'nl', 'pt'];
+        const iti = window.intlTelInput(input, {
+            containerClass: 'd-block',
+            initialCountry: 'ma',
+            separateDialCode: true,
+            nationalMode: true,
+            countrySearch: false,
+            countryOrder: countries,
+            onlyCountries: countries,
+            i18n: {
+                ma: "Maroc",
+                fr: "France",
+                es: "Espagne",
+                be: "Belgique",
+                gb: "Royaume-Uni",
+                it: "Italie",
+                de: "Allemagne",
+                ch: "Suisse",
+                nl: "Pays-Bas",
+                pt: "Portugal"
+            },
+            loadUtils: () => import("/intl-tel-input/utils.js"),
+        });
+
+        const form = input.closest('form');
+        form.addEventListener('submit', (ev) => {
+            input.value = iti.getNumber();
+        });
+
+        input.addEventListener('input', (event) => {
+            if (event.isTrusted) {
+                let phoneNumber = input.value.trim();
+                if (/^00\d+/.test(phoneNumber)) {
+                    phoneNumber = '+' + phoneNumber.slice(2);
+                    iti.setNumber(phoneNumber);
+                } else if (/^0\d+/.test(phoneNumber)) {
+                    phoneNumber = phoneNumber.slice(1);
+                    iti.setNumber(phoneNumber);
+                }
+            }
+        });
     }
 }

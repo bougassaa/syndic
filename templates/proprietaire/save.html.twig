@@ -7,12 +7,21 @@
 {% block body %}
     <h2>{{ ('proprietaire.' ~ mode)|trans }}</h2>
     {{ form_start(form) }}
-        <div class="row g-2 g-md-3">
+        <div class="row g-2 g-md-3 mb-3">
             <div class="col-md-6">
                 {{ form_row(form.nom) }}
             </div>
             <div class="col-md-6">
                 {{ form_row(form.prenom) }}
+            </div>
+        </div>
+
+        <div class="row g-2 g-md-3 mb-2 mb-md-0">
+            <div class="col-md-6">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.city) }}
             </div>
         </div>
 

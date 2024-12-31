@@ -42,6 +42,12 @@ class Proprietaire
     #[ORM\OneToMany(targetEntity: Garage::class, mappedBy: 'proprietaire')]
     private Collection $garages;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $city = null;
+
     public function __construct()
     {
         $this->possessions = new ArrayCollection();
@@ -188,6 +194,30 @@ class Proprietaire
                 $garage->setProprietaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
 
         return $this;
     }
