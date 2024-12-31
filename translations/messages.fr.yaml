@@ -43,6 +43,9 @@ proprietaire:
   appartements: Appartements
   appartements-add: + autre appartement
   detail: Détail sur le propriétaire
+  phone: Téléphone
+  city: Domicile
+  city-help: Ville de résidence principale
 
 cotisation:
   nav: Cotisations
