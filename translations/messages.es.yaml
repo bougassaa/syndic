@@ -44,8 +44,8 @@ proprietaire:
   appartements-add: + otro apartamento
   detail: Detalles sobre el propietario
   phone: Teléfono
-  city: Domicilio
-  city-help: Ciudad de residencia principal
+  city: Domicilio principal
+  city-help: País o ciudad de residencia principal
 
 cotisation:
   nav: Cuotas

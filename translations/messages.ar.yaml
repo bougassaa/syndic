@@ -44,8 +44,8 @@ proprietaire:
   appartements-add: + شقة إضافية
   detail: تفاصيل عن المالك
   phone: هاتف
-  city: السكن
-  city-help: مدينة الإقامة الرئيسية
+  city: السكن الرئيسي
+  city-help: البلد أو المدينة للإقامة الرئيسية
 
 cotisation:
   nav: المساهمات
