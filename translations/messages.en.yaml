@@ -43,6 +43,9 @@ proprietaire:
   appartements: Apartments
   appartements-add: + another apartment
   detail: Details about the owner
+  phone: Phone
+  city: Residence
+  city-help: City of main residence
 
 cotisation:
   nav: Contributions
