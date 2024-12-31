@@ -72,11 +72,6 @@ tr[data-url] {
     cursor: pointer;
 }
 
-.row-trigger {
-    width: 32px;
-    display: inline-block;
-}
-
 .table tbody td,
 .table tbody th {
     vertical-align: middle;

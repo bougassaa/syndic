@@ -33,6 +33,7 @@
         <table class="table table-sm table-striped table-hover">
             <thead>
                 <tr>
+                    <th></th>
                     <th>{{ 'depense.paidAt'|trans }}</th>
                     <th>{{ 'montant'|trans }}</th>
                     <th>{{ 'depense.type'|trans }}</th>
@@ -43,14 +44,14 @@
             <tbody>
                 {% for item in depenses %}
                     <tr {% if item.preuves is not empty %}data-url="{{ url('app_depense_more_infos', {'depense': item.id}) }}"{% endif%}>
+                        <td style="width: 1px">
+                            {% if item.preuves is not empty %}
+                                <button class="btn-sm btn btn-light">
+                                    <i class="fa-solid fa-folder-open"></i>
+                                </button>
+                            {% endif%}
+                        </td>
                         <td>
-                            <span class="row-trigger">
-                                {% if item.preuves is not empty %}
-                                    <button class="btn-sm btn btn-light">
-                                        <i class="fa-solid fa-folder-open"></i>
-                                    </button>
-                                {% endif%}
-                            </span>
                             {{ item.paidAt|date }}
                         </td>
                         <td class="text-start" dir="ltr">{{ item.montant|format_currency('MAD') }}</td>

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initSelect();
     initDatepicker();
     initPhoneInput();
+    initDynamicModal();
     new ClipboardJS('.clipboard');
 
     document.querySelectorAll('input.text-uppercase').forEach(input => {
@@ -116,40 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (select.value) {
                 inputMontant.value = json[select.value];
             }
-        });
-    });
-
-    // used for all [data-url]
-    document.querySelectorAll('[data-url]').forEach(el => {
-        el.addEventListener('click', async (event) => {
-            const targetUrl = event.target && event.target.dataset.url;
-
-            if (!targetUrl && event.target.closest('.dropdown') instanceof HTMLElement) {
-                return;
-            }
-
-            if (!targetUrl && event.target.tagName === 'A') {
-                return;
-            }
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            const response = await fetch(targetUrl || el.dataset.url);
-            const data = await response.text();
-            const modalElement = createElementFromString(data);
-            document.body.appendChild(modalElement);
-
-            const modal = new bootstrap.Modal(modalElement); // Créer l'instance de modal
-            modal.show(); // Afficher la modal
-
-            modalElement.addEventListener('shown.bs.modal', () => {
-                initTooltip(modalElement);
-            })
-
-            modalElement.addEventListener('hidden.bs.modal', () => {
-                modalElement.remove();
-            })
         });
     });
 
@@ -375,7 +342,7 @@ function initPhoneInput() {
         });
 
         const form = input.closest('form');
-        form.addEventListener('submit', (ev) => {
+        form.addEventListener('submit', () => {
             input.value = iti.getNumber();
         });
 
@@ -392,4 +359,45 @@ function initPhoneInput() {
             }
         });
     }
+}
+
+function initDynamicModal(parent = document, parentModal = null) {
+    // used for all [data-url]
+    parent.querySelectorAll('[data-url]').forEach(el => {
+        el.addEventListener('click', async (event) => {
+            const targetUrl = event.target && event.target.dataset.url;
+
+            if (!targetUrl && event.target.closest('.dropdown') instanceof HTMLElement) {
+                return;
+            }
+
+            if (!targetUrl && event.target.tagName === 'A') {
+                return;
+            }
+
+            if (parentModal !== null) {
+                parentModal.hide();
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const response = await fetch(targetUrl || el.dataset.url);
+            const data = await response.text();
+            const modalElement = createElementFromString(data);
+            document.body.appendChild(modalElement);
+
+            const modal = new bootstrap.Modal(modalElement); // Créer l'instance de modal
+            modal.show(); // Afficher la modal
+
+            modalElement.addEventListener('shown.bs.modal', () => {
+                initTooltip(modalElement);
+                initDynamicModal(modalElement, modal);
+            })
+
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modalElement.remove();
+            })
+        });
+    });
 }

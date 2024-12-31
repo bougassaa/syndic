@@ -23,7 +23,7 @@
                     <th>{{ appartement.absoluteName(false) }}</th>
                     <td>
                         {% if appartement.lastProprietaire is not null %}
-                            {{ appartement.lastProprietaire.absoluteName }}
+                            {% include 'proprietaire/_display-name.html.twig' with {'proprietaire': appartement.lastProprietaire} %}
                         {% endif %}
                     </td>
                 </tr>

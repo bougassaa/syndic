@@ -13,6 +13,14 @@
                     <li class="list-group-item">
                         <b>{{ 'proprietaire.prenom'|trans }}:</b> {{ proprietaire.prenom }}
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="list-group-item">
+                            <b>{{ 'proprietaire.phone'|trans }}:</b> {% include 'proprietaire/_display-phone.html.twig' %}
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ 'proprietaire.city'|trans }}:</b> {{ proprietaire.city }}
+                        </li>
+                    {% endif %}
                     {% for possession in proprietaire.possessions %}
                         <li class="list-group-item">
                             <b>{{ 'appartement.nom'|trans }}:</b> {{ possession.appartement.absoluteName }}

@@ -1,0 +1,5 @@
+{% if proprietaire.phone is not empty %}
+    <a href="tel:{{ proprietaire.phone }}">{{ proprietaire.phone }}</a>
+{% else %}
+    -
+{% endif %}
