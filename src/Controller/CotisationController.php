@@ -65,11 +65,16 @@ class CotisationController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/cotisation/new', name: 'app_cotisation_new')]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    #[Route('/cotisation/new/{appartement?}', name: 'app_cotisation_new')]
+    public function new(Request $request, EntityManagerInterface $manager, ?Appartement $appartement = null): Response
     {
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
+
+        if ($appartement) {
+            $cotisation->setAppartement($appartement);
+            $cotisation->setProprietaire($appartement->getLastProprietaire());
+        }
 
         $yearTarif = $this->tarifRepository->getCurrentTarif($this->syndic);
         if ($yearTarif) {

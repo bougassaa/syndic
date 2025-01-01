@@ -93,8 +93,12 @@
                         {{ item.tarif.tarif|format_currency('MAD') }}
                     </td>
                     <td class="text-end">
-                        {% if item.cotisations is not empty and is_granted('ROLE_ADMIN') %}
-                            {{ _self.cotisationSetting(item) }}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {% if item.cotisations is not empty %}
+                                {{ _self.cotisationSetting(item) }}
+                            {% else %}
+                                {{ _self.cotisationPayment(item) }}
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
@@ -115,7 +119,7 @@
     </div>
     <div class="list-group list-group-flush d-md-none">
         {% for item in items %}
-            <a href="#" class="list-group-item list-group-item-action {% if item.status == 'overdue' %}list-group-item-danger{% endif %}"
+            <div class="list-group-item list-group-item-action cursor-pointer {% if item.status == 'overdue' %}list-group-item-danger{% endif %}"
                  data-url="{{ path('app_cotisation_more_infos', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
             >
                 <div class="d-flex">
@@ -134,6 +138,8 @@
                     <div class="d-flex align-items-center">
                         {% if item.cotisations is not empty and is_granted('ROLE_ADMIN') %}
                             {{ _self.cotisationSetting(item) }}
+                        {% elseif item.status == 'overdue' and is_granted('ROLE_ADMIN') %}
+                            {{ _self.cotisationPayment(item) }}
                         {% elseif item.status != 'overdue'  %}
                             <button class="btn-sm btn btn-light">
                                 <i class="fa-solid fa-folder-open"></i>
@@ -141,7 +147,7 @@
                         {% endif %}
                     </div>
                 </div>
-            </a>
+            </div>
         {% endfor %}
         <div class="list-group-item list-group-item-info text-black">
             {{ 'cotisation.total'|trans }}
@@ -175,4 +181,13 @@
             </li>
         </ul>
     </div>
+{% endmacro %}
+
+{% macro cotisationPayment(item) %}
+    <a href="{{ path('app_cotisation_new', {'appartement': item.appartement.id}) }}"
+       data-bs-toggle="tooltip" data-bs-title="{{ 'cotisation.new'|trans }}"
+       class="btn-sm btn btn-light"
+    >
+        <i class="fa-solid fa-money-check-dollar"></i>
+    </a>
 {% endmacro %}

@@ -381,7 +381,7 @@ function initDynamicModal(parent = document, parentModal = null) {
                 return;
             }
 
-            if (!targetUrl && event.target.tagName === 'A') {
+            if (!targetUrl && event.target.closest('a')) {
                 return;
             }
 
