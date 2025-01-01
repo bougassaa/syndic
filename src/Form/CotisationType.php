@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Cotisation;
-use App\Entity\Proprietaire;
+use App\Entity\Syndic;
 use App\Entity\Tarif;
 use App\Form\Type\AppartementFieldType;
 use App\Form\Type\PreuvesType;
+use App\Form\Type\ProprietaireFieldType;
+use App\Service\SyndicSessionResolver;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,8 +25,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CotisationType extends AbstractType
 {
 
-    public function __construct(private TranslatorInterface $translator)
+    private Syndic $syndic;
+
+    public function __construct(private TranslatorInterface $translator, SyndicSessionResolver $syndicSessionResolver)
     {
+        $this->syndic = $syndicSessionResolver->getSelectedSyndic();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -34,6 +40,12 @@ class CotisationType extends AbstractType
                 'choice_label' => fn(Tarif $tarif) => $tarif->getPeriodeYear(),
                 'label' => $this->translator->trans('cotisation.tarif'),
                 'attr' => ['class' => 'cotisationTarif'],
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->where('t.syndic = :syndic')
+                        ->setParameter('syndic', $this->syndic)
+                        ->orderBy('t.debutPeriode', 'DESC');
+                }
             ])
             ->add('paidAt', null, [
                 'widget' => 'single_text',
@@ -75,12 +87,7 @@ class CotisationType extends AbstractType
             ->add('appartement', AppartementFieldType::class, [
                 'attr' => ['class' => 'cotisationAppartement'],
             ])
-            ->add('proprietaire', EntityType::class, [
-                'label' => $this->translator->trans('cotisation.proprietaire'),
-                'class' => Proprietaire::class,
-                'placeholder' => $this->translator->trans('select-choose'),
-                'choice_label' => fn (Proprietaire $p) => $p->getAbsoluteName()
-            ])
+            ->add('proprietaire', ProprietaireFieldType::class)
             ->add('preuves', PreuvesType::class, [
                 'label' => $this->translator->trans('cotisation.preuves'),
             ]);

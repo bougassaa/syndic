@@ -30,7 +30,7 @@ class TypeDepenseController extends AbstractController
     public function list(TypeDepenseRepository $repository): Response
     {
         return $this->render('type_depense/list.html.twig', [
-            'typeDepenses' => $repository->findBy([]),
+            'typeDepenses' => $repository->getSyndicTypeDepenses($this->syndic),
         ]);
     }
 

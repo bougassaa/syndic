@@ -29,7 +29,7 @@ class ProprietaireController extends AbstractController
     public function list(ProprietaireRepository $repository): Response
     {
         return $this->render('proprietaire/list.html.twig', [
-            'proprietaires' => $repository->getSyndicProprietaires($this->syndic),
+            'proprietaires' => $repository->getProprietairesList($this->syndic),
         ]);
     }
 

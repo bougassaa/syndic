@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Depense;
+use App\Entity\Syndic;
 use App\Entity\TypeDepense;
 use App\Form\Type\PreuvesType;
+use App\Service\SyndicSessionResolver;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -17,8 +20,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DepenseType extends AbstractType
 {
-    public function __construct(private TranslatorInterface $translator)
+    private Syndic $syndic;
+
+    public function __construct(private TranslatorInterface $translator, SyndicSessionResolver $syndicSessionResolver)
     {
+        $this->syndic = $syndicSessionResolver->getSelectedSyndic();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -30,6 +36,11 @@ class DepenseType extends AbstractType
                 'attr' => ['class' => 'selectTypeDepense'],
                 'class' => TypeDepense::class,
                 'choice_label' => 'label',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->where('t.syndic = :syndic')
+                        ->setParameter('syndic', $this->syndic);
+                },
             ])
             ->add('paidAt', null, [
                 'widget' => 'single_text',

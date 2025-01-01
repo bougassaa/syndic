@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Syndic
 {
 
+    const GH_15 = 'GH15';
     const GH_16 = 'GH16';
 
     #[ORM\Id]

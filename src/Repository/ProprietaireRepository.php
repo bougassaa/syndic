@@ -20,15 +20,17 @@ class ProprietaireRepository extends ServiceEntityRepository
     }
 
     /** @return Proprietaire[] */
-    public function getSyndicProprietaires(Syndic $syndic): array
+    public function getProprietairesList(Syndic $syndic): array
     {
         return $this->createQueryBuilder('p')
-            ->join('p.possessions', 'po')
-            ->join('po.appartement', 'a')
-            ->join('a.batiment', 'b')
+            ->leftJoin('p.possessions', 'po')
+            ->leftJoin('po.appartement', 'a')
+            ->leftJoin('a.batiment', 'b')
             ->where('b.syndic = :syndic')
+            ->orWhere('b.syndic IS NULL')
             ->setParameter('syndic', $syndic)
-            ->orderBy('p.isSystem', 'ASC')
+            ->orderBy('b.syndic', 'DESC')
+            ->addOrderBy('p.isSystem', 'ASC')
             ->addOrderBy('CASE WHEN po.leaveAt IS NOT NULL THEN 1 ELSE 0 END', 'ASC')
             ->addOrderBy('po.appartement', 'ASC')
             ->getQuery()

@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Appartement;
 use App\Entity\Batiment;
+use App\Entity\Syndic;
+use App\Service\SyndicSessionResolver;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -15,8 +18,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AppartementType extends AbstractType
 {
 
-    public function __construct(private TranslatorInterface $translator)
+    private Syndic $syndic;
+
+    public function __construct(private TranslatorInterface $translator, SyndicSessionResolver $syndicSessionResolver)
     {
+        $this->syndic = $syndicSessionResolver->getSelectedSyndic();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -30,6 +36,12 @@ class AppartementType extends AbstractType
                 'label' => $this->translator->trans('batiment.nom'),
                 'class' => Batiment::class,
                 'choice_label' => 'nom',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.syndic = :syndic')
+                        ->setParameter('syndic', $this->syndic)
+                        ->orderBy('b.nom', 'ASC');
+                },
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('save')
