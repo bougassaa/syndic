@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\Appartement;
-use App\Entity\Proprietaire;
 use App\Entity\Syndic;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityRepository;
@@ -41,6 +40,9 @@ class AppartementFieldType extends AbstractType
                     ->addOrderBy('a.numero', 'ASC');
             },
             'label' => $this->translator->trans('appartement.nom'),
+            'choice_attr' => function (Appartement $appartement) {
+                return ['data-description' => $appartement->getLastProprietaire()?->getAbsoluteName()];
+            }
         ]);
     }
 

@@ -253,7 +253,17 @@ function initTooltip(parent = document) {
 
 function initSelect(parent = document) {
     parent.querySelectorAll('select').forEach(select => {
-        const options = {maxOptions: 300};
+        const options = {
+            maxOptions: 300,
+            render: {
+                option: function(data, escape) {
+                    return `<div class="d-flex align-items-center gap-2">
+                        <span>${escape(data.text)}</span>
+                        ${data.description ? `<small class="text-muted">${escape(data.description)}</small>` : ``}
+                    </div>`;
+                }
+            }
+        };
 
         if (select.hasAttribute('data-select-no-search')) {
             options.controlInput = null;
