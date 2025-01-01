@@ -182,3 +182,8 @@ month:
   10: Octobre
   11: Novembre
   12: Décembre
+
+error:
+  not_found: Page introuvable...
+  go_home: Aller en page d'accueil
+  error_occur: Une erreur est survenue... Veuillez capturer cette page et la montrer aux administrateurs du site.

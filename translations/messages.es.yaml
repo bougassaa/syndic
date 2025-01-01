@@ -182,3 +182,8 @@ month:
   10: Octubre
   11: Noviembre
   12: Diciembre
+
+error:
+  not_found: Página no encontrada...
+  go_home: Ir a la página de inicio
+  error_occur: Ocurrió un error... Por favor, captura esta página y muéstrasela a los administradores del sitio.

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ 'error.not_found'|trans }}</h1>
+
+    <p>
+        <a class="btn btn-outline-primary" href="{{ path('app_home') }}">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            {{ 'error.go_home'|trans }}
+        </a>
+    </p>
+{% endblock %}

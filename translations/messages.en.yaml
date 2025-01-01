@@ -182,3 +182,8 @@ month:
   10: October
   11: November
   12: December
+
+error:
+  not_found: Page not found...
+  go_home: Go to homepage
+  error_occur: An error occurred... Please capture this page and show it to the site administrators.
