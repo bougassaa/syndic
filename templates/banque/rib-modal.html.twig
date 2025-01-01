@@ -14,30 +14,30 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex gap-3 flex-column mt-3">
-                    {# todo : make it dynamic #}
                     <div class="input-group">
                         <div class="form-floating">
-                            <input class="form-control" id="codeAccount" value="00011824471" readonly>
+                            <input class="form-control" id="codeAccount" value="{{ banque.numeroBanque }}" readonly>
                             <label for="codeAccount">{{ 'bank.account'|trans }}</label>
                         </div>
                         {{ _self.clipboardButton("codeAccount") }}
                     </div>
                     <div class="input-group">
                         <div class="form-floating">
-                            <input class="form-control" id="codeRIB" value="350 810 0000000011824471 48" readonly>
+                            <input class="form-control" id="codeRIB" value="{{ banque.rib }}" readonly>
                             <label for="codeRIB">{{ 'bank.rib'|trans }}</label>
                         </div>
                         {{ _self.clipboardButton("codeRIB") }}
                     </div>
                     <div class="input-group">
                         <div class="form-floating">
-                            <input class="form-control form-control-sm" id="codeName" value="Syndic Complexe Sable d'or GH16 Zone 2 Tanger" readonly>
+                            <input class="form-control form-control-sm" id="codeName" value="{{ banque.labelCompte }}" readonly>
                             <label for="codeName">{{ 'bank.label'|trans }}</label>
                         </div>
+                        {{ _self.clipboardButton("codeName") }}
                     </div>
                     <div class="input-group">
                         <div class="form-floating">
-                            <input class="form-control form-control-sm" id="codeAgence" value="TANGER PPAL" readonly>
+                            <input class="form-control form-control-sm" id="codeAgence" value="{{ banque.agence }}" readonly>
                             <label for="codeAgence">{{ 'bank.agence'|trans }}</label>
                         </div>
                         {{ _self.clipboardButton("codeAgence") }}

@@ -155,6 +155,7 @@ admin:
   logout: Déconnexion
 
 bank:
+  nav: Relevé bancaire
   rib: RIB
   agence: Agence
   account: Numéro de compte

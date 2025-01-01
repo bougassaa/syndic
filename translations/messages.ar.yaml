@@ -155,6 +155,7 @@ admin:
   logout: تسجيل الخروج
 
 bank:
+  nav: كشف حساب بنكي
   rib: رقم الحساب البنكي
   agence: الوكالة
   account: رقم الحساب

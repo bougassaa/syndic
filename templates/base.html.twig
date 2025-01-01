@@ -89,6 +89,11 @@
                                             {{ 'type-depense.nav'|trans }}
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('app_banque_save') }}">
+                                            {{ 'bank.nav'|trans }}
+                                        </a>
+                                    </li>
                                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         <li>
                                             <hr class="dropdown-divider">

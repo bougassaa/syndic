@@ -125,12 +125,6 @@ class HomeController extends AbstractController
         return [$paidCotisations, $pendingCotisations];
     }
 
-    #[Route('/show-rib', name: 'app_show_rib_modal')]
-    public function showRIBModal(): Response
-    {
-        return $this->render('home/rib-modal.html.twig');
-    }
-
     #[Route('/serve-image/{folder}/{filename}', name: 'app_serve_image')]
     public function serveImage(string $folder, string $filename): Response
     {

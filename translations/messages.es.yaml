@@ -155,6 +155,7 @@ admin:
   logout: Cerrar sesión
 
 bank:
+  nav: Extracto bancario
   rib: RIB
   agence: Agencia
   account: Número de cuenta

@@ -46,6 +46,9 @@ class Syndic
     #[ORM\OneToMany(targetEntity: TypeDepense::class, mappedBy: 'syndic')]
     private Collection $typeDepenses;
 
+    #[ORM\OneToOne(mappedBy: 'syndic', cascade: ['persist', 'remove'])]
+    private ?Banque $banque = null;
+
     public function __construct()
     {
         $this->batiments = new ArrayCollection();
@@ -194,5 +197,22 @@ class Syndic
     public function hasBeforeDohaPeriode(): bool
     {
         return $this->nom == self::GH_16;
+    }
+
+    public function getBanque(): ?Banque
+    {
+        return $this->banque;
+    }
+
+    public function setBanque(Banque $banque): static
+    {
+        // set the owning side of the relation if necessary
+        if ($banque->getSyndic() !== $this) {
+            $banque->setSyndic($this);
+        }
+
+        $this->banque = $banque;
+
+        return $this;
     }
 }

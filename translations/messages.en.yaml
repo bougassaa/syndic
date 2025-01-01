@@ -155,6 +155,7 @@ admin:
   logout: Log out
 
 bank:
+  nav: Bank statement
   rib: RIB
   agence: Agency
   account: Account number
