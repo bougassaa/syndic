@@ -69,6 +69,7 @@ class CotisationController extends AbstractController
     #[Route('/cotisation/new/{appartement?}/{tarif?}', name: 'app_cotisation_new')]
     public function new(Request $request, EntityManagerInterface $manager, ?Appartement $appartement = null, ?Tarif $tarif = null): Response
     {
+        $this->setRefererInSession($request);
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
 
@@ -92,7 +93,7 @@ class CotisationController extends AbstractController
             $manager->persist($cotisation);
             $manager->flush();
 
-            return $this->redirectRefererOrList();
+            return $this->redirectRefererOrList($request);
         }
 
         return $this->render('cotisation/save.html.twig', [
@@ -107,6 +108,7 @@ class CotisationController extends AbstractController
     #[Route('/cotisation/edit/{cotisation}', name: 'app_cotisation_edit')]
     public function edit(Cotisation $cotisation, Request $request, EntityManagerInterface $manager): Response
     {
+        $this->setRefererInSession($request);
         $form = $this->createForm(CotisationType::class, $cotisation, [
             'existing_preuves' => $cotisation->getPreuves(),
         ]);
@@ -118,7 +120,7 @@ class CotisationController extends AbstractController
             $manager->persist($cotisation);
             $manager->flush();
 
-            return $this->redirectRefererOrList();
+            return $this->redirectRefererOrList($request);
         }
 
         return $this->render('cotisation/save.html.twig', [
@@ -133,9 +135,10 @@ class CotisationController extends AbstractController
     #[Route('/cotisation/delete/{cotisation}', name: 'app_cotisation_delete')]
     public function delete(Cotisation $cotisation, EntityManagerInterface $manager, Request $request): Response
     {
+        $this->setRefererInSession($request);
         $manager->remove($cotisation);
         $manager->flush();
-        return $this->redirectRefererOrList();
+        return $this->redirectRefererOrList($request);
     }
 
     #[Route('/cotisation/more-infos/{tarif}/{appartement}', name: 'app_cotisation_more_infos')]
@@ -213,10 +216,20 @@ class CotisationController extends AbstractController
         return $cotisations;
     }
 
-    private function redirectRefererOrList(): RedirectResponse
+    private function setRefererInSession(Request $request): void
     {
+        if (!$request->getSession()->has('referer_url')) {
+            $request->getSession()->set('referer_url', $request->headers->get('referer'));
+        }
+    }
+
+    private function redirectRefererOrList(Request $request): RedirectResponse
+    {
+        $referer = $request->getSession()->get('referer_url');
+        $request->getSession()->remove('referer_url');
+
         return $this->redirect(
-            $request->headers->get('referer') ?? $this->generateUrl('app_cotisation_list')
+            $referer ?: $this->generateUrl('app_cotisation_list')
         );
     }
 }
