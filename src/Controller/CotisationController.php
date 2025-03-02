@@ -15,6 +15,7 @@ use App\Service\CotisationsDisplay;
 use App\Service\SyndicSessionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -65,8 +66,8 @@ class CotisationController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/cotisation/new/{appartement?}', name: 'app_cotisation_new')]
-    public function new(Request $request, EntityManagerInterface $manager, ?Appartement $appartement = null): Response
+    #[Route('/cotisation/new/{appartement?}/{tarif?}', name: 'app_cotisation_new')]
+    public function new(Request $request, EntityManagerInterface $manager, ?Appartement $appartement = null, ?Tarif $tarif = null): Response
     {
         $cotisation = new Cotisation();
         $cotisation->setPaidAt(new \DateTime());
@@ -76,7 +77,7 @@ class CotisationController extends AbstractController
             $cotisation->setProprietaire($appartement->getLastProprietaire());
         }
 
-        $yearTarif = $this->tarifRepository->getCurrentTarif($this->syndic);
+        $yearTarif = $tarif ?: $this->tarifRepository->getCurrentTarif($this->syndic);
         if ($yearTarif) {
             $cotisation->setMontant($yearTarif->getTarif());
             $cotisation->setTarif($yearTarif);
@@ -91,7 +92,7 @@ class CotisationController extends AbstractController
             $manager->persist($cotisation);
             $manager->flush();
 
-            return $this->redirectToRoute('app_cotisation_list');
+            return $this->redirectRefererOrList();
         }
 
         return $this->render('cotisation/save.html.twig', [
@@ -117,7 +118,7 @@ class CotisationController extends AbstractController
             $manager->persist($cotisation);
             $manager->flush();
 
-            return $this->redirectToRoute('app_cotisation_list');
+            return $this->redirectRefererOrList();
         }
 
         return $this->render('cotisation/save.html.twig', [
@@ -134,9 +135,7 @@ class CotisationController extends AbstractController
     {
         $manager->remove($cotisation);
         $manager->flush();
-        return $this->redirect(
-            $request->headers->get('referer') ?? $this->generateUrl('app_cotisation_list')
-        );
+        return $this->redirectRefererOrList();
     }
 
     #[Route('/cotisation/more-infos/{tarif}/{appartement}', name: 'app_cotisation_more_infos')]
@@ -212,5 +211,12 @@ class CotisationController extends AbstractController
             }
         }
         return $cotisations;
+    }
+
+    private function redirectRefererOrList(): RedirectResponse
+    {
+        return $this->redirect(
+            $request->headers->get('referer') ?? $this->generateUrl('app_cotisation_list')
+        );
     }
 }

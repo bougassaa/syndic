@@ -184,7 +184,7 @@
 {% endmacro %}
 
 {% macro cotisationPayment(item) %}
-    <a href="{{ path('app_cotisation_new', {'appartement': item.appartement.id}) }}"
+    <a href="{{ path('app_cotisation_new', {'appartement': item.appartement.id, 'tarif': item.tarif.id}) }}"
        data-bs-toggle="tooltip" data-bs-title="{{ 'cotisation.new'|trans }}"
        class="btn-sm btn btn-light"
     >
