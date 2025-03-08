@@ -68,7 +68,7 @@ class CotisationFormatter
         return false;
     }
 
-    public function getPartialReason(): string
+    public function getPartialReason(): ?string
     {
         foreach ($this->cotisations as $cotisation) {
             if ($cotisation->isPartial()) {
