@@ -188,6 +188,27 @@ document.addEventListener('DOMContentLoaded', function () {
             loading(sumbitButton, false);
         });
     });
+
+    // for onboarding step 1
+    document.querySelectorAll('.onboarding__batiment').forEach(input => {
+        input.addEventListener('change', () => {
+            const radio = document.querySelector('[name="batiment"]:checked');
+            if (radio instanceof HTMLInputElement && radio.value) {
+                const appartements = jsonParse(radio.dataset.appartements);
+                const select = document.querySelector('[name="appartement"]');
+                const submit = document.querySelector('.btn[type="submit"]');
+                const label = document.querySelector('#onboarding-appartement__label');
+                label.classList.remove('opacity-0');
+                select.tomselect.setDisabled(false);
+                select.tomselect.clear();
+                select.tomselect.clearOptions();
+                select.tomselect.addOptions(appartements);
+                select.addEventListener('change', () => {
+                    submit.disabled = !select.tomselect.getValue();
+                });
+            }
+        });
+    });
 });
 
 function initOwnerSwitch(parent = document) {

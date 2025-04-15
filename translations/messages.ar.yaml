@@ -3,6 +3,8 @@ parametres: الإعدادات
 save: حفظ
 edit: تعديل
 delete: حذف
+next: التالي
+return: رجوع
 status: الحالة
 copy: نسخ
 close: إغلاق
@@ -187,3 +189,10 @@ error:
   not_found: الصفحة غير موجودة...
   go_home: الذهاب إلى الصفحة الرئيسية
   error_occur: حدث خطأ... يرجى التقاط صورة لهذه الصفحة وعرضها على مسؤولي الموقع.
+
+onboarding:
+  choose-langue: اختر لغتك
+  choose-batiment: اختر المبنى الذي يقع فيه شقتك
+  choose-your-appartement: اختر رقم شقتك
+  beginAt-help: متى بدأت السكن هنا؟
+  confirm-selection: لقد اخترت الشقة %appart%. إذا لم تكن شقتك، يُرجى العودة وتصحيح اختيارك.

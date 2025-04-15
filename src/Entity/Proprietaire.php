@@ -48,6 +48,9 @@ class Proprietaire
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $city = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $onboardingDoneAt = null;
+
     public function __construct()
     {
         $this->possessions = new ArrayCollection();
@@ -218,6 +221,18 @@ class Proprietaire
     public function setCity(?string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getOnboardingDoneAt(): ?\DateTimeImmutable
+    {
+        return $this->onboardingDoneAt;
+    }
+
+    public function setOnboardingDoneAt(?\DateTimeImmutable $onboardingDoneAt): static
+    {
+        $this->onboardingDoneAt = $onboardingDoneAt;
 
         return $this;
     }

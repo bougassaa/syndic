@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p>{{ 'onboarding.choose-batiment'|trans }}</p>
+    <form action="{{ path('app_onboarding_step3') }}" method="get" >
+        <div class="row g-2 mb-3">
+            {% for batiment in batiments %}
+                <div class="col">
+                    <div>
+                        <input type="radio"
+                               class="btn-check onboarding__batiment"
+                               name="batiment"
+                               id="batiment-{{ batiment.nom }}"
+                               value="{{ batiment.nom }}"
+                               data-appartements="{{ batiment.occupedAppartements|json_encode }}"
+                        >
+                        <label class="btn btn-lg btn-outline-dark w-100"
+                               type="button"
+                               for="batiment-{{ batiment.nom }}"
+                        >
+                            {{ batiment.nom }}
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-4">
+            <label class="opacity-0 form-label"
+                   id="onboarding-appartement__label"
+                   for="onboarding-appartement"
+            >
+                {{ 'onboarding.choose-your-appartement'|trans }}
+            </label>
+            <select name="appartement"
+                    id="onboarding-appartement"
+                    class="form-select-lg"
+                    data-select-allow-empty="true"
+                    disabled required
+            >
+            </select>
+        </div>
+
+        <div>
+            <button class="btn btn-lg btn-primary float-end d-inline-flex align-items-center gap-4"
+                    type="submit"
+                    disabled
+            >
+                {{ 'next'|trans }}
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </button>
+        </div>
+    </form>
+{% endblock %}

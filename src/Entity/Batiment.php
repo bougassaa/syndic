@@ -91,4 +91,14 @@ class Batiment
 
         return $this;
     }
+
+    public function getOccupedAppartements(): array
+    {
+        return $this->appartements->filter(function (Appartement $a) {
+            $lasProprietaire = $a->getLastProprietaire();
+            return $lasProprietaire && !$lasProprietaire->isSystem();
+        })->map(function (Appartement $a) {
+            return ['value' => $a->getId(), 'text' => $a->getAbsoluteName(false)];
+        })->toArray();
+    }
 }

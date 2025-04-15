@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% import '_components/_macros.html.twig' as macros %}
+
+{% block body %}
+    <p>{{ 'onboarding.choose-langue'|trans }}</p>
+    {{ macros.selectLang("", false) }}
+    <div class="mt-4">
+        <a href="{{ path('app_onboarding_step2') }}"
+           class="btn btn-lg btn-primary d-inline-flex align-items-center gap-4 float-end"
+        >
+            {{ 'next'|trans }}
+            <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+    </div>
+{% endblock %}
+

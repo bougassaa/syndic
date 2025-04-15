@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProprietaireType extends AbstractType
 {
 
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(protected TranslatorInterface $translator)
     {
     }
 
@@ -33,7 +33,6 @@ class ProprietaireType extends AbstractType
             ->add('phone', TelType::class, [
                 'required' => false,
                 'label' => $this->translator->trans('proprietaire.phone'),
-                'row_attr' => ['class' => 'text-uppercase'],
             ])
             ->add('city', null, [
                 'required' => false,

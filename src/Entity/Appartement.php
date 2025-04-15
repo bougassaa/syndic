@@ -140,6 +140,11 @@ class Appartement
 
     public function getLastProprietaire(): ?Proprietaire
     {
+        return $this->getLastPossession()?->getProprietaire();
+    }
+
+    public function getLastPossession(): ?Possession
+    {
         if ($this->possessions->isEmpty()) {
             return null;
         }
@@ -148,7 +153,7 @@ class Appartement
 
         usort($possessions, fn (Possession $a, Possession $b) => $b->getBeginAt() <=> $a->getBeginAt());
 
-        return $possessions[0]?->getProprietaire();
+        return $possessions[0];
     }
 
 }

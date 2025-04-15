@@ -3,6 +3,8 @@ parametres: Paramètres
 save: Sauvegarder
 edit: Modifier
 delete: Supprimer
+next: Suivant
+return: Retour
 status: Statut
 copy: Copier
 close: Fermer
@@ -187,3 +189,10 @@ error:
   not_found: Page introuvable...
   go_home: Aller en page d'accueil
   error_occur: Une erreur est survenue... Veuillez capturer cette page et la montrer aux administrateurs du site.
+
+onboarding:
+  choose-langue: Choisissez la langue
+  choose-batiment: Choisissez le bâtiment où se trouve votre appartement
+  choose-your-appartement: Choisissez le numéro de votre appartement
+  beginAt-help: Quand vous avez commencé à habiter
+  confirm-selection: Vous avez choisi l'appartement %appart%. Si ce n’est pas le vôtre, veuillez revenir en arrière et corriger votre sélection.

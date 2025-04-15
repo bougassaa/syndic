@@ -54,3 +54,21 @@
     {% endfor %}
     </select>
 {% endmacro %}
+
+{% macro selectLang(class, small = true) %}
+    <form method="get"
+          action="{{ path('app_lang') }}"
+          data-bs-theme="light"
+          class="change-lang {{ class }}"
+    >
+        <select class="form-select-{{ small ? 'sm' : 'lg' }}" name="lang"
+                data-select-no-search="true"
+                data-select-icon="fa-solid fa-language"
+        >
+            <option value="fr" {% if app.locale == 'fr' %}selected{% endif %}>Français</option>
+            <option value="ar" {% if app.locale == 'ar' %}selected{% endif %}>العربية</option>
+            <option value="en" {% if app.locale == 'en' %}selected{% endif %}>English</option>
+            <option value="es" {% if app.locale == 'es' %}selected{% endif %}>Español</option>
+        </select>
+    </form>
+{% endmacro %}

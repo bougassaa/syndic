@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p>
+        <a class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-3"
+           href="{{ path('app_onboarding_step2') }}"
+        >
+            <i class="fa-solid fa-arrow-left-long"></i>
+            {{ 'return'|trans }}
+        </a>
+    </p>
+
+    {% if appart %}
+        <div class="alert alert-primary">
+            {{ 'onboarding.confirm-selection'|trans({'%appart%': '<b>' ~ appart.absoluteName ~ '</b>'})|raw }}
+        </div>
+    {% endif %}
+
+    <div>
+        {% if propForm %}
+            {{ form(propForm) }}
+        {% endif %}
+    </div>
+{% endblock %}
